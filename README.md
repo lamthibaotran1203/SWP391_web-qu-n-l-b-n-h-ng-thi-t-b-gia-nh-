@@ -60,14 +60,11 @@ frontend/
     features/        approved feature modules only
     pages/           route-level UI
     components/      small reusable UI pieces
-docs/                architecture, later RDS/SDS/diagrams/evidence
 scripts/             OS-neutral Node launch/build helpers
-household-goods-sales-planning-handoff/
-                      planning source of truth
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before changing the login flow. It contains
-the exact request path to explain during defense.
+Planning, agent instructions and working documents live on the `develop` branch. The
+`master` branch intentionally contains only the runnable project and its setup guide.
 
 ## Fresh clone setup
 
@@ -280,12 +277,9 @@ repositories, or JPA entities directly in JSON responses.
 
 ## Team workflow
 
-- Protect `main`; changes enter through a GitLab Merge Request with a green pipeline and one
+- Protect `master`; changes enter through a GitLab Merge Request with a green pipeline and one
   reviewer.
 - One owner implements and explains one complete vertical UC slice.
-- Do not begin a business UC until ownership and its planning/traceability rows are confirmed.
+- Do not begin a business UC until ownership is confirmed on `develop`.
 - Never edit an applied Flyway migration. Add a new migration.
 - Never commit `.env`, passwords, JDBC URLs with credentials or provider secrets.
-
-External service readiness and the boundary between configuration and owned UCs are recorded
-in [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
