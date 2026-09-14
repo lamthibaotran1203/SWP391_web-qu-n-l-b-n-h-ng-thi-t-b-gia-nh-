@@ -43,3 +43,4 @@ supabase/.temp/
 .tmp_backlog/
 .tmp_docx/
 .tmp_docx_inspect.py
+outputs/
