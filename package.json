@@ -1,0 +1,17 @@
+{
+  "name": "household-goods-sales",
+  "private": true,
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=11 <12"
+  },
+  "scripts": {
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:check": "npm --prefix frontend run check",
+    "backend:dev": "node scripts/run-backend.mjs",
+    "backend:test": "node scripts/run-maven.mjs test",
+    "build": "node scripts/build-all.mjs"
+  }
+}

@@ -1,0 +1,10 @@
+project_type=SWP391 classroom modular monolith
+source_control_and_ci=GitLab repository + Merge Requests + GitLab CI/CD
+backend=Java 21 + Spring Boot + Spring MVC REST + Spring Security + Spring Data JPA
+frontend=ReactJS + Vite + React Router
+database=PostgreSQL hosted on Supabase; backend JDBC only
+schema_migrations=Flyway owns lowercase app schema; Hibernate ddl-auto=validate
+authentication=same-origin server session + CSRF; no JWT and no Supabase Auth
+deployment=one Spring Boot artifact serves production React build and /api/v1
+testing=JUnit + Spring/MockMvc + PostgreSQL integration + Vitest + browser smoke
+architecture=feature-oriented modular monolith; Controller -> Service -> Repository; DTO boundary

@@ -1,0 +1,115 @@
+stages:
+  - validate
+  - frontend-test
+  - backend-test
+  - build
+  - smoke
+
+variables:
+  POSTGRES_DB: household_goods_test
+  POSTGRES_USER: app
+  POSTGRES_PASSWORD: ci_disposable_only
+  DB_URL: jdbc:postgresql://postgres:5432/household_goods_test
+  DB_USERNAME: app
+  DB_PASSWORD: ci_disposable_only
+  MAVEN_USER_HOME: "$CI_PROJECT_DIR/.m2"
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+default:
+  interruptible: true
+
+validate-repository:
+  stage: validate
+  image: alpine:3.22
+  before_script:
+    - apk add --no-cache git
+  script:
+    - git show --check --oneline --no-renames "$CI_COMMIT_SHA"
+    - test -x backend/mvnw
+    - test -f backend/mvnw.cmd
+    - test -f frontend/package-lock.json
+    - if git ls-files | grep -E '(^|/)\.env($|\.)|\.(jks|keystore|p12|pem|private-key)$' | grep -vE '(^|/)\.env\.example$' | grep -q .; then echo 'Tracked secret file detected'; exit 1; fi
+    - if git grep -nE '(SMTP_PASSWORD|PAYPAL_CLIENT_SECRET|DB_PASSWORD)=[^<[:space:]][^[:space:]]+' -- ':!.env.example'; then echo 'Possible committed secret detected'; exit 1; fi
+
+frontend-test:
+  stage: frontend-test
+  image: node:24.19.0-alpine
+  cache:
+    key: frontend-npm
+    paths:
+      - .npm/
+  script:
+    - npm --prefix frontend ci
+    - npm --prefix frontend run lint
+    - npm --prefix frontend run test
+    - npm --prefix frontend run build
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 day
+
+backend-test:
+  stage: backend-test
+  image: maven:3.9.16-eclipse-temurin-21
+  services:
+    - name: postgres:17-alpine
+      alias: postgres
+  cache:
+    key: backend-maven
+    paths:
+      - .m2/repository/
+      - .m2/wrapper/
+  script:
+    - cd backend
+    - ./mvnw test
+
+package-application:
+  stage: build
+  image: maven:3.9.16-eclipse-temurin-21
+  needs:
+    - job: frontend-test
+      artifacts: true
+    - job: backend-test
+  cache:
+    key: backend-maven
+    paths:
+      - .m2/repository/
+      - .m2/wrapper/
+  script:
+    - cd backend
+    - ./mvnw clean package -DskipTests
+    - jar tf target/household-goods-backend-0.1.0-SNAPSHOT.jar | grep 'BOOT-INF/classes/static/index.html'
+  artifacts:
+    paths:
+      - backend/target/household-goods-backend-0.1.0-SNAPSHOT.jar
+    expire_in: 1 day
+
+smoke-application:
+  stage: smoke
+  image: maven:3.9.16-eclipse-temurin-21
+  needs:
+    - job: package-application
+      artifacts: true
+  services:
+    - name: postgres:17-alpine
+      alias: postgres
+  variables:
+    SESSION_COOKIE_SECURE: "false"
+    BOOTSTRAP_MANAGER_EMAIL: manager.ci@example.invalid
+    BOOTSTRAP_MANAGER_PASSWORD: CiAuthTest123
+    BOOTSTRAP_MANAGER_FULL_NAME: Quản lý CI
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq curl
+  script:
+    - java -jar backend/target/household-goods-backend-0.1.0-SNAPSHOT.jar > application.log 2>&1 &
+    - APP_PID=$!
+    - trap 'kill "$APP_PID" 2>/dev/null || true' EXIT
+    - for attempt in $(seq 1 30); do curl -fsS http://localhost:8080/actuator/health && break; sleep 1; done
+    - curl -fsS http://localhost:8080/ | grep 'Gia Dụng Việt'
+    - CSRF_JSON=$(curl -fsS -c cookies.txt http://localhost:8080/api/v1/auth/csrf)
+    - CSRF_TOKEN=$(printf '%s' "$CSRF_JSON" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
+    - test -n "$CSRF_TOKEN"
+    - curl -fsS -b cookies.txt -c cookies.txt -H "X-XSRF-TOKEN:$CSRF_TOKEN" --data-urlencode "email=$BOOTSTRAP_MANAGER_EMAIL" --data-urlencode "password=$BOOTSTRAP_MANAGER_PASSWORD" http://localhost:8080/api/v1/auth/login | grep 'MANAGER'
+    - curl -fsS -b cookies.txt http://localhost:8080/api/v1/auth/me | grep '"authenticated":true'
+  after_script:
+    - test "$CI_JOB_STATUS" = success || cat application.log

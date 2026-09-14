@@ -1,0 +1,76 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../auth/useAuth'
+
+export function LoginPage() {
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  function updateField(event) {
+    setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    setError('')
+    setSubmitting(true)
+    try {
+      await login(form.email, form.password)
+      navigate('/')
+    } catch (requestError) {
+      setError(requestError.message || 'Không thể đăng nhập.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <main className="login-page">
+      <section className="login-shell" aria-labelledby="login-title">
+        <Link className="back-link" to="/">← Quay lại trang chủ</Link>
+        <p className="eyebrow">Gia Dụng Việt</p>
+        <h1 id="login-title">Đăng nhập hệ thống</h1>
+        <p className="text-secondary">
+          Sử dụng tài khoản được quản trị viên hệ thống cấp.
+        </p>
+
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="email">Email</label>
+            <input
+              className="form-control form-control-lg"
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="username"
+              value={form.email}
+              onChange={updateField}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="form-label" htmlFor="password">Mật khẩu</label>
+            <input
+              className="form-control form-control-lg"
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={form.password}
+              onChange={updateField}
+              required
+            />
+          </div>
+          <button className="btn btn-dark btn-lg w-100" type="submit" disabled={submitting}>
+            {submitting ? 'Đang đăng nhập…' : 'Đăng nhập'}
+          </button>
+        </form>
+      </section>
+    </main>
+  )
+}

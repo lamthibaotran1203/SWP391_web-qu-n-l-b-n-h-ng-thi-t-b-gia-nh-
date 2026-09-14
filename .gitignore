@@ -1,0 +1,45 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+secrets/
+*.jks
+*.keystore
+*.p12
+*.pem
+*.private-key
+
+# IDE, OS and local agent state
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+.fleet/
+.playwright-cli/
+*.iml
+*.swp
+
+# Java/Maven output
+backend/target/
+
+# Node/Vite/test output
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+coverage/
+test-results/
+playwright-report/
+
+# Local Supabase CLI state
+supabase/.temp/
+
+# Runtime output
+*.log
+*.pid
+*.hprof
+
+# One-off local document/backlog inspection and render workspaces
+.tmp_backlog/
+.tmp_docx/
+.tmp_docx_inspect.py
