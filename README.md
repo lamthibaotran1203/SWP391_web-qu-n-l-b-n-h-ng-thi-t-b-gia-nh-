@@ -1,6 +1,4 @@
-# SWP391 - Household Goods Sales & Inventory
-
-Đồ án SWP391 của Group 03: website bán hàng và quản lý kho cho cửa hàng gia dụng.
+# SWP391_Group03 - Household Appliances Management System
 
 ## Stack
 
@@ -20,19 +18,7 @@ cd SWP391
 npm --prefix frontend ci
 ```
 
-Tạo file `.env`:
-
-macOS/Linux:
-
-```bash
-cp .env.example .env
-```
-
-Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
+Tạo file `.env` và copy từ .env.example qua
 
 Nhóm đang dùng chung database Supabase. Điền thông tin sau vào `.env` và lấy password từ
 người giữ tài khoản Supabase:
