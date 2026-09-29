@@ -1,14 +1,16 @@
 # Household Goods Sales Planning Handoff
 
-Status: **decision-ready SWP391 baseline v2.0**
+Status: **historical, unapproved planning proposal (reviewed 2026-09-24)**
 
-Current commitment: **37 baseline actor-goal use cases and 2 optional features**
+Original proposal: **37 actor-goal use cases and 2 optional features**. The team later
+submitted a different 35-UC Backlog and RDS to the lecturer. See
+[PROJECT_STATUS.md](../PROJECT_STATUS.md) before using this folder.
 
 ## Start here
 
-This folder is the planning source for a five-student, ten-week SWP391 classroom project.
-It describes one small Vietnamese household-goods store, not a production retailer or an
-open-ended e-commerce platform.
+This folder records an earlier planning draft for a five-student, ten-week SWP391 classroom
+project. It describes one small Vietnamese household-goods store. Its UC IDs, scope,
+exclusions, and decisions are not the current approved requirements.
 
 Read `MASTER_PLAN.md` first, then the numbered files:
 
@@ -26,7 +28,7 @@ Read `MASTER_PLAN.md` first, then the numbered files:
 
 `10_PROMPT_FOR_NEXT_CODEX.md` is only a handoff prompt. It does not add requirements.
 
-## Authority
+## Internal order within this historical draft
 
 | Artifact | Authority |
 | --- | --- |
@@ -38,8 +40,9 @@ Read `MASTER_PLAN.md` first, then the numbered files:
 | `11` | Cross-artifact traceability seed; it must follow the sources above |
 | `09` | Work allocation and backlog seed, not a source of new behavior |
 
-If two files conflict, do not choose the more convenient sentence. Correct the earliest
-authoritative source, then propagate the approved change downstream.
+This table explains how the draft was organized; it does not give the draft authority over
+the lecturer-facing submission or later team decisions. When sources conflict, record the
+discrepancy and obtain a team decision before propagating changes.
 
 ## Technical direction
 
@@ -70,9 +73,9 @@ sequence flow, and queries. No old football-domain behavior is imported.
 
 ## Scope control
 
-Promotion and Operational Dashboard are optional. Supplier/procurement, multi-location
-stock, courier integration, warranty/repair, exchange, loyalty, review, notification,
-policy engines, AI, mobile, microservices, and direct browser-to-Supabase access are excluded.
+In this draft, Promotion and Operational Dashboard were optional and Supplier/procurement was
+excluded. The submitted 35-UC Backlog includes Supplier and Purchase Order work, so that
+exclusion is unresolved. Do not carry it into the revised RDS without a team decision.
 
 Before adding anything, identify its actor, trigger, observable result, rules, states,
 screen/API, tables/queries, tests, owner, lost schedule capacity, and exact traceability

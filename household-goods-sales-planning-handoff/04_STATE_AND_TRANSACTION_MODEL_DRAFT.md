@@ -1,6 +1,8 @@
 # State, Stock, Money, and Transaction Model
 
-Status: **recommended logical baseline; not a physical ERD or SDS**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **recommended logical baseline; not a physical ERD or SDS**
 
 ## Delivery order states
 

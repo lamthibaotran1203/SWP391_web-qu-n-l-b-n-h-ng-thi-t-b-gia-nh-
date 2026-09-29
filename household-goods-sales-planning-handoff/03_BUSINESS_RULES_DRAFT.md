@@ -1,6 +1,8 @@
 # Business Rules
 
-Status: **recommended baseline; sequential BR-01 through BR-64**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **recommended baseline; sequential BR-01 through BR-64**
 
 ## Identity and authorization
 

@@ -1,6 +1,8 @@
 # Decision Register Before RDS Freeze
 
-Status: **recommended defaults; team signatures still required**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **recommended defaults; team signatures still required**
 
 `PLAN BASELINE` means this pack consistently assumes the decision. `CONFIRM W1` means an
 external service/account/host choice must be confirmed by the end of week 1. A changed

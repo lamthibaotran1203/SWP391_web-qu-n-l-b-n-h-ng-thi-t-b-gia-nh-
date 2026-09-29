@@ -1,6 +1,8 @@
 # Household Goods Sales SWP391 Master Plan
 
-Status: **decision-ready planning baseline v2.0**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **decision-ready planning baseline v2.0**
 
 Audience: five-student SWP391 team, project mentor, and future implementation/document agents
 
