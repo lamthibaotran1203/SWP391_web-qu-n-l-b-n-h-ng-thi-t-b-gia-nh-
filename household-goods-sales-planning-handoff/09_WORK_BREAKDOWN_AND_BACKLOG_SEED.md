@@ -1,6 +1,8 @@
 # Work Breakdown and GitLab Backlog Seed
 
-Status: **canonical 37-UC planning seed; team dates and names pending**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **canonical 37-UC planning seed; team dates and names pending**
 
 ## 1. Purpose and authority
 

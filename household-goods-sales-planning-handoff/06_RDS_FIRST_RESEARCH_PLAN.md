@@ -1,6 +1,8 @@
 # RDS First Research and Delivery Plan
 
-Status: **course-aligned document contract and work sequence**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **course-aligned document contract and work sequence**
 
 ## Principle
 

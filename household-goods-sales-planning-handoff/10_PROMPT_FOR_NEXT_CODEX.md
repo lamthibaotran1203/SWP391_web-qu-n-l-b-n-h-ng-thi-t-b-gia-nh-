@@ -1,7 +1,8 @@
 # Prompt for the Next Codex Project
 
-Copy this folder into the implementation repository, then use the prompt below. Replace the
-bracketed phase only if the team has genuinely passed its preceding release gate.
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+The prompt below is archived for context. Do not reuse it as current project instructions.
 
 ```text
 You are continuing a five-student, ten-week SWP391 classroom project: Household Goods Sales

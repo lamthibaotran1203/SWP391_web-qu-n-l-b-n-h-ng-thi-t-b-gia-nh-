@@ -1,7 +1,8 @@
 # External integration boundaries
 
-This file records configuration readiness only. It does not claim completion of the use
-cases that own email or online payment behavior.
+This file records the last verified runtime configuration, not an approved future RDS scope.
+See [PROJECT_STATUS.md](../PROJECT_STATUS.md) for the submitted-document status. It does not
+claim completion of the use cases that own email or online payment behavior.
 
 ## Secret boundary
 
@@ -14,10 +15,11 @@ cases that own email or online payment behavior.
 ## Supabase PostgreSQL
 
 The developer MCP connection is OAuth-authenticated and scoped to project
-`hqelyoqvqofqzvdcwvna`. A read-only dashboard query confirmed that the active database is
-PostgreSQL 17.6 and that schema `app` has not been migrated yet. MCP access is a development
-tool and does not configure the running application. Spring still needs an SSL JDBC URL,
-database username and database password through `DB_URL`, `DB_USERNAME` and `DB_PASSWORD`.
+`hqelyoqvqofqzvdcwvna`. A read-only dashboard query confirmed PostgreSQL 17.6. On
+2026-09-14, Spring connected over SSL through Supavisor session mode, Flyway applied `V1` to
+schema `app`, and Hibernate validated the mapping. These are dated checks, not a fresh audit
+of the current remote database. MCP access does not configure the running application;
+Spring still needs `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
 
 React must not use Supabase Auth, anon/service-role keys or the Data API. Flyway remains the
 only owner of schema `app`. Prefer a direct IPv6 database connection when the deployment host
@@ -33,18 +35,19 @@ reads `SMTP_*`; application messages use `MAIL_FROM_EMAIL` and `MAIL_FROM_NAME`.
 display name is `Gia Dụng Việt`. The address must remain an account or alias accepted by the
 SMTP provider.
 
-SMTP is infrastructure for UC-01, UC-07 and UC-08. Their owner must still implement token
-lifecycle, failure handling and one real sandbox-message proof. Configuration alone is not
-feature evidence.
+SMTP supports registration, password reset, and staff setup if those flows remain in the
+approved scope. Historical 37-UC IDs must not be copied into the submitted 35-UC RDS. The
+owners still need token lifecycle, failure handling, and one real sandbox-message proof.
+Configuration alone is not feature evidence.
 
 ## Online payment
 
-Online payment is explicitly deferred. No provider credentials, SDK, controller, callback or
-payment state transition is part of the current runtime configuration. The team must approve
-DEC-04 before provider-specific variables and implementation are added.
+Online payment is not yet implemented. No provider credentials, SDK, controller, callback,
+or payment state transition is part of the last recorded runtime configuration. The provider
+and flow need a current team decision; `DEC-04` in the historical planning pack is a draft.
 
 ## GitLab
 
-The local `origin` remote points to `https://gitlab.com/031153437/SWP391.git`. Authentication,
-the first push, protected `main`, masked CI/CD variables and the first hosted pipeline remain
-GitLab-side actions; none are implied by adding the remote.
+The local `origin` remote points to `https://gitlab.com/031153437/SWP391.git`. Branch
+protection, masked CI/CD variables, and hosted pipeline status were not checked during the
+2026-09-24 documentation review; none is proven by the local remote configuration.

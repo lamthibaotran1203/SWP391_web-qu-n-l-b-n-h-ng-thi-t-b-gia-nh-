@@ -1,6 +1,8 @@
 # Technical Foundation Blueprint
 
-Status: **planned architecture, API, screen, database, security, CI, and test contract**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **planned architecture, API, screen, database, security, CI, and test contract**
 
 This file bridges approved requirements to RDS and implementation. It defines boundaries and
 evidence, not final Java class names or a physical SDS. Actual symbols may differ after

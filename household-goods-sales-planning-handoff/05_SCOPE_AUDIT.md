@@ -1,6 +1,8 @@
 # Scope Audit and Use Case Rationale
 
-Status: **third-pass audit of the React/Spring 37-UC baseline**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **third-pass audit of the React/Spring 37-UC baseline**
 
 ## Verdict
 

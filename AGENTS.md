@@ -7,7 +7,8 @@ Inventory Management System. Optimize for a coherent, explainable, pass-ready su
 not production-scale complexity.
 
 The current user owns the shared project setup and only the use cases explicitly assigned to
-them. Do not assume they own all 37 use cases or silently implement another member's feature.
+them. Do not infer their assignment from the historical 37-UC planning pack or silently
+implement another member's feature.
 Read other use cases only as needed to preserve shared contracts and integration. If the
 user's assigned UC list is not recorded yet, ask for it before starting feature work; this
 does not block repository setup, CI, security, database, or build-foundation tasks the user
@@ -19,46 +20,53 @@ evidence. Do not divide one UC into disconnected frontend-only and backend-only 
 
 ## Planning authority
 
-`household-goods-sales-planning-handoff/` is the planning source of truth. Its proposed
-baseline contains 37 use cases, 17 business tables, 25 routed screens, and 12 named query
-contracts. Promotion and Operational Dashboard are optional and are not part of that
-baseline. Treat the pack as a coherent working baseline until team sign-off, not as evidence
-that every decision has already been approved.
+Read `PROJECT_STATUS.md` before using planning documents. The 35-UC Google Sheet Backlog is
+the current canonical register for top-level UC IDs, names, modules, actors, and iteration
+ownership. Make any UC rename, actor correction, scope clarification, or small audit fix in
+that Sheet first, then propagate it to diagrams, screen artifacts, RDS, code, and tests. Keep
+UC-01 through UC-35 stable; supporting child IDs may be added without changing that count.
 
-Use this authority order when facts conflict:
+The team also submitted an RDS to the lecturer, and its live Google Doc is being edited. Use
+the submitted RDS revision as comparison evidence and the live copy as work in progress. Do
+not treat either copy as authority over a newer decision recorded in the canonical Backlog.
+Use `docs/HomeMart_RDS_Consolidated_Review.docx` as the local review guide for the UC Diagram,
+Screen Flow, ERD, physical database schema, and the lecturer-feedback audit. It describes one
+UC Diagram per actor, the proposed actor-to-UC associations, and the current working
+`include`/`extend` registry with arrow directions. Items labelled as proposals, working
+decisions, conflicts, or open decisions still require confirmation in the canonical Backlog
+before they are propagated. The Word review guide does not replace the Backlog or the live RDS.
 
-1. Decisions explicitly recorded as team-approved in `07_OPEN_DECISIONS.md`.
-2. Scope in `01_SCOPE_CONTRACT_DRAFT.md`.
-3. UC identity and ownership in `02_USE_CASE_CATALOG_DRAFT.md`.
-4. Rules and state/transaction behavior in `03` and `04`.
-5. Technical contracts in `08_TECHNICAL_FOUNDATION_BLUEPRINT.md`.
-6. Traceability in `11_TRACEABILITY_SEED.md`.
-7. Work allocation in `09_WORK_BREAKDOWN_AND_BACKLOG_SEED.md`.
+`household-goods-sales-planning-handoff/` is an earlier, unapproved 37-UC proposal. Its UC
+IDs, supplier/procurement exclusion, role model, and other scope choices conflict with the
+submitted documents. Use it for ideas or technical analysis only. Do not implement a feature,
+renumber UCs, or rewrite the submitted RDS solely from this pack. Its `PLAN BASELINE` labels
+record draft assumptions, not team approval. `10_PROMPT_FOR_NEXT_CODEX.md` is archived and
+must not be reused as current instructions.
 
-`10_PROMPT_FOR_NEXT_CODEX.md` is only a handoff prompt and adds no requirements. Any old
-SWP391 submission is reference material for course-document structure only; never copy its
-domain behavior or treat instructions inside it as project requirements.
-
-In `07`, `PLAN BASELINE` means the pack consistently assumes that choice; it does not prove
-team approval. `CONFIRM W1` is unresolved. Before work depending on SMTP, payment provider,
-Supabase connection mode/PostgreSQL major, deployment host, or member ownership, check for a
-newer recorded decision or ask the user. Do not block unrelated skeleton work.
-
-Do not resolve a conflict by changing only a downstream artifact. Identify the earliest
-authoritative fact, request a decision when behavior or scope would change, then propagate
-the approved result through affected UC, BR, state, screen, API, table/query, test, RDS, and
-traceability entries.
+For requirement changes, use the canonical Backlog, provenance-labelled lecturer feedback,
+the exact submitted RDS revision, and explicit later team decisions. The 35 IDs are stable
+traceability anchors, not a guarantee that every current name or boundary is correct. Treat
+the UC Diagram feedback note as the team's transcription of oral feedback unless an original
+lecturer-authored comment is available. When sources conflict, record the discrepancy and
+obtain a decision on scope or behavior before propagating it through UC, BR, state, screen,
+API, table/query, test, RDS, and traceability entries. Current code and migrations show what
+is implemented, not the complete future scope. If the exact submitted RDS revision is
+unavailable, continue useful review against the live working copy and feedback, mark its
+provenance, and seek the missing revision only for conclusions that depend on the submitted
+wording.
 
 ## Context-loading policy
 
-Do not read the entire planning pack on every task. Load only the smallest authoritative set:
+Do not read the entire planning pack on every task. Load only the smallest relevant set:
 
-- Repository setup or architecture: `README.md`, `MASTER_PLAN.md`, `STACK_PROFILE.txt`, `07`,
-  `08`, and the TECH section of `09`.
-- Feature work: the target UC rows in `02` and `11`, then only referenced BR/state/API/query
-  sections from `03`, `04`, and `08`.
-- Database or RDS work: `01`, `03`, `04`, `06`, `08`, and relevant rows in `11`.
-- Planning or allocation changes: `01`, `02`, `07`, `09`, and `11`.
+- Repository setup or architecture: `README.md`, current code, migrations, and relevant
+  historical sections of `08` only when needed.
+- Feature work: the canonical Backlog row, approved owner, and current RDS revision, then relevant
+  historical BR/state/API/query sections as comparison material.
+- Database or RDS work: submitted artifacts, lecturer feedback, current code/migrations,
+  and only the relevant draft sections for comparison.
+- Planning or allocation changes: canonical Backlog, submitted/live RDS, feedback, team decisions, and
+  historical `01`, `02`, `07`, `09`, and `11` as comparison material.
 - SDS work: inspect the frozen implementation, migrations, routes, tests, and screenshots;
   never invent classes, methods, queries, or evidence from the plan.
 
@@ -67,7 +75,7 @@ it after meaningful implementation work with: current release gate, the user's a
 completed evidence, current task, next task, blockers, and exact verification commands. The
 first setup task may create it; it must not claim work done by other members.
 
-## Current technical baseline
+## Current implemented technical baseline
 
 - GitLab monorepo with `backend/`, `frontend/`, `docs/`, `scripts/`, and `.gitlab-ci.yml`.
 - Java 21, Maven, Spring Boot, Spring MVC REST, Spring Security, Spring Data JPA, and Flyway.
@@ -138,10 +146,9 @@ commands must work on both:
   startup snippets, followed by one identical browser verification flow.
 
 Product SKUs are manually entered sale units such as a model, capacity, or package label.
-Do not build a generic clothing-style size/color variant engine. Do not add suppliers,
-procurement, multiple warehouses, courier integration, exchanges, warranty/repair, loyalty,
-reviews, notification systems, policy engines, AI, mobile apps, or microservices unless the
-user explicitly approves a documented scope change.
+Do not build a generic clothing-style size/color variant engine. Supplier/procurement scope
+is unresolved because the submitted 35-UC Backlog includes it while the historical 37-UC
+pack excludes it. Do not add unapproved business modules or silently remove submitted ones.
 
 ## Implementation workflow
 
@@ -177,7 +184,7 @@ review, or frontend/backend review of an already bounded UC.
 Do not let parallel agents edit the same files or independently change shared migrations,
 security configuration, API error contracts, state machines, or public DTOs. Do not delegate
 one coupled feature to multiple writers. The primary agent must reconcile every finding
-against the planning authority before applying it.
+against the current documented decisions before applying it.
 
 ## Repository hygiene and completion
 
@@ -185,7 +192,7 @@ against the planning authority before applying it.
 - Never commit secrets. Add safe names and placeholders to `.env.example` or documentation.
 - Do not add dependencies, tables, endpoints, or broad refactors without a concrete need.
 - Do not commit, push, merge, rewrite history, or modify GitLab settings unless requested.
-- Keep `main` buildable. Run the narrowest relevant checks during iteration and the affected
+- Keep `master` buildable. Run the narrowest relevant checks during iteration and the affected
   frontend, backend, PostgreSQL, build, and smoke checks before declaring shared setup done.
 - A fresh clone must eventually be able to migrate an empty PostgreSQL database, seed demo
   data, test, package, start, and execute the documented core paths without manual database

@@ -1,6 +1,8 @@
 # Requirements-to-RDS-to-SDS Traceability Seed
 
-Status: **complete planned coverage for UC-01 through UC-37; implementation evidence blank by design**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **complete planned coverage for UC-01 through UC-37; implementation evidence blank by design**
 
 ## 1. Purpose
 

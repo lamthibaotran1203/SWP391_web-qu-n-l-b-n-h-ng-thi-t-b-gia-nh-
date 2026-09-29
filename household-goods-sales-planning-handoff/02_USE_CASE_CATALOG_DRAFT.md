@@ -1,6 +1,8 @@
 # Use Case Catalogue
 
-Status: **recommended 37-UC baseline for team sign-off**
+> **Archive note (2026-09-24):** This 37-UC proposal predates the 35-UC Backlog and RDS submitted to the lecturer. It is not approved scope. Read [PROJECT_STATUS.md](../PROJECT_STATUS.md) before using it.
+
+Original draft status: **recommended 37-UC baseline for team sign-off**
 
 ## Classification rule
 

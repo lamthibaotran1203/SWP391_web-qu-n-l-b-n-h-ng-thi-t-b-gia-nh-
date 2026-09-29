@@ -4,9 +4,26 @@ SWP391 Group 03 classroom project for one Vietnamese household-goods store and o
 location. The codebase is a modular monolith: React/Vite in the browser, Spring Boot REST and
 Spring Security on the server, and PostgreSQL managed by Flyway.
 
-Current state: **R1 walking skeleton locally verified**. The Supabase project is reachable and
-matches PostgreSQL 17; application JDBC/Flyway proof and the first GitLab-hosted pipeline are
-still pending. No business use case is claimed complete.
+Last recorded runtime state: **R1 walking skeleton locally verified**. The Supabase JDBC/Flyway
+connection was verified on 2026-09-14; the first GitLab-hosted pipeline and full browser
+login proof against Supabase were still pending. No business use case is claimed complete.
+
+## Requirements documents
+
+Read [PROJECT_STATUS.md](PROJECT_STATUS.md) before using local planning files. The team
+submitted a 35-UC Google Sheet Backlog and RDS to the lecturer, then received substantial
+feedback. The live RDS is being edited. The 37-UC
+`household-goods-sales-planning-handoff/` folder is an older, unapproved proposal and is
+useful only as reference material until the team records revised decisions. Current code
+and migrations show implementation status, not the full accepted scope.
+
+For the current Use Case Diagram, Screen Flow, ERD, database-schema, and lecturer-feedback
+review, read
+[docs/HomeMart_RDS_Consolidated_Review.docx](docs/HomeMart_RDS_Consolidated_Review.docx).
+The document uses one UC Diagram specification per actor and records the proposed
+`include`/`extend` relationships in prose and tables. The 35-UC Google Sheet remains the
+canonical register. Apply UC name, actor, scope, and iteration corrections in the Sheet
+before propagating them to the RDS, diagrams, authorization matrix, code, or tests.
 
 ## What is already wired
 
@@ -63,7 +80,7 @@ frontend/
 docs/                architecture, later RDS/SDS/diagrams/evidence
 scripts/             OS-neutral Node launch/build helpers
 household-goods-sales-planning-handoff/
-                      planning source of truth
+                      historical 37-UC proposal; see PROJECT_STATUS.md
 ```
 
 Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before changing the login flow. It contains
