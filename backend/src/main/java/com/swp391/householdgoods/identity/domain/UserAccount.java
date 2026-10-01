@@ -11,6 +11,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.time.Instant;
 
+/**
+ * Thực thể đại diện cho tài khoản người dùng trong hệ thống (Customer, Staff, Manager).
+ */
 @Entity
 @Table(name = "user_account", schema = "app")
 public class UserAccount {
