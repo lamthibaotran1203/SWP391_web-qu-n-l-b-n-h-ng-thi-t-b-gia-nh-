@@ -1,5 +1,6 @@
 package com.swp391.householdgoods.common.api;
 
+import com.swp391.householdgoods.catalog.application.ProductNotFoundException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
@@ -23,8 +24,8 @@ public class ApiExceptionHandler {
             MethodArgumentNotValidException exception,
             HttpServletRequest request) {
         Map<String, String> fieldErrors = new LinkedHashMap<>();
-        exception.getBindingResult().getFieldErrors().forEach(error ->
-                fieldErrors.putIfAbsent(error.getField(), error.getDefaultMessage()));
+        exception.getBindingResult().getFieldErrors()
+                .forEach(error -> fieldErrors.putIfAbsent(error.getField(), error.getDefaultMessage()));
 
         return problem(
                 HttpStatus.BAD_REQUEST,
@@ -42,6 +43,16 @@ public class ApiExceptionHandler {
                 "Không tìm thấy tài nguyên được yêu cầu.",
                 Map.of(),
                 request);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    ResponseEntity<ApiProblem> handleProductNotFound(ProductNotFoundException exception, HttpServletRequest request) {
+        return problem(HttpStatus.NOT_FOUND, "PRODUCT_NOT_FOUND", exception.getMessage(), Map.of(), request);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<ApiProblem> handleIllegalArgument(IllegalArgumentException exception, HttpServletRequest request) {
+        return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST", exception.getMessage(), Map.of(), request);
     }
 
     @ExceptionHandler(Exception.class)
