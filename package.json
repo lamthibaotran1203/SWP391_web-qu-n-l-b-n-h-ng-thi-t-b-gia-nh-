@@ -12,6 +12,10 @@
     "frontend:check": "npm --prefix frontend run check",
     "backend:dev": "node scripts/run-backend.mjs",
     "backend:test": "node scripts/run-maven.mjs test",
-    "build": "node scripts/build-all.mjs"
+    "db:info": "node scripts/run-schema.mjs info",
+    "db:migrate": "node scripts/run-schema.mjs migrate",
+    "build": "node scripts/build-all.mjs",
+    "db:seed:catalog": "node scripts/run-schema.mjs seed-catalog-demo",
+    "backend:verify:postgres": "node scripts/verify-postgres.mjs"
   }
 }

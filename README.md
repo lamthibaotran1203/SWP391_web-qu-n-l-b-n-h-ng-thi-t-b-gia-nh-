@@ -306,3 +306,40 @@ repositories, or JPA entities directly in JSON responses.
 
 External service readiness and the boundary between configuration and owned UCs are recorded
 in [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
+
+## Shared schema migration
+
+Supabase was upgraded through Flyway V4 on 2026-10-05. It contains 24 business tables plus
+Flyway history. Existing V1–V3 and product data were preserved; incomplete catalogue items
+are INACTIVE. See [deployment evidence and RDS addendum](docs/database/HomeMart_Schema_Deployment_2026-10-05.md).
+
+On macOS/Linux or Windows PowerShell, from repository root with JDK 21 and the ignored
+local DB environment configured:
+
+```text
+npm run build
+npm run db:info
+npm run db:migrate
+npm run db:info
+```
+
+Expected: Flyway current version 4, pending migrations 0. The schema command does not start
+the web server or bootstrap accounts. Never manually apply the historical diagram SQL to
+shared Supabase. Run integration tests against isolated PostgreSQL, not the shared database.
+
+## Shared catalogue foundation
+
+Read [the catalogue contract](docs/contracts/Catalog_Shared_Contract.md) before implementing
+product, cart, order or stock code. Supabase is now at V5. Live prices belong to `hm_sku` and
+live quantities to `hm_inventory`; old product fields are immutable `legacy_*` archives.
+The public read API is `/api/v1/catalog/skus`; management UC-13 remains to be implemented.
+
+```text
+npm run frontend:check
+npm run backend:verify:postgres
+npm run db:seed:catalog
+```
+
+The verification command creates/removes an isolated PostgreSQL Docker database and builds
+with Java 21; it never uses Supabase credentials. Demo seed is explicit/idempotent and targets
+the configured database. The shared frontend catalogue client is in `frontend/src/features/catalog/api.js`.

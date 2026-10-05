@@ -1,7 +1,8 @@
 # Project status
 
-Documentation review: 2026-09-26. Runtime evidence below was last recorded on 2026-09-14;
-it has not been reverified against teammates' later work.
+Schema deployment and documentation review: 2026-10-05. Application runtime evidence below was last recorded on
+2026-09-14; it has not been reverified against teammates' later work. The isolated PostgreSQL
+diagram verification on 2026-10-05 is documented separately below.
 
 ## Requirements and document status
 
@@ -23,8 +24,48 @@ awaits a locally configured bootstrap Manager. CI-host proof is still pending.
 
 ## User-owned use cases
 
-Not recorded yet. This blocks business feature implementation, but did not block the shared
-TECH-01–05 setup requested here.
+User-confirmed AnNP scope on 2026-10-05: **UC-04, UC-05, UC-13, UC-15, UC-32, UC-33,
+UC-34**. The canonical Backlog's seven top-level Lead cells now record AnNP. Iteration sheets
+still need reconciliation by the team. No business UC implementation is claimed.
+
+## Current catalog foundation task — 2026-10-05
+
+- Backlog J14 records the user-approved shared product/SKU integration contract; live RDS edits
+  deferred by the user. `docs/contracts/Catalog_Shared_Contract.md` is the concrete handoff.
+- Applied V5 through Flyway on Supabase; original three products' values preserved as immutable
+  legacy archives. Live price/stock sources are SKU/inventory, with no two-way synchronization.
+- Shared public read API, reference DTOs and frontend client exist; this is a prerequisite,
+  not completion of UC-09/10 or UC-13 management. Visibility includes active product/SKU and
+  undeleted references; missing stock is 0, zero stock visible/unpurchasable, money is string.
+- Explicit idempotent demo seed adds two labelled products/SKUs (stock 5/0) without accounts.
+- Verification: frontend lint/build + 2 tests; isolated PostgreSQL backend clean verify + 11
+  tests; local V1–V3 -> V4 -> V5 archive-preserving upgrade and zero-migration rerun.
+- Live Spring/JDBC catalogue API smoke uses Supabase without bootstrap accounts. Temporary
+  Docker preview is localhost:8085; it is not an external deployment or team-host proof.
+- Next: implement AnNP UC-13 management vertical slice with version/permission/duplicate tests;
+  teammates consume the shared contract. RDS checklist kept separately as requested.
+
+## Current schema deployment task
+
+- On 2026-10-05, discovered Supabase already had Flyway V1–V3 and three products, rather
+  than an empty database. Restored exact applied V2/V3 from GitLab history; did not edit them.
+- Recorded schema/lifecycle decisions in canonical Backlog column I before propagation.
+- Applied **V4** to Supabase PostgreSQL 17.6 through Flyway: **24 business tables plus
+  Flyway history**, current version 4, zero pending migrations. No account or demo fixture added.
+- Remote rerun executed zero migrations; original-column digest matched. Three SKU/inventory
+  rows preserve total stock 65 and prices; three opening entries, no duplicate identity tables.
+- Kept `app.user_account` and existing `app.product`; added business contracts, FK/indexes,
+  default-address/publication/return-line protections, immutable history and financial evidence.
+- Existing products preserve original values except intentional ACTIVE -> INACTIVE for
+  missing brand/image; SKU/inventory/opening ledger projections preserve existing price/stock.
+- Historical diagram SQL remains outside Flyway and must not be applied to shared Supabase.
+- Evidence, recorded decisions, RDS synchronization addendum and integration limitations:
+  `docs/database/HomeMart_Schema_Deployment_2026-10-05.md`.
+- Local Java 21/Maven 3.9.16/PostgreSQL 17 verification: **7 integration tests passed**,
+  Hibernate validation and packaging passed. Separate V1–V3 -> V4 legacy-data upgrade passed;
+  repeat migration executed zero. Frontend lint, one test and production build passed.
+- Runtime login/browser proof against Supabase was not repeated; no business feature is
+  complete merely because the schema is deployed. Live RDS/ERD still need synchronization.
 
 ## Completed evidence
 
@@ -63,12 +104,12 @@ TECH-01–05 setup requested here.
 
 ## Last recorded implementation task
 
-Clarify local and Supabase runtime configuration without starting unassigned business UCs.
+Standardize and deploy catalogue sources/API/demo through V5; preserve applied history and legacy data.
 
 ## Next recorded implementation task
 
-Configure a local bootstrap Manager, then run the browser login/logout proof against the
-shared Supabase database. Obtain GitLab authentication and A–E member/UC ownership afterward.
+Implement assigned UC-13 management against the shared catalogue contract. RDS updates are
+deferred by user request; bootstrap Manager is still needed for authenticated browser proof.
 
 ## Blockers and unresolved decisions
 
@@ -77,8 +118,8 @@ shared Supabase database. Obtain GitLab authentication and A–E member/UC owner
   a locally configured bootstrap Manager (DEC-27, DEC-38).
 - SMTP credentials are available locally; a real-message proof and credential rotation remain
   pending (DEC-03).
-- Online payment is deferred. The provider decision remains open (DEC-04), with no active
-  provider configuration in the codebase.
+- UC-15 is assigned to AnNP. Payment schema is ready; provider selection and payment flow
+  implementation remain open (DEC-04), with no active provider configuration.
 - GitLab `origin` is configured, but repository authentication, protected `main`, masked CI/CD
   variables and the first hosted pipeline are pending.
 - Deployment host (DEC-29) and team ownership mapping (DEC-30) remain unresolved.
@@ -97,3 +138,18 @@ npm run build
 Visible result: `http://localhost:5173` shows “Hệ thống đã sẵn sàng”; a configured bootstrap
 Manager can log in, survive refresh, log out through CSRF, and becomes anonymous on the next
 `/api/v1/auth/me` request.
+
+## Schema-only commands (macOS/Linux and Windows PowerShell)
+
+From repository root with JDK 21 and the ignored local DB environment configured:
+
+```text
+npm run build
+npm run db:info
+npm run db:migrate
+npm run db:info
+```
+
+These commands run Flyway without web startup, mail or account bootstrap. Expected after
+V5: current version 5, pending 0, 25 app tables including Flyway history. Do not run integration
+tests against shared Supabase; use the isolated PostgreSQL test database.
