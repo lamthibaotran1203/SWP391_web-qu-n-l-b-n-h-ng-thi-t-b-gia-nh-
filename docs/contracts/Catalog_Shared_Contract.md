@@ -1,8 +1,8 @@
 # Shared catalogue integration contract — 2026-10-05
 
 Approved by the user and recorded in canonical Backlog J14 before implementation.
-Applies to AnNP UC-13 prerequisites and teammates' integration. RDS changes are deferred
-in `docs/database/AnNP_Notes_To_Fix_Later.md`. Search/detail/cart/stock workflows owned by
+Applies to AnNP UC-13 prerequisites and teammates' integration. RDS changes are deferred;
+personal follow-up notes and intermediate review evidence remain local and are not versioned. Search/detail/cart/stock workflows owned by
 other members are not implemented here; UC-13 management UI/write API is not yet complete.
 
 ## Data sources

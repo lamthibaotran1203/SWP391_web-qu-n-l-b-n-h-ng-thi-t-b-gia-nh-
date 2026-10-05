@@ -230,7 +230,7 @@ Online payment chưa làm. SMTP chỉ cần cấu hình khi bắt đầu phần 
 
 Supabase was upgraded through Flyway V4 on 2026-10-05. It contains 24 business tables plus
 Flyway history. Existing V1–V3 and product data were preserved; incomplete catalogue items
-are INACTIVE. See [deployment evidence and RDS addendum](docs/database/HomeMart_Schema_Deployment_2026-10-05.md).
+are INACTIVE. See [shared catalogue contract and verification](docs/contracts/Catalog_Shared_Contract.md).
 
 On macOS/Linux or Windows PowerShell, from repository root with JDK 21 and the ignored
 local DB environment configured:
