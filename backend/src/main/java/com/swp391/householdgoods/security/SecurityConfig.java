@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
+                                "/api/v1/catalog/**",
                                 "/api/v1/auth/csrf",
                                 "/api/v1/auth/me")
                         .permitAll()
