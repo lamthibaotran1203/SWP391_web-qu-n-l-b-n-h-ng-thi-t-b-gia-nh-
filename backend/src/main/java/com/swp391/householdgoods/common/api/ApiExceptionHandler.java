@@ -44,6 +44,19 @@ public class ApiExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler(com.swp391.householdgoods.catalog.application.CatalogException.class)
+    ResponseEntity<ApiProblem> handleCatalog(
+            com.swp391.householdgoods.catalog.application.CatalogException exception,
+            HttpServletRequest request) {
+        return problem(exception.status(), exception.code(), exception.getMessage(), Map.of(), request);
+    }
+
+    @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    ResponseEntity<ApiProblem> handleParameter(HttpServletRequest request) {
+        return problem(HttpStatus.BAD_REQUEST, "PARAMETER_INVALID",
+                "Tham số gửi lên chưa hợp lệ.", Map.of(), request);
+    }
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<ApiProblem> handleUnexpected(Exception exception, HttpServletRequest request) {
         String traceId = TraceIdFilter.getTraceId(request);

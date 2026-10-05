@@ -44,3 +44,7 @@ supabase/.temp/
 .tmp_docx/
 .tmp_docx_inspect.py
 outputs/
+
+# Local database review drafts, personal RDS follow-up notes and browser evidence.
+# Executable schema stays in backend migrations; team contract stays in docs/contracts.
+/docs/database/
