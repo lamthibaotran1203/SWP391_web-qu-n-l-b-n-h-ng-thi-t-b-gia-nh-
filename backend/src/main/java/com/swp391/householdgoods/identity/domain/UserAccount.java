@@ -11,6 +11,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.time.Instant;
 
+/**
+ * Thực thể đại diện cho tài khoản người dùng trong hệ thống
+ * (Customer, Staff, Manager).
+ */
 @Entity
 @Table(name = "user_account", schema = "app")
 public class UserAccount {
@@ -64,6 +68,7 @@ public class UserAccount {
             AccountStatus status,
             Instant emailVerifiedAt,
             Instant createdAt) {
+
         this.email = email;
         this.passwordHash = passwordHash;
         this.fullName = fullName;
@@ -79,6 +84,7 @@ public class UserAccount {
             String passwordHash,
             String fullName,
             Instant now) {
+
         return new UserAccount(
                 email,
                 passwordHash,
@@ -87,6 +93,35 @@ public class UserAccount {
                 AccountStatus.ACTIVE,
                 now,
                 now);
+    }
+
+    /**
+     * Tạo tài khoản Customer mới khi đăng ký.
+     * Tài khoản chưa được kích hoạt cho đến khi xác minh email.
+     */
+    public static UserAccount registerCustomer(
+            String email,
+            String passwordHash,
+            String fullName,
+            Instant now) {
+
+        return new UserAccount(
+                email,
+                passwordHash,
+                fullName,
+                AccountRole.CUSTOMER,
+                AccountStatus.PENDING_VERIFICATION,
+                null,
+                now);
+    }
+
+    /**
+     * Xác minh email và kích hoạt tài khoản.
+     */
+    public void verifyEmail(Instant now) {
+        this.emailVerifiedAt = now;
+        this.status = AccountStatus.ACTIVE;
+        this.updatedAt = now;
     }
 
     public Long getId() {
@@ -105,6 +140,10 @@ public class UserAccount {
         return fullName;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     public AccountRole getRole() {
         return role;
     }
@@ -120,5 +159,21 @@ public class UserAccount {
         this.fullName = fullName;
         this.updatedAt = now;
         return true;
+    }
+
+    public Instant getEmailVerifiedAt() {
+        return emailVerifiedAt;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 }

@@ -10,8 +10,12 @@
     "db:down": "docker compose down",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:check": "npm --prefix frontend run check",
-    "backend:dev": "node scripts/run-backend.mjs",
-    "backend:test": "node scripts/run-maven.mjs test",
+    "backend:dev": "powershell -ExecutionPolicy Bypass -File ./run-backend.ps1",
+    "backend:test": "powershell -ExecutionPolicy Bypass -File ./run-tests.ps1",
+    "db:info": "node scripts/run-schema.mjs info",
+    "db:migrate": "node scripts/run-schema.mjs migrate",
+    "db:seed:catalog": "node scripts/run-schema.mjs seed-catalog-demo",
+    "backend:verify:postgres": "node scripts/verify-postgres.mjs",
     "build": "node scripts/build-all.mjs"
   }
 }
