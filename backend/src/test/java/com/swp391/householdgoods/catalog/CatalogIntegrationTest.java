@@ -29,6 +29,32 @@ class CatalogIntegrationTest {
     private long sku() { return jdbc.queryForObject("select id from app.hm_sku where sku_code='DEMO-SKU-1'",Long.class); }
     private long product() { return jdbc.queryForObject("select product_id from app.hm_sku where id=?",Long.class,sku()); }
 
+    @Test void detailContainsRealMetadataAndOnlyEligibleSkusWithoutChangingStock() throws Exception {
+        seed();
+        long productId = product();
+        jdbc.update("update app.product set description='Đáy dày, dùng bếp từ', image_url='/cover.svg' where product_id=?", productId);
+        jdbc.update("update app.hm_sku set image_url='/two-litres.svg' where id=?", sku());
+        jdbc.update("insert into app.hm_sku(product_id,sku_code,barcode,sku_name,original_price,selling_price,status,image_url,created_at) values (?, 'DETAIL-SIBLING','DETAIL-SIBLING','4 lít',300000,250000,'ACTIVE','/four-litres.svg',now())", productId);
+        jdbc.update("insert into app.hm_sku(product_id,sku_code,barcode,sku_name,original_price,selling_price,status,image_url,created_at) values (?, 'DETAIL-HIDDEN','DETAIL-HIDDEN','Ẩn',1,1,'INACTIVE','/hidden.svg',now())", productId);
+        mvc.perform(get("/api/v1/catalog/products/" + productId + "/detail"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.data.productId").value(productId))
+            .andExpect(jsonPath("$.data.description").value("Đáy dày, dùng bếp từ"))
+            .andExpect(jsonPath("$.data.brandName").value("HomeMart Demo"))
+            .andExpect(jsonPath("$.data.images.length()").value(3))
+            .andExpect(jsonPath("$.data.skus.length()").value(2))
+            .andExpect(jsonPath("$.data.skus[0].availableQuantity").value(5))
+            .andExpect(jsonPath("$.data.skus[1].sellingPrice").value("250000"))
+            .andExpect(jsonPath("$.data.skus[1].purchasable").value(false))
+            .andExpect(jsonPath("$.data.legacyPrice").doesNotExist());
+        assertThat(jdbc.queryForObject("select reserved_quantity from app.hm_inventory where sku_id=?", Integer.class, sku())).isZero();
+        jdbc.update("update app.product set status='INACTIVE' where product_id=?", productId);
+        mvc.perform(get("/api/v1/catalog/products/" + productId + "/detail")).andExpect(status().isNotFound());
+        jdbc.update("update app.product set status='ACTIVE' where product_id=?", productId);
+        jdbc.update("update app.hm_sku set status='INACTIVE' where product_id=?", productId);
+        mvc.perform(get("/api/v1/catalog/products/" + productId + "/detail")).andExpect(status().isNotFound());
+    }
+
     @Test void publicApiUsesCanonicalSourcesAndStableSaleUnitPagination() throws Exception {
         seed(); seed();
         jdbc.update("update app.hm_sku set selling_price=180000 where id=?",sku());

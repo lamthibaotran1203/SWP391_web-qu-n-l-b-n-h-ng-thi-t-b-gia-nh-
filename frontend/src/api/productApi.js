@@ -1,6 +1,6 @@
 import { apiRequest } from './http'
 
-export function getProducts({ search = '', brand = '', category = '', minPrice = '', maxPrice = '', sort = 'newest', page = 0, size = 12 } = {}) {
+export function getProducts({ search = '', brand = '', category = '', minPrice = '', maxPrice = '', sort = 'newest', page = 0, size = 12 } = {}, options = {}) {
   const params = new URLSearchParams({ page, size })
   if (search.trim()) params.set('search', search.trim())
   if (brand.trim()) params.set('brand', brand.trim())
@@ -8,7 +8,7 @@ export function getProducts({ search = '', brand = '', category = '', minPrice =
   if (String(minPrice).trim()) params.set('minPrice', String(minPrice).trim())
   if (String(maxPrice).trim()) params.set('maxPrice', String(maxPrice).trim())
   if (sort) params.set('sort', sort)
-  return apiRequest(`/api/v1/catalog/skus?${params.toString()}`).then((result) => ({
+  return apiRequest(`/api/v1/catalog/skus?${params.toString()}`, options).then((result) => ({
     content: result.items.map(toProduct),
     number: result.page,
     size: result.size,
@@ -17,14 +17,20 @@ export function getProducts({ search = '', brand = '', category = '', minPrice =
   }))
 }
 
-export function getProductById(id) {
-  return apiRequest(`/api/v1/catalog/skus/${encodeURIComponent(id)}`).then(toProduct)
+export function getProductById(id, options = {}) {
+  return apiRequest(`/api/v1/catalog/skus/${encodeURIComponent(id)}`, options).then(toProduct)
+}
+
+export function getProductDetail(productId, options = {}) {
+  return apiRequest(`/api/v1/catalog/products/${encodeURIComponent(productId)}/detail`, options)
 }
 
 function toProduct(sku) {
   return {
     id: sku.skuId,
     productId: sku.productId,
+    productVersion: sku.productVersion,
+    skuVersion: sku.skuVersion,
     sku: sku.skuCode,
     // The card/detail title is the product name; skuName is only the sale-unit label.
     name: sku.productName || sku.skuName,
@@ -34,7 +40,7 @@ function toProduct(sku) {
     stockQuantity: sku.availableQuantity,
     description: '',
     imageUrl: sku.imageUrl,
-    status: sku.purchasable ? 'ACTIVE' : 'INACTIVE',
+    status: 'ACTIVE',
   }
 }
 
@@ -54,6 +60,7 @@ export function updateProduct(id, data) {
   })
 }
 
-export function deleteProduct(id) {
-  return apiRequest(`/api/v1/products/${id}`, { method: 'DELETE' })
+export function deleteProduct(id, { productVersion, skuVersion }) {
+  const params = new URLSearchParams({ productVersion, skuVersion })
+  return apiRequest(`/api/v1/products/${encodeURIComponent(id)}?${params}`, { method: 'DELETE' })
 }
