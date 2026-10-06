@@ -2,6 +2,7 @@ package com.swp391.householdgoods.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -87,6 +88,23 @@ class AuthIntegrationTest {
                 .andReturn();
         JsonNode refreshedCsrf = data(refreshedCsrfResult);
         Cookie refreshedCsrfCookie = requiredCookie(refreshedCsrfResult, "XSRF-TOKEN");
+
+        mockMvc.perform(patch("/api/v1/auth/me")
+                        .session(authenticatedSession)
+                        .cookie(refreshedCsrfCookie)
+                        .header(
+                                refreshedCsrf.get("headerName").asText(),
+                                refreshedCsrf.get("token").asText())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(
+                                java.util.Map.of("fullName", "Tên quản lý đã cập nhật"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.authenticated").value(true))
+                .andExpect(jsonPath("$.data.fullName").value("Tên quản lý đã cập nhật"));
+
+        mockMvc.perform(get("/api/v1/auth/me").session(authenticatedSession))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.fullName").value("Tên quản lý đã cập nhật"));
 
         mockMvc.perform(post("/api/v1/auth/logout")
                         .session(authenticatedSession)

@@ -1,7 +1,10 @@
 package com.swp391.householdgoods.common.api;
 
+import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
+import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -9,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -34,12 +39,50 @@ public class ApiExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler({
+            ConstraintViolationException.class,
+            MethodArgumentTypeMismatchException.class,
+            HandlerMethodValidationException.class
+    })
+    ResponseEntity<ApiProblem> handleRequestParameterValidation(HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "VALIDATION_FAILED",
+                "Tham số tìm kiếm chưa hợp lệ.",
+                Map.of(),
+                request);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     ResponseEntity<ApiProblem> handleNotFound(HttpServletRequest request) {
         return problem(
                 HttpStatus.NOT_FOUND,
                 "RESOURCE_NOT_FOUND",
                 "Không tìm thấy tài nguyên được yêu cầu.",
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(SalesOrderNotFoundException.class)
+    ResponseEntity<ApiProblem> handleSalesOrderNotFound(
+            SalesOrderNotFoundException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "ORDER_NOT_FOUND",
+                "Không tìm thấy đơn hàng.",
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(InvalidSalesOrderSearchException.class)
+    ResponseEntity<ApiProblem> handleInvalidSalesOrderSearch(
+            InvalidSalesOrderSearchException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "INVALID_ORDER_SEARCH",
+                exception.getMessage(),
                 Map.of(),
                 request);
     }

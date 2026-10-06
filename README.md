@@ -53,9 +53,17 @@ Nếu database chưa có tài khoản Manager, thêm vào `.env` trước khi ch
 BOOTSTRAP_MANAGER_EMAIL=manager@example.com
 BOOTSTRAP_MANAGER_PASSWORD=<password>
 BOOTSTRAP_MANAGER_FULL_NAME=Quản lý cửa hàng
+BOOTSTRAP_MANAGER_UPDATE_EXISTING=false
 ```
 
-Tài khoản chỉ được tạo khi chưa tồn tại. Chạy lại backend không đổi password cũ.
+Tài khoản chỉ được tạo khi chưa tồn tại. Chạy lại backend không đổi password cũ. Nếu cần đồng
+bộ tên hiển thị của Manager đã tồn tại với `BOOTSTRAP_MANAGER_FULL_NAME`, chỉ bật
+`BOOTSTRAP_MANAGER_UPDATE_EXISTING=true` khi chủ động muốn cập nhật. Mặc định là `false`; tùy
+chọn này chỉ cập nhật tên, không thay đổi mật khẩu hoặc thông tin đăng nhập khác.
+
+Người dùng đã đăng nhập cũng có thể đổi tên hiển thị trực tiếp trên trang chủ bằng nút
+**Đổi tên hiển thị**. Thay đổi này được lưu ngay vào tài khoản; không cần sửa `.env` hay khởi
+động lại backend.
 
 ## Database local
 
@@ -80,6 +88,19 @@ npm run build             # đóng gói toàn bộ project
 npm run db:up             # bật PostgreSQL local
 npm run db:down           # tắt PostgreSQL local
 ```
+
+## Tra cứu đơn hàng (UC-18)
+
+Tài khoản `STAFF` và `MANAGER` có thể mở mục **Tra cứu đơn hàng** trên trang chủ hoặc vào
+`/staff/orders`. Màn hình hỗ trợ tìm theo mã đơn/thông tin khách hàng, lọc theo kênh, trạng
+thái đơn, trạng thái thanh toán và ngày đặt; chọn mã đơn để xem thông tin khách hàng, sản phẩm
+và tổng tiền. API chỉ cho phép nhân viên/quản lý truy cập:
+
+- `GET /api/v1/staff/orders` — tìm kiếm và phân trang.
+- `GET /api/v1/staff/orders/{id}` — xem chi tiết đơn.
+
+Schema đơn hàng được tạo bằng Flyway migration. UC-18 chỉ tra cứu; đơn hàng sẽ xuất hiện khi
+luồng tạo đơn được triển khai và ghi dữ liệu vào database.
 
 Trước khi push code nên chạy:
 

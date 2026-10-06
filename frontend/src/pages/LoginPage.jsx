@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 
 export function LoginPage() {
   const { login } = useAuth()
+  const location = useLocation()
   const navigate = useNavigate()
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
@@ -19,7 +20,7 @@ export function LoginPage() {
     setSubmitting(true)
     try {
       await login(form.email, form.password)
-      navigate('/')
+      navigate(location.state?.from || '/')
     } catch (requestError) {
       setError(requestError.message || 'Không thể đăng nhập.')
     } finally {

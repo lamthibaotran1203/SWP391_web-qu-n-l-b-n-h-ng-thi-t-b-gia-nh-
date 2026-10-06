@@ -112,4 +112,13 @@ public class UserAccount {
     public AccountStatus getStatus() {
         return status;
     }
+
+    public boolean updateFullName(String fullName, Instant now) {
+        if (this.fullName.equals(fullName)) {
+            return false;
+        }
+        this.fullName = fullName;
+        this.updatedAt = now;
+        return true;
+    }
 }

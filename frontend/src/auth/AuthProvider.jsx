@@ -4,6 +4,7 @@ import {
   login as requestLogin,
   logout as requestLogout,
   refreshCsrfToken,
+  updateCurrentUser as requestUpdateCurrentUser,
 } from '../api/http'
 import { AuthContext } from './auth-context'
 
@@ -80,9 +81,15 @@ export function AuthProvider({ children }) {
     setUser(await getCurrentUser())
   }, [])
 
+  const updateFullName = useCallback(async (fullName) => {
+    const currentUser = await requestUpdateCurrentUser(fullName)
+    setUser(currentUser)
+    return currentUser
+  }, [])
+
   const value = useMemo(
-    () => ({ user, connection, login, logout, reload }),
-    [connection, login, logout, reload, user],
+    () => ({ user, connection, login, logout, reload, updateFullName }),
+    [connection, login, logout, reload, updateFullName, user],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

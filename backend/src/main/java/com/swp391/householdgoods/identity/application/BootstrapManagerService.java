@@ -34,7 +34,7 @@ public class BootstrapManagerService {
     }
 
     @Transactional
-    public boolean initialize(BootstrapManagerProperties properties) {
+    public BootstrapManagerResult initialize(BootstrapManagerProperties properties) {
         String email = normalizeEmail(properties.email());
         String password = properties.password();
         String fullName = normalizeFullName(properties.fullName());
@@ -42,26 +42,35 @@ public class BootstrapManagerService {
         validate(email, password, fullName);
 
         return repository.findByEmailIgnoreCase(email)
-                .map(existing -> validateExisting(existing, email))
+                .map(existing -> updateExisting(existing, email, fullName, properties.updateExisting()))
                 .orElseGet(() -> createManager(email, password, fullName));
     }
 
-    private boolean createManager(String email, String password, String fullName) {
+    private BootstrapManagerResult createManager(String email, String password, String fullName) {
         Instant now = clock.instant();
         repository.save(UserAccount.bootstrapManager(
                 email,
                 passwordEncoder.encode(password),
                 fullName,
                 now));
-        return true;
+        return BootstrapManagerResult.CREATED;
     }
 
-    private boolean validateExisting(UserAccount existing, String email) {
+    private BootstrapManagerResult updateExisting(
+            UserAccount existing,
+            String email,
+            String fullName,
+            boolean updateExisting) {
         if (existing.getRole() != AccountRole.MANAGER || existing.getStatus() != AccountStatus.ACTIVE) {
             throw new IllegalStateException(
                     "BOOTSTRAP_MANAGER_EMAIL belongs to a non-active Manager account: " + email);
         }
-        return false;
+        if (!updateExisting) {
+            return BootstrapManagerResult.UNCHANGED;
+        }
+        return existing.updateFullName(fullName, clock.instant())
+                ? BootstrapManagerResult.UPDATED
+                : BootstrapManagerResult.UNCHANGED;
     }
 
     private void validate(String email, String password, String fullName) {
