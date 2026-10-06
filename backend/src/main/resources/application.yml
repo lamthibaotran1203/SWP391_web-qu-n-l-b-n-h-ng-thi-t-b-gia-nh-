@@ -65,9 +65,12 @@ management:
       show-details: never
 
 app:
+  base-url: ${APP_BASE_URL:http://localhost:5173}
+
   mail:
     from-email: ${MAIL_FROM_EMAIL:}
     from-name: ${MAIL_FROM_NAME:Gia Dụng Việt}
+
   bootstrap-manager:
     email: ${BOOTSTRAP_MANAGER_EMAIL:}
     password: ${BOOTSTRAP_MANAGER_PASSWORD:}

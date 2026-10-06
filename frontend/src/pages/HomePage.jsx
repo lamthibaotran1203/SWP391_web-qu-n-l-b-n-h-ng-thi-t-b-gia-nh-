@@ -1,9 +1,29 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import { getRoleLabel } from '../auth/role-labels'
 import { ConnectionStatus } from '../components/ConnectionStatus'
 
 export function HomePage() {
-  const { user, connection, logout, reload } = useAuth()
+  const { user, connection, logout, reload, updateFullName } = useAuth()
+  const [editingName, setEditingName] = useState(false)
+  const [fullName, setFullName] = useState('')
+  const [profileError, setProfileError] = useState('')
+  const [savingName, setSavingName] = useState(false)
+
+  async function saveName(event) {
+    event.preventDefault()
+    setProfileError('')
+    setSavingName(true)
+    try {
+      await updateFullName(fullName)
+      setEditingName(false)
+    } catch (error) {
+      setProfileError(error.message || 'Không thể cập nhật tên hiển thị.')
+    } finally {
+      setSavingName(false)
+    }
+  }
 
   return (
     <main>
@@ -23,7 +43,57 @@ export function HomePage() {
                 <div>
                   <span className="label">Phiên đăng nhập</span>
                   <strong>{user.fullName}</strong>
-                  <span>{user.email} · {user.role}</span>
+                  <span>{user.email} · {getRoleLabel(user.role)}</span>
+                  {editingName ? (
+                    <form className="profile-name-form" onSubmit={saveName}>
+                      <label className="visually-hidden" htmlFor="profile-full-name">
+                        Tên hiển thị mới
+                      </label>
+                      <input
+                        autoFocus
+                        className="form-control form-control-sm"
+                        id="profile-full-name"
+                        maxLength={100}
+                        value={fullName}
+                        onChange={(event) => setFullName(event.target.value)}
+                        required
+                      />
+                      {profileError && <span className="profile-name-error" role="alert">{profileError}</span>}
+                      <div className="profile-name-actions">
+                        <button className="btn btn-warning btn-sm" type="submit" disabled={savingName}>
+                          {savingName ? 'Đang lưu…' : 'Lưu tên'}
+                        </button>
+                        <button
+                          className="btn btn-outline-light btn-sm"
+                          type="button"
+                          disabled={savingName}
+                          onClick={() => {
+                            setEditingName(false)
+                            setProfileError('')
+                          }}
+                        >
+                          Hủy
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <button
+                      className="btn btn-outline-light btn-sm align-self-start mt-2"
+                      type="button"
+                      onClick={() => {
+                        setFullName(user.fullName)
+                        setProfileError('')
+                        setEditingName(true)
+                      }}
+                    >
+                      Đổi tên hiển thị
+                    </button>
+                  )}
+                  {['STAFF', 'MANAGER'].includes(user.role) && (
+                    <Link className="btn btn-warning btn-sm mt-2" to="/staff/orders">
+                      Tra cứu đơn hàng
+                    </Link>
+                  )}
                 </div>
                 {user.role === 'MANAGER' && <Link className="btn btn-outline-light" to="/manager/catalog">Quản lý sản phẩm</Link>}
                 <Link className="btn btn-outline-light" to="/account/password">Đổi mật khẩu</Link>

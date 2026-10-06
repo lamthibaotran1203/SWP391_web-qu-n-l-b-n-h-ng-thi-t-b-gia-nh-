@@ -2,26 +2,19 @@
 
 ## Stack
 
-Last recorded runtime state: **R1 walking skeleton locally verified**. The Supabase JDBC/Flyway
-connection was verified on 2026-09-14; the first GitLab-hosted pipeline and full browser
-login proof against Supabase were still pending. No business use case is claimed complete.
+Current integration: UC-05 password change and UC-13 catalog management are integrated with
+`develop` 91c1d69 (registration, profile and order lookup). Local verification on 2026-10-06:
+18 frontend tests plus lint/build, 44 backend tests against isolated PostgreSQL, and Java21 packaging.
+Supabase runs PostgreSQL17 with Flyway migrations V1–V7. Hosted CI and full UC sign-off remain separate.
 
 ## Requirements documents
 
-Read [PROJECT_STATUS.md](PROJECT_STATUS.md) before using local planning files. The team
-submitted a 35-UC Google Sheet Backlog and RDS to the lecturer, then received substantial
-feedback. The live RDS is being edited. The 37-UC
-`household-goods-sales-planning-handoff/` folder is an older, unapproved proposal and is
-useful only as reference material until the team records revised decisions. Current code
-and migrations show implementation status, not the full accepted scope.
-
-For the current Use Case Diagram, Screen Flow, ERD, database-schema, and lecturer-feedback
-review, read
-[docs/HomeMart_RDS_Consolidated_Review.docx](docs/HomeMart_RDS_Consolidated_Review.docx).
-The document uses one UC Diagram specification per actor and records the proposed
-`include`/`extend` relationships in prose and tables. The 35-UC Google Sheet remains the
-canonical register. Apply UC name, actor, scope, and iteration corrections in the Sheet
-before propagating them to the RDS, diagrams, authorization matrix, code, or tests.
+The team's 35-UC Google Sheet Backlog is the canonical register for ownership, names, actors
+and scope. The submitted RDS is comparison evidence; the live RDS is work in progress.
+Record requirement decisions in the Backlog before propagating them to code or documents.
+Current code and migrations show implemented behavior, not the complete accepted scope.
+Personal learning notes, agent context and unapproved planning/review drafts stay local and
+are ignored by Git. Shared API contracts are in `docs/contracts/`.
 
 `master` là bản chạy ổn định. Planning và tài liệu làm việc của nhóm nằm ở `develop`.
 
@@ -68,12 +61,10 @@ frontend/
     components/      small reusable UI pieces
 docs/                architecture, later RDS/SDS/diagrams/evidence
 scripts/             OS-neutral Node launch/build helpers
-household-goods-sales-planning-handoff/
-                      historical 37-UC proposal; see PROJECT_STATUS.md
 ```
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before changing the login flow. It contains
-the exact request path to explain during defense.
+Authentication uses server sessions and CSRF. Read the security package and the UC-05 flow
+below before changing login or password behavior.
 
 ## Fresh clone setup
 
@@ -153,9 +144,17 @@ Nếu database chưa có tài khoản Manager, thêm vào `.env` trước khi ch
 BOOTSTRAP_MANAGER_EMAIL=manager@example.com
 BOOTSTRAP_MANAGER_PASSWORD=<password>
 BOOTSTRAP_MANAGER_FULL_NAME=Quản lý cửa hàng
+BOOTSTRAP_MANAGER_UPDATE_EXISTING=false
 ```
 
-Tài khoản chỉ được tạo khi chưa tồn tại. Chạy lại backend không đổi password cũ.
+Tài khoản chỉ được tạo khi chưa tồn tại. Chạy lại backend không đổi password cũ. Nếu cần đồng
+bộ tên hiển thị của Manager đã tồn tại với `BOOTSTRAP_MANAGER_FULL_NAME`, chỉ bật
+`BOOTSTRAP_MANAGER_UPDATE_EXISTING=true` khi chủ động muốn cập nhật. Mặc định là `false`; tùy
+chọn này chỉ cập nhật tên, không thay đổi mật khẩu hoặc thông tin đăng nhập khác.
+
+Người dùng đã đăng nhập cũng có thể đổi tên hiển thị trực tiếp trên trang chủ bằng nút
+**Đổi tên hiển thị**. Thay đổi này được lưu ngay vào tài khoản; không cần sửa `.env` hay khởi
+động lại backend.
 
 ## Database local
 
@@ -180,6 +179,19 @@ npm run build             # đóng gói toàn bộ project
 npm run db:up             # bật PostgreSQL local
 npm run db:down           # tắt PostgreSQL local
 ```
+
+## Tra cứu đơn hàng (UC-18)
+
+Tài khoản `STAFF` và `MANAGER` có thể mở mục **Tra cứu đơn hàng** trên trang chủ hoặc vào
+`/staff/orders`. Màn hình hỗ trợ tìm theo mã đơn/thông tin khách hàng, lọc theo kênh, trạng
+thái đơn, trạng thái thanh toán và ngày đặt; chọn mã đơn để xem thông tin khách hàng, sản phẩm
+và tổng tiền. API chỉ cho phép nhân viên/quản lý truy cập:
+
+- `GET /api/v1/staff/orders` — tìm kiếm và phân trang.
+- `GET /api/v1/staff/orders/{id}` — xem chi tiết đơn.
+
+Schema đơn hàng được tạo bằng Flyway migration. UC-18 chỉ tra cứu; đơn hàng sẽ xuất hiện khi
+luồng tạo đơn được triển khai và ghi dữ liệu vào database.
 
 Trước khi push code nên chạy:
 

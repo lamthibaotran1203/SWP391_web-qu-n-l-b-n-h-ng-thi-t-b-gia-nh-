@@ -235,9 +235,14 @@ class CatalogManagementIntegrationTest {
         var start = new CountDownLatch(1);
         var pool = Executors.newFixedThreadPool(2);
         try {
+            // Isolate the SKU-code collision: two simultaneous unique violations have no fixed reporting order.
+            var fields = sku("A");
             Callable<Boolean> create = () -> {
+                var duplicateSku = new SkuFields(fields.skuCode(), prefix + "-BAR-" + UUID.randomUUID(),
+                        fields.skuName(), fields.attributes(), fields.imageUrl(), fields.originalPrice(),
+                        fields.sellingPrice(), fields.minStockThreshold(), fields.status());
                 start.await();
-                try { create(); return true; }
+                try { service.create(new CreateProduct(product(ProductStatus.ACTIVE), List.of(duplicateSku)), email); return true; }
                 catch (CatalogException conflict) { assertThat(conflict.code()).isEqualTo("SKU_CODE_DUPLICATE"); return false; }
             };
             var first = pool.submit(create); var second = pool.submit(create); start.countDown();

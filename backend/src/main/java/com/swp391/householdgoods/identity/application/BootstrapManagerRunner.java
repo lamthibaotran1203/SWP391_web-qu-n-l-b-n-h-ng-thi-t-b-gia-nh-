@@ -29,7 +29,11 @@ public class BootstrapManagerRunner implements ApplicationRunner {
             return;
         }
 
-        boolean created = service.initialize(properties);
-        log.info(created ? "Bootstrap Manager account created" : "Bootstrap Manager account already exists");
+        BootstrapManagerResult result = service.initialize(properties);
+        switch (result) {
+            case CREATED -> log.info("Bootstrap Manager account created");
+            case UPDATED -> log.info("Bootstrap Manager display name updated");
+            case UNCHANGED -> log.info("Bootstrap Manager account already exists");
+        }
     }
 }

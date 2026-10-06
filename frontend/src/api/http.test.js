@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiRequest, changeOwnPassword, refreshCsrfToken } from './http'
+import { apiRequest, changeOwnPassword, getSalesOrders, refreshCsrfToken, updateCurrentUser } from './http'
 
 function jsonResponse(body, status = 200) {
   return {
@@ -47,5 +47,55 @@ describe('API client CSRF flow', () => {
     expect(path).toBe('/api/v1/auth/password')
     expect(JSON.parse(options.body)).toEqual({ currentPassword: 'old password', newPassword: 'new password', confirmation: 'new password' })
     expect(options.headers.get('X-XSRF-TOKEN')).toBe('fresh-token')
+  })
+
+  it('sends supported order search filters as query parameters', async () => {
+    fetch.mockResolvedValueOnce(jsonResponse({
+      data: { content: [], page: 0, size: 20, totalElements: 0, totalPages: 0 },
+    }))
+
+    await getSalesOrders({
+      q: 'HG-2026',
+      channel: 'ONLINE',
+      status: '',
+      paymentStatus: 'PAID',
+      from: '',
+      to: '',
+      page: 0,
+      size: 20,
+    })
+
+    const requestUrl = new URL(fetch.mock.calls[0][0], 'http://localhost')
+    expect(requestUrl.pathname).toBe('/api/v1/staff/orders')
+    expect(requestUrl.searchParams.get('q')).toBe('HG-2026')
+    expect(requestUrl.searchParams.get('channel')).toBe('ONLINE')
+    expect(requestUrl.searchParams.get('paymentStatus')).toBe('PAID')
+    expect(requestUrl.searchParams.get('page')).toBe('0')
+    expect(requestUrl.searchParams.get('size')).toBe('20')
+    expect(requestUrl.searchParams.has('status')).toBe(false)
+  })
+
+  it('updates the current user display name with CSRF protection', async () => {
+    fetch
+      .mockResolvedValueOnce(jsonResponse({
+        data: {
+          headerName: 'X-XSRF-TOKEN',
+          parameterName: '_csrf',
+          token: 'profile-token',
+        },
+      }))
+      .mockResolvedValueOnce(jsonResponse({
+        data: { authenticated: true, fullName: 'Bảo Trân', role: 'MANAGER' },
+      }))
+
+    await refreshCsrfToken()
+    const result = await updateCurrentUser('Bảo Trân')
+
+    const [url, options] = fetch.mock.calls[1]
+    expect(url).toBe('/api/v1/auth/me')
+    expect(options.method).toBe('PATCH')
+    expect(options.headers.get('X-XSRF-TOKEN')).toBe('profile-token')
+    expect(JSON.parse(options.body)).toEqual({ fullName: 'Bảo Trân' })
+    expect(result.fullName).toBe('Bảo Trân')
   })
 })

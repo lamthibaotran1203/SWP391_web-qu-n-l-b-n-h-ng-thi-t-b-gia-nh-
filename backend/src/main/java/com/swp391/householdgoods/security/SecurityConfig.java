@@ -31,10 +31,15 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        CookieCsrfTokenRepository csrfRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        csrfRepository.setCookieCustomizer(cookie -> cookie.path("/").sameSite("Lax"));
+        CookieCsrfTokenRepository csrfRepository =
+                CookieCsrfTokenRepository.withHttpOnlyFalse();
 
-        CsrfTokenRequestAttributeHandler csrfRequestHandler = new CsrfTokenRequestAttributeHandler();
+        csrfRepository.setCookieCustomizer(
+                cookie -> cookie.path("/").sameSite("Lax"));
+
+        CsrfTokenRequestAttributeHandler csrfRequestHandler =
+                new CsrfTokenRequestAttributeHandler();
+
         csrfRequestHandler.setCsrfRequestAttributeName("_csrf");
 
         http.addFilterAfter(credentialSessionFilter,
@@ -45,7 +50,9 @@ public class SecurityConfig {
                         .csrfTokenRequestHandler(csrfRequestHandler))
                 .cors(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+
                 .authorizeHttpRequests(authorize -> authorize
+
                         .requestMatchers(
                                 "/",
                                 "/index.html",
@@ -54,19 +61,28 @@ public class SecurityConfig {
                                 "/error",
                                 "/actuator/health")
                         .permitAll()
+
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/v1/catalog/**",
+                                "/api/v1/products/**",
                                 "/api/v1/auth/csrf",
-                                "/api/v1/auth/me")
+                                "/api/v1/auth/me",
+                                "/api/v1/auth/verify-email")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/products/**").hasRole("MANAGER")
-                        .requestMatchers("/api/v1/auth/login").permitAll()
-                        .requestMatchers("/api/v1/manager/**").hasRole("MANAGER")
-                        .requestMatchers("/api/v1/staff/**").hasAnyRole("STAFF", "MANAGER")
-                        .requestMatchers("/api/**").authenticated()
-                        .anyRequest().permitAll())
+                        .requestMatchers(
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/register")
+                        .permitAll()
+                        .requestMatchers("/api/v1/manager/**")
+                        .hasRole("MANAGER")
+                        .requestMatchers("/api/v1/staff/**")
+                        .hasAnyRole("STAFF", "MANAGER")
+                        .requestMatchers("/api/**")
+                        .authenticated()
+                        .anyRequest()
+                        .permitAll())
                 .formLogin(form -> form
                         .loginProcessingUrl("/api/v1/auth/login")
                         .usernameParameter("email")
@@ -74,18 +90,26 @@ public class SecurityConfig {
                         .successHandler(handlers.loginSuccess())
                         .failureHandler(handlers.loginFailure())
                         .permitAll())
+
                 .logout(logout -> logout
                         .logoutUrl("/api/v1/auth/logout")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID", "XSRF-TOKEN")
-                        .logoutSuccessHandler(handlers.logoutSuccess()))
+                        .logoutSuccessHandler(
+                                handlers.logoutSuccess()))
+
                 .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(handlers.authenticationEntryPoint())
-                        .accessDeniedHandler(handlers.accessDenied()))
+                        .authenticationEntryPoint(
+                                handlers.authenticationEntryPoint())
+                        .accessDeniedHandler(
+                                handlers.accessDenied()))
+
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .sessionFixation(Customizer.withDefaults()));
+                        .sessionCreationPolicy(
+                                SessionCreationPolicy.IF_REQUIRED)
+                        .sessionFixation(
+                                Customizer.withDefaults()));
 
         return http.build();
     }

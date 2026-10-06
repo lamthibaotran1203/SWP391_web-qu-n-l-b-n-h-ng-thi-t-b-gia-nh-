@@ -13,4 +13,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     @org.springframework.data.jpa.repository.Query("select a from UserAccount a where lower(a.email)=lower(:email)")
     Optional<UserAccount> findForPasswordChange(
             @org.springframework.data.repository.query.Param("email") String email);
+
+    boolean existsByEmailIgnoreCase(String email);
 }
