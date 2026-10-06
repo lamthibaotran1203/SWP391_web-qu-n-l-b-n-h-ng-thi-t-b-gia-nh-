@@ -1,4 +1,4 @@
-package com.swp391.householdgoods.orders.application;
+package com.swp391.householdgoods.orders.api;
 
 import java.util.List;
 

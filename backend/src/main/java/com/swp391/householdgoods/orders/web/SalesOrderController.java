@@ -1,9 +1,12 @@
-package com.swp391.householdgoods.orders.application;
+package com.swp391.householdgoods.orders.web;
 
 import com.swp391.householdgoods.common.api.ApiEnvelope;
+import com.swp391.householdgoods.orders.api.SalesOrderDetails;
+import com.swp391.householdgoods.orders.api.SalesOrderPage;
+import com.swp391.householdgoods.orders.api.SalesOrderSummary;
+import com.swp391.householdgoods.orders.application.SalesOrderQueryService;
+import com.swp391.householdgoods.orders.application.SalesOrderSearch;
 import com.swp391.householdgoods.orders.domain.OrderChannel;
-import com.swp391.householdgoods.orders.domain.OrderStatus;
-import com.swp391.householdgoods.orders.domain.PaymentStatus;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -31,8 +34,8 @@ public class SalesOrderController {
     ApiEnvelope<SalesOrderPage<SalesOrderSummary>> search(
             @RequestParam(required = false) @Size(max = 120) String q,
             @RequestParam(required = false) OrderChannel channel,
-            @RequestParam(required = false) OrderStatus status,
-            @RequestParam(required = false) PaymentStatus paymentStatus,
+            @RequestParam(required = false) @Size(max = 50) String status,
+            @RequestParam(required = false) @Size(max = 50) String paymentStatus,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                     LocalDate from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

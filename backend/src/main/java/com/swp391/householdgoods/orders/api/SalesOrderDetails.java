@@ -1,9 +1,5 @@
-package com.swp391.householdgoods.orders.application;
+package com.swp391.householdgoods.orders.api;
 
-import com.swp391.householdgoods.orders.domain.OrderChannel;
-import com.swp391.householdgoods.orders.domain.OrderStatus;
-import com.swp391.householdgoods.orders.domain.PaymentMethod;
-import com.swp391.householdgoods.orders.domain.PaymentStatus;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -11,10 +7,10 @@ import java.util.List;
 public record SalesOrderDetails(
         Long id,
         String orderNumber,
-        OrderChannel channel,
-        OrderStatus status,
-        PaymentStatus paymentStatus,
-        PaymentMethod paymentMethod,
+        String channel,
+        String status,
+        String paymentStatus,
+        String paymentMethod,
         String customerName,
         String customerEmail,
         String customerPhone,

@@ -3,6 +3,12 @@ package com.swp391.householdgoods.config;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.swp391.householdgoods.orders.api.SalesOrderDetails;
+import com.swp391.householdgoods.orders.api.SalesOrderPage;
+import com.swp391.householdgoods.orders.api.SalesOrderSummary;
+import com.swp391.householdgoods.orders.application.SalesOrderQueryService;
+import com.swp391.householdgoods.orders.application.SalesOrderSearch;
+import com.swp391.householdgoods.orders.domain.OrderChannel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,14 +23,71 @@ import org.springframework.transaction.annotation.Transactional;
 class SchemaFoundationIntegrationTest {
 
     @Autowired private JdbcTemplate jdbc;
+    @Autowired private SalesOrderQueryService salesOrderQueryService;
 
     @Test
     void existingIdentityIsTheOnlyAccountSourceAndAppliedMigrationsValidate() {
         assertThat(jdbc.queryForObject("select count(*) from app.flyway_schema_history "
-                + "where version in ('1','2','3','4','5') and success", Integer.class)).isEqualTo(5);
+                + "where version in ('1','2','3','4','5','6','7') and success", Integer.class)).isEqualTo(7);
         assertThat(jdbc.queryForObject("select count(*) from information_schema.tables "
                 + "where table_schema='app' and table_name in ('hm_user','hm_role','hm_userrole','hm_product')",
                 Integer.class)).isZero();
+    }
+
+    @Test
+    void salesOrderSearchReadsSharedOrderPaymentAndSkuTables() {
+        long user = account();
+        long orderId = jdbc.queryForObject(
+                "insert into app.hm_order(user_id,order_code,order_type,status,payment_status,total_amount,"
+                        + "discount_amount,shipping_fee,final_amount,created_at) "
+                        + "values (?,?,'ONLINE','COMPLETED','PAID',100000,0,0,100000,current_timestamp) "
+                        + "returning id",
+                Long.class,
+                user,
+                "ORDER-" + java.util.UUID.randomUUID());
+        long sku = sku();
+        jdbc.update("insert into app.hm_order_item(order_id,sku_id,quantity,unit_price,total_price,"
+                + "sku_code_snapshot,sku_name_snapshot,created_at) "
+                + "values (?,?,2,50000,100000,'SKU-TEST','Ấm kiểm thử',current_timestamp)",
+                orderId,
+                sku);
+        jdbc.update("insert into app.hm_payment(order_id,transaction_code,idempotency_key,amount,payment_method,"
+                + "provider,status,payment_time,created_at) "
+                + "values (?,?,?,100000,'CASH','STORE','COMPLETED',current_timestamp,current_timestamp)",
+                orderId,
+                "PAY-" + java.util.UUID.randomUUID(),
+                "IDEMP-" + java.util.UUID.randomUUID());
+        jdbc.update("insert into app.hm_shipment(order_id,recipient_name,recipient_phone,shipping_address,"
+                + "shipping_status,created_at) values (?,'Người nhận đơn','0912345678','Địa chỉ giao hàng',"
+                + "'PENDING',current_timestamp)",
+                orderId);
+
+        String orderCode = jdbc.queryForObject(
+                "select order_code from app.hm_order where id=?",
+                String.class,
+                orderId);
+        SalesOrderSearch search = new SalesOrderSearch(
+                "0912345678", OrderChannel.ONLINE, "COMPLETED", "PAID", null, null);
+        SalesOrderPage<SalesOrderSummary> result = salesOrderQueryService.search(search, 0, 10);
+
+        assertThat(result.totalElements()).isEqualTo(1);
+        assertThat(result.content()).singleElement().satisfies(order -> {
+            assertThat(order.id()).isEqualTo(orderId);
+            assertThat(order.orderNumber()).isEqualTo(orderCode);
+            assertThat(order.customerName()).isEqualTo("Người kiểm thử");
+            assertThat(order.channel()).isEqualTo("ONLINE");
+            assertThat(order.paymentMethod()).isEqualTo("CASH");
+            assertThat(order.totalAmount()).isEqualByComparingTo("100000");
+        });
+
+        SalesOrderDetails details = salesOrderQueryService.getDetails(orderId);
+        assertThat(details.shippingAddress()).isEqualTo("Địa chỉ giao hàng");
+        assertThat(details.customerPhone()).isEqualTo("0912345678");
+        assertThat(details.items()).singleElement().satisfies(item -> {
+            assertThat(item.productName()).isEqualTo("Ấm kiểm thử");
+            assertThat(item.productSku()).isEqualTo("SKU-TEST");
+            assertThat(item.lineTotal()).isEqualByComparingTo("100000");
+        });
     }
 
     @Test

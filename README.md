@@ -249,7 +249,7 @@ Online payment chưa làm. SMTP chỉ cần cấu hình khi bắt đầu phần 
 
 ## Shared schema migration
 
-Supabase was upgraded through Flyway V4 on 2026-10-05. It contains 24 business tables plus
+Supabase was upgraded through Flyway V5 on 2026-10-05. It contains 24 business tables plus
 Flyway history. Existing V1–V3 and product data were preserved; incomplete catalogue items
 are INACTIVE. See [shared catalogue contract and verification](docs/contracts/Catalog_Shared_Contract.md).
 

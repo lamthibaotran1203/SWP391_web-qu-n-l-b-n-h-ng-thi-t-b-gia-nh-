@@ -1,6 +1,6 @@
 # Project status
 
-Updated 2026-10-05. Read this before using planning documents.
+Updated 2026-10-06. Read this before using planning documents.
 
 ## Authority and ownership
 
@@ -19,6 +19,9 @@ Updated 2026-10-05. Read this before using planning documents.
   unchanged values in immutable legacy archives. Two explicit demo SKUs have stock 5/0.
 - Shared read-only catalogue API and React API client exist; no UC-13 management screen
   or write flow yet. [Team integration contract](docs/contracts/Catalog_Shared_Contract.md).
+- Orders search/details now read from `hm_order`, `hm_order_item`, `hm_payment`,
+  `user_account`, and stored SKU snapshots; this is an explicitly requested integration
+  exception, not a claim that UC-18 is complete.
 - After integrating develop: 11 isolated PostgreSQL backend tests, 2 frontend tests,
   lint/build/package passed. Legacy upgrade and idempotent migrate/seed passed.
 - Live Spring/JDBC catalogue API smoke against Supabase passed. No bootstrap account added.
@@ -26,12 +29,13 @@ Updated 2026-10-05. Read this before using planning documents.
 
 ## Current and next task
 
-- Current: publish shared schema/catalogue prerequisites through MR An -> develop;
-  keep intermediate review files local. Existing unrelated ok.md deletion stays outside MR.
+- Current: Orders read-only query integration with the existing shared tables. No migration
+  or shared database modification was added; V7 remains the existing historical migration.
+  PostgreSQL integration is not verified because Docker is unavailable in this environment.
 - Next: AnNP UC-13 management vertical slice with permissions, version/duplicate checks,
   Vietnamese UI and browser smoke; teammates integrate through the shared catalogue contract.
-- Open: payment provider selection, Admin/MANAGER wording, BR collisions, iteration ownership,
-  Manager bootstrap for authenticated browser proof and RDS synchronization.
+- Open: payment provider selection, Admin/MANAGER wording, BR collisions, iteration ownership, Manager bootstrap for
+  authenticated browser proof and RDS synchronization.
 
 ## Exact verification commands
 
@@ -40,6 +44,12 @@ From repository root, with Node 24/npm 11 and Docker running:
 ```text
 npm run frontend:check
 npm run backend:verify:postgres
+```
+
+The Orders service unit test also runs without Docker:
+
+```text
+.\backend\mvnw.cmd -f backend\pom.xml -B -Dtest=SalesOrderQueryServiceTest test
 ```
 
 For the configured database with JDK 21 (never run integration tests on shared Supabase):
