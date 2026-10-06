@@ -12,6 +12,7 @@ import { RegisterPage } from '../pages/RegisterPage'
 import { VerifyEmailPage } from '../pages/VerifyEmailPage'
 import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { ProductListPage } from '../pages/ProductListPage'
+import { StaffOrdersPage } from '../pages/StaffOrdersPage'
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/staff/orders" element={<StaffOrdersPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

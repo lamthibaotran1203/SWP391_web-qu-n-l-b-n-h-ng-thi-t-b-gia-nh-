@@ -83,6 +83,14 @@ export function getCurrentUser() {
   return apiRequest('/api/v1/auth/me')
 }
 
+export function updateCurrentUser(fullName) {
+  return apiRequest('/api/v1/auth/me', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fullName }),
+  })
+}
+
 export function login(email, password) {
   return apiRequest('/api/v1/auth/login', {
     method: 'POST',
@@ -97,6 +105,20 @@ export function logout() {
   return apiRequest('/api/v1/auth/logout', {
     method: 'POST',
   })
+}
+
+export function getSalesOrders(filters) {
+  const params = new URLSearchParams()
+  for (const [key, value] of Object.entries(filters)) {
+    if (value !== '' && value !== null && value !== undefined) {
+      params.set(key, value)
+    }
+  }
+  return apiRequest(`/api/v1/staff/orders?${params.toString()}`)
+}
+
+export function getSalesOrderDetails(id) {
+  return apiRequest(`/api/v1/staff/orders/${encodeURIComponent(id)}`)
 }
 
 export function register(email, password, fullName) {
