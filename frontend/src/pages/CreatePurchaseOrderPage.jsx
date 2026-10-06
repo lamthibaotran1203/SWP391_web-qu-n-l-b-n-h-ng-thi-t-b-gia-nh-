@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AppHeader } from '../components/AppShell'
 import {
   getActiveSuppliers,
   getAvailableSkus,
@@ -182,18 +183,18 @@ export function CreatePurchaseOrderPage() {
 
   if (loadingInitial) {
     return (
-      <div className="container py-5 text-center">
+      <main className="workspace-page"><AppHeader /><div className="container py-5 text-center">
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Đang tải...</span>
         </div>
         <p className="mt-2 text-muted">Đang tải thông tin nhà cung cấp và danh mục SKU...</p>
-      </div>
+      </div></main>
     )
   }
 
   if (initialError) {
     return (
-      <div className="container py-5">
+      <main className="workspace-page"><AppHeader /><div className="container py-5">
         <div className="alert alert-danger" role="alert">
           <h4 className="alert-heading">Không thể khởi tạo đơn hàng</h4>
           <p>{initialError}</p>
@@ -202,12 +203,14 @@ export function CreatePurchaseOrderPage() {
             Quay lại quản lý nhà cung cấp
           </Link>
         </div>
-      </div>
+      </div></main>
     )
   }
 
   return (
-    <div className="container purchasing-page">
+    <main className="workspace-page">
+      <AppHeader />
+      <div className="container purchasing-page">
       {/* Header */}
       <div className="purchasing-header">
         <div className="purchasing-title">
@@ -492,6 +495,7 @@ export function CreatePurchaseOrderPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </main>
   )
 }

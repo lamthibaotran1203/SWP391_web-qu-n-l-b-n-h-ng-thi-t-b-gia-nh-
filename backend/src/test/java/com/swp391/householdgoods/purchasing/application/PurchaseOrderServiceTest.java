@@ -205,4 +205,38 @@ class PurchaseOrderServiceTest {
                 .isInstanceOf(PurchaseOrderValidationException.class)
                 .hasMessageContaining("không tồn tại");
     }
+
+    @Test
+    void createPurchaseOrderRejectsInvalidExpectedDateInsteadOfDroppingIt() {
+        when(supplierRepository.findByIdAndIsDeletedFalse(1L)).thenReturn(Optional.of(activeSupplier));
+
+        CreatePurchaseOrderRequest request = new CreatePurchaseOrderRequest(
+                1L,
+                "not-a-date",
+                null,
+                false,
+                List.of(new PurchaseOrderItemRequest(101L, 1, new BigDecimal("100000")))
+        );
+
+        assertThatThrownBy(() -> purchaseOrderService.createPurchaseOrder(request, "admin@homemart.vn"))
+                .isInstanceOf(PurchaseOrderValidationException.class)
+                .hasMessageContaining("Ngày dự kiến");
+    }
+
+    @Test
+    void createPurchaseOrderRejectsFractionalVndInsteadOfRoundingIt() {
+        when(supplierRepository.findByIdAndIsDeletedFalse(1L)).thenReturn(Optional.of(activeSupplier));
+
+        CreatePurchaseOrderRequest request = new CreatePurchaseOrderRequest(
+                1L,
+                null,
+                null,
+                false,
+                List.of(new PurchaseOrderItemRequest(101L, 1, new BigDecimal("100000.5")))
+        );
+
+        assertThatThrownBy(() -> purchaseOrderService.createPurchaseOrder(request, "admin@homemart.vn"))
+                .isInstanceOf(PurchaseOrderValidationException.class)
+                .hasMessageContaining("số nguyên VND");
+    }
 }

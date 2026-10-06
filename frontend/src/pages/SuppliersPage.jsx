@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AppHeader } from '../components/AppShell'
 import {
   getSuppliers,
   createSupplier,
@@ -199,7 +200,9 @@ export function SuppliersPage() {
   }
 
   return (
-    <div className="container purchasing-page">
+    <main className="workspace-page">
+      <AppHeader />
+      <div className="container purchasing-page">
       {/* Header */}
       <div className="purchasing-header">
         <div className="purchasing-title">
@@ -597,6 +600,7 @@ export function SuppliersPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </main>
   )
 }

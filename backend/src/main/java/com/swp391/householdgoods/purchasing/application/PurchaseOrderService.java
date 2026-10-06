@@ -13,7 +13,7 @@ import com.swp391.householdgoods.purchasing.infrastructure.PurchaseOrderItemRepo
 import com.swp391.householdgoods.purchasing.infrastructure.PurchaseOrderRepository;
 import com.swp391.householdgoods.purchasing.infrastructure.SupplierRepository;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -66,26 +66,13 @@ public class PurchaseOrderService {
 
         // Validate items and ensure no duplicate SKUs in the same PO
         Set<Long> seenSkuIds = new HashSet<>();
-        List<PurchaseOrderItem> poItems = new ArrayList<>();
         List<PurchaseOrderItemResponse> itemResponses = new ArrayList<>();
 
         PurchaseOrderStatus initialStatus = request.isDraft()
                 ? PurchaseOrderStatus.DRAFT
                 : PurchaseOrderStatus.ORDERED;
 
-        Instant expectedDate = null;
-        if (request.expectedDate() != null && !request.expectedDate().trim().isEmpty()) {
-            try {
-                expectedDate = Instant.parse(request.expectedDate().trim());
-            } catch (Exception e) {
-                // If standard ISO date string without time (e.g., 2026-10-20), parse via LocalDate
-                try {
-                    expectedDate = LocalDate.parse(request.expectedDate().trim()).atStartOfDay(java.time.ZoneOffset.UTC).toInstant();
-                } catch (Exception ignored) {
-                    expectedDate = null;
-                }
-            }
-        }
+        Instant expectedDate = parseExpectedDate(request.expectedDate());
 
         String poCode = generateUniquePoCode();
 
@@ -114,8 +101,13 @@ public class PurchaseOrderService {
                 throw new PurchaseOrderValidationException("Đơn giá nhập cho SKU ID " + skuId + " không được âm.");
             }
 
-            // BR-37: VND Monetary Precision (Whole integer VND)
-            BigDecimal roundedCost = itemReq.unitCost().setScale(0, RoundingMode.HALF_UP);
+            // BR-37: VND Monetary Precision (Whole integer VND). Never silently
+            // round a submitted purchasing cost because that changes the PO total.
+            if (itemReq.unitCost().stripTrailingZeros().scale() > 0) {
+                throw new PurchaseOrderValidationException(
+                        "Đơn giá nhập cho SKU ID " + skuId + " phải là số nguyên VND.");
+            }
+            BigDecimal wholeVndCost = itemReq.unitCost().setScale(0);
 
             // 28.0.E2: Validate SKU existence from app.hm_sku
             SkuRecord skuRecord = fetchSkuRecord(skuId);
@@ -127,7 +119,7 @@ public class PurchaseOrderService {
                     purchaseOrder,
                     skuId,
                     itemReq.orderedQuantity(),
-                    roundedCost,
+                    wholeVndCost,
                     actor
             );
 
@@ -140,8 +132,8 @@ public class PurchaseOrderService {
                     skuRecord.skuName(),
                     itemReq.orderedQuantity(),
                     0,
-                    roundedCost,
-                    roundedCost.multiply(BigDecimal.valueOf(itemReq.orderedQuantity()))
+                    wholeVndCost,
+                    wholeVndCost.multiply(BigDecimal.valueOf(itemReq.orderedQuantity()))
             ));
         }
 
@@ -158,7 +150,9 @@ public class PurchaseOrderService {
             PurchaseOrderStatus status,
             Pageable pageable
     ) {
-        String cleanKeyword = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : null;
+        // Keep the optional text parameter typed as VARCHAR for PostgreSQL. Passing null
+        // through Hibernate here can be bound as bytea, which makes LOWER(:keyword) fail.
+        String cleanKeyword = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : "";
         return purchaseOrderRepository.searchOrders(cleanKeyword, supplierId, status, pageable)
                 .map(po -> {
                     List<PurchaseOrderItemResponse> items = loadItemResponses(po.getId());
@@ -201,6 +195,25 @@ public class PurchaseOrderService {
                 (String) r.get("status"),
                 Boolean.TRUE.equals(r.get("is_deleted"))
         );
+    }
+
+    private Instant parseExpectedDate(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        String normalized = value.trim();
+        try {
+            return Instant.parse(normalized);
+        } catch (DateTimeException instantError) {
+            try {
+                return LocalDate.parse(normalized)
+                        .atStartOfDay(java.time.ZoneOffset.UTC)
+                        .toInstant();
+            } catch (DateTimeException dateError) {
+                throw new PurchaseOrderValidationException(
+                        "Ngày dự kiến phải có định dạng yyyy-MM-dd hoặc ISO-8601 hợp lệ.");
+            }
+        }
     }
 
     private String generateUniquePoCode() {

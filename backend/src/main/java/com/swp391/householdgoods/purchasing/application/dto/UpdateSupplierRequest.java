@@ -4,6 +4,7 @@ import com.swp391.householdgoods.purchasing.domain.SupplierStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
 
 public record UpdateSupplierRequest(
         @NotBlank(message = "Tên nhà cung cấp không được để trống")
@@ -16,6 +17,7 @@ public record UpdateSupplierRequest(
         @Size(max = 50, message = "Số điện thoại không quá 50 ký tự")
         String phone,
 
+        @Email(message = "Email nhà cung cấp không hợp lệ")
         @Size(max = 255, message = "Email không quá 255 ký tự")
         String email,
 

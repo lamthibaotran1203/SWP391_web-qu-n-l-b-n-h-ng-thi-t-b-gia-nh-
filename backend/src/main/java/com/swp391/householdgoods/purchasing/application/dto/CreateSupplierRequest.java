@@ -1,6 +1,7 @@
 package com.swp391.householdgoods.purchasing.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
 public record CreateSupplierRequest(
@@ -22,6 +23,7 @@ public record CreateSupplierRequest(
         @Size(max = 50, message = "Số điện thoại không quá 50 ký tự")
         String phone,
 
+        @Email(message = "Email nhà cung cấp không hợp lệ")
         @Size(max = 255, message = "Email không quá 255 ký tự")
         String email,
 

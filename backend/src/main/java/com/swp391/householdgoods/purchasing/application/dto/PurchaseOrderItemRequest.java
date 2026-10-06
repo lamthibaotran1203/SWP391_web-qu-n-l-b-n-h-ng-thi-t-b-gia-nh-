@@ -1,6 +1,7 @@
 package com.swp391.householdgoods.purchasing.application.dto;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ public record PurchaseOrderItemRequest(
 
         @NotNull(message = "Đơn giá nhập không được để trống")
         @DecimalMin(value = "0", message = "Đơn giá nhập không được âm")
+        @Digits(integer = 18, fraction = 0, message = "Đơn giá nhập phải là số nguyên VND")
         BigDecimal unitCost
 ) {
 }

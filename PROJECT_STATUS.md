@@ -1,6 +1,6 @@
 # Project status
 
-Updated 2026-10-06. Read this before using planning documents.
+Updated 2026-10-07. Read this before using planning documents.
 
 ## Authority and ownership
 
@@ -30,16 +30,39 @@ Updated 2026-10-06. Read this before using planning documents.
   - Invariant POST-5 strictly preserved: Physical inventory is NOT increased at PO creation.
   - Invariant BR-28 strictly preserved: `received_quantity = 0 <= ordered_quantity`.
   - Frontend: `CreatePurchaseOrderPage.jsx` with supplier selection, dynamic SKU table, live VND subtotal calculation, draft vs confirmation dispatch.
-  - Tests: `PurchaseOrderServiceTest` (6/6 passed), `CreatePurchaseOrderPage.test.jsx` (3/3 passed).
+  - Invalid expected dates are rejected instead of being silently removed; fractional VND costs
+    are rejected instead of silently rounded.
+  - Tests: `PurchaseOrderServiceTest` (8/8 passed), `CreatePurchaseOrderPage.test.jsx` (3/3 passed).
+- Repository audit fixes on 2026-10-06:
+  - Every current React route is forwarded to `index.html` in the packaged SPA, so direct refresh
+    no longer fails outside `/` and `/login`.
+  - Legacy `/api/v1/products` writes are denied because V5 makes `legacy_*` columns immutable;
+    UC-13 must add a canonical product/SKU write contract before those writes are reopened.
+  - Supplier/PO paging, IDs, keywords, supplier email, and whole-VND inputs now have server-side
+    boundary validation. Catalogue prices render without JavaScript safe-integer truncation.
 - Frontend test suite: 13/13 tests passed, ESLint 0 errors, production build clean.
-- Backend unit test suite: 19/19 tests passed, 0 failures.
+- Affected backend unit suite: 22/22 tests passed, 0 failures, including two new PO regression
+  tests and one SPA-forward regression test.
+- Spring Boot JAR packaging passed with the already-built React assets.
+- Existing frontend screens now share one HomeMart UI system derived from the reviewed MeGo
+  interaction patterns without copying its business logic or Ant Design dependency. The shared
+  shell covers brand navigation and role-aware actions; home, authentication, catalogue, staff
+  orders, suppliers, and purchase-order screens use consistent color, spacing, cards, forms,
+  tables, modals, feedback states, and responsive behavior. Frontend lint, 13/13 tests, and the
+  production build pass after the UI refresh; local browser checks covered desktop-style and
+  narrow layouts with no console rendering errors. Backend-dependent data remained unavailable
+  during visual QA because only the frontend preview was running.
 
 ## Current and next task
 
-- Current: UC-27 and UC-28 full vertical slices (Backend + Frontend + Tests) implemented and integrated with Orders read model fix.
-- Next: Integration review with teammates, goods receiving flow (UC-29) prerequisite contracts.
+- Current: project-wide frontend UI refresh is implemented and verified while preserving existing
+  API calls, authorization, validation, and business flows.
+- Next: run the PostgreSQL integration suite and smoke flow after Docker Desktop is available,
+  then reconcile the unused V7 `sales_order*` read-model tables with the current `hm_order*` implementation.
 - Open: payment provider selection, Admin/MANAGER wording, BR collisions, iteration ownership, Manager bootstrap for
-  authenticated browser proof and RDS synchronization.
+  authenticated browser proof and RDS synchronization. Local integration verification is blocked
+  because Docker Desktop does not currently start on this workstation. The root build script also
+  requires the pinned Node 24/npm 11; the active shell currently exposes Node 22/npm 10.
 
 ## Exact verification commands
 
@@ -48,6 +71,12 @@ From repository root, with Node 24/npm 11 and Docker running:
 ```text
 npm run frontend:check
 npm run backend:verify:postgres
+```
+
+The affected backend unit suite can be run without Docker:
+
+```text
+.\backend\mvnw.cmd -f backend\pom.xml -Dtest=AccountProfileServiceTest,BootstrapManagerServiceTest,SalesOrderQueryServiceTest,PurchaseOrderServiceTest,SupplierServiceTest,SpaForwardControllerTest test
 ```
 
 The Orders service unit test also runs without Docker:
@@ -64,6 +93,8 @@ npm run db:migrate
 npm run db:seed:catalog
 ```
 
-Expected: Flyway version 5, pending 0. Temporary catalogue preview is localhost:8085;
+The last verified shared Supabase state was Flyway version 5 with pending 0. The repository now
+also contains V6 and V7, so check `db:info` and team ownership before migrating the shared database.
+Temporary catalogue preview is localhost:8085;
 this is not a team deployment. Stop/remove its homemart-catalog-preview Docker container
 when no longer needed. SMTP health is excluded only from this catalogue preview.

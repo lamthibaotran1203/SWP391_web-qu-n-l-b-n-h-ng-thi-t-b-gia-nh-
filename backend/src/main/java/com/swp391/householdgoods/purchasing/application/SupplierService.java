@@ -24,7 +24,9 @@ public class SupplierService {
 
     @Transactional(readOnly = true)
     public Page<SupplierResponse> searchSuppliers(String keyword, SupplierStatus status, Pageable pageable) {
-        String cleanKeyword = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : null;
+        // Keep the optional text parameter typed as VARCHAR for PostgreSQL. Passing null
+        // through Hibernate here can be bound as bytea, which makes LOWER(:keyword) fail.
+        String cleanKeyword = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : "";
         return supplierRepository.searchSuppliers(cleanKeyword, status, pageable)
                 .map(SupplierResponse::fromDomain);
     }

@@ -7,6 +7,9 @@ import com.swp391.householdgoods.purchasing.application.dto.SupplierResponse;
 import com.swp391.householdgoods.purchasing.application.dto.UpdateSupplierRequest;
 import com.swp391.householdgoods.purchasing.domain.SupplierStatus;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -23,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
 
 @RestController
 @RequestMapping("/api/v1/purchasing/suppliers")
+@Validated
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -36,12 +41,12 @@ public class SupplierController {
 
     @GetMapping
     public ApiEnvelope<Page<SupplierResponse>> list(
-            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @Size(max = 120) String keyword,
             @RequestParam(required = false) SupplierStatus status,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
     ) {
-        Pageable pageable = PageRequest.of(Math.max(0, page), Math.max(1, Math.min(size, 100)));
+        Pageable pageable = PageRequest.of(page, size);
         return new ApiEnvelope<>(supplierService.searchSuppliers(keyword, status, pageable));
     }
 
@@ -51,7 +56,7 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
-    public ApiEnvelope<SupplierResponse> getById(@PathVariable Long id) {
+    public ApiEnvelope<SupplierResponse> getById(@PathVariable @Min(1) Long id) {
         return new ApiEnvelope<>(supplierService.getSupplierById(id));
     }
 
@@ -67,7 +72,7 @@ public class SupplierController {
 
     @PutMapping("/{id}")
     public ApiEnvelope<SupplierResponse> update(
-            @PathVariable Long id,
+            @PathVariable @Min(1) Long id,
             @Valid @RequestBody UpdateSupplierRequest request,
             Principal principal
     ) {
@@ -77,7 +82,7 @@ public class SupplierController {
 
     @DeleteMapping("/{id}")
     public ApiEnvelope<String> delete(
-            @PathVariable Long id,
+            @PathVariable @Min(1) Long id,
             Principal principal
     ) {
         String actor = principal != null ? principal.getName() : "ADMIN";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
-import { getRoleLabel } from '../auth/role-labels'
 import { getSalesOrders } from '../api/http'
+import { AppHeader } from '../components/AppShell'
 import { OrderDetailsDialog } from './orders/OrderDetailsDialog'
 import { SalesOrdersTable } from './orders/SalesOrdersTable'
 import { orderStatusLabels, paymentStatusLabels } from './orders/order-formatters'
@@ -10,7 +10,7 @@ import '../styles/orders.css'
 
 const pageSize = 20
 
-function StaffOrdersContent({ user }) {
+function StaffOrdersContent() {
   const [draft, setDraft] = useState({
     q: '',
     channel: '',
@@ -88,16 +88,7 @@ function StaffOrdersContent({ user }) {
 
   return (
     <main className="orders-page">
-      <header className="orders-header">
-        <div className="container orders-header-inner">
-          <Link className="orders-brand" to="/">Gia Dụng Việt</Link>
-          <nav className="orders-nav" aria-label="Điều hướng nhân viên">
-            <span>{user.fullName}</span>
-            <span className="orders-role">{getRoleLabel(user.role)}</span>
-            <Link className="btn btn-outline-light btn-sm" to="/">Trang chủ</Link>
-          </nav>
-        </div>
-      </header>
+      <AppHeader />
 
       <div className="container orders-content">
         <div className="orders-title-row">
@@ -235,5 +226,5 @@ export function StaffOrdersPage() {
     )
   }
 
-  return <StaffOrdersContent user={user} />
+  return <StaffOrdersContent />
 }

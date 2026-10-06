@@ -6,6 +6,9 @@ import com.swp391.householdgoods.purchasing.application.dto.CreatePurchaseOrderR
 import com.swp391.householdgoods.purchasing.application.dto.PurchaseOrderResponse;
 import com.swp391.householdgoods.purchasing.domain.PurchaseOrderStatus;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import java.security.Principal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
 
 @RestController
 @RequestMapping("/api/v1/purchasing/purchase-orders")
+@Validated
 public class PurchaseOrderController {
 
     private final PurchaseOrderService purchaseOrderService;
@@ -42,18 +47,18 @@ public class PurchaseOrderController {
 
     @GetMapping
     public ApiEnvelope<Page<PurchaseOrderResponse>> list(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) Long supplierId,
+            @RequestParam(required = false) @Size(max = 120) String keyword,
+            @RequestParam(required = false) @Min(1) Long supplierId,
             @RequestParam(required = false) PurchaseOrderStatus status,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Min(1) @Max(100) int size
     ) {
-        Pageable pageable = PageRequest.of(Math.max(0, page), Math.max(1, Math.min(size, 100)));
+        Pageable pageable = PageRequest.of(page, size);
         return new ApiEnvelope<>(purchaseOrderService.searchPurchaseOrders(keyword, supplierId, status, pageable));
     }
 
     @GetMapping("/{id}")
-    public ApiEnvelope<PurchaseOrderResponse> getById(@PathVariable Long id) {
+    public ApiEnvelope<PurchaseOrderResponse> getById(@PathVariable @Min(1) Long id) {
         return new ApiEnvelope<>(purchaseOrderService.getPurchaseOrderById(id));
     }
 }

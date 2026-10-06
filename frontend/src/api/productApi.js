@@ -37,23 +37,3 @@ function toProduct(sku) {
     status: sku.purchasable ? 'ACTIVE' : 'INACTIVE',
   }
 }
-
-export function createProduct(data) {
-  return apiRequest('/api/v1/products', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-}
-
-export function updateProduct(id, data) {
-  return apiRequest(`/api/v1/products/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-}
-
-export function deleteProduct(id) {
-  return apiRequest(`/api/v1/products/${id}`, { method: 'DELETE' })
-}

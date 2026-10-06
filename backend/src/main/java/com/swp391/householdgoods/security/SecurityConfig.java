@@ -63,6 +63,21 @@ public class SecurityConfig {
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register")
                         .permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/products",
+                                "/api/v1/products/**")
+                        .denyAll()
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/v1/products",
+                                "/api/v1/products/**")
+                        .denyAll()
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/v1/products",
+                                "/api/v1/products/**")
+                        .denyAll()
                         .requestMatchers("/api/v1/manager/**")
                         .hasRole("MANAGER")
                         .requestMatchers("/api/v1/purchasing/**")

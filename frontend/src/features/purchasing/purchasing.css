@@ -155,3 +155,143 @@
   gap: 0.75rem;
   background: #f8fafc;
 }
+
+/* HomeMart shared workspace treatment */
+.purchasing-page {
+  padding-top: 2.75rem;
+}
+
+.purchasing-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-color: var(--hm-line);
+}
+
+.purchasing-title h1 {
+  color: var(--hm-ink);
+  font-size: clamp(1.8rem, 4vw, 2.55rem);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+
+.purchasing-title p {
+  color: var(--hm-muted);
+}
+
+.purchasing-filter-card,
+.purchasing-table-container {
+  border-color: var(--hm-line);
+  border-radius: var(--hm-radius-lg);
+  box-shadow: var(--hm-shadow-sm);
+}
+
+.purchasing-filter-card {
+  padding: 1.25rem;
+}
+
+.purchasing-table th {
+  border-color: var(--hm-line);
+  color: #687770;
+  background: var(--hm-surface-soft);
+}
+
+.purchasing-table td {
+  border-color: #edf2ef;
+}
+
+.purchasing-table tbody tr:hover {
+  background: #f9fcfa;
+}
+
+.purchasing-table td.text-primary,
+.purchasing-table .text-primary {
+  color: var(--hm-primary) !important;
+}
+
+.badge-active {
+  color: #087454;
+  background: #e7f7f0;
+}
+
+.badge-inactive {
+  color: #a53838;
+  background: #faeaea;
+}
+
+.supplier-modal-backdrop {
+  background: rgb(11 31 24 / 62%);
+  backdrop-filter: blur(4px);
+}
+
+.supplier-modal-dialog {
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: var(--hm-radius-lg);
+}
+
+.supplier-modal-header,
+.supplier-modal-footer {
+  border-color: var(--hm-line);
+  background: var(--hm-surface-soft);
+}
+
+.supplier-modal-header h2 {
+  color: var(--hm-ink);
+  font-weight: 850;
+}
+
+.purchasing-page .card-header.bg-light {
+  background: var(--hm-surface-soft) !important;
+}
+
+.purchasing-page .card-header.bg-dark {
+  border-color: var(--hm-primary-dark);
+  background: linear-gradient(135deg, var(--hm-primary-dark), var(--hm-primary)) !important;
+}
+
+.purchasing-page .bg-light {
+  background: var(--hm-surface-soft) !important;
+}
+
+.purchasing-page .table thead th {
+  padding: 0.85rem 1rem;
+  border-color: var(--hm-line);
+  color: #687770;
+  background: var(--hm-surface-soft);
+  font-size: 0.75rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.purchasing-page .table tbody td {
+  padding: 0.9rem 1rem;
+  border-color: #edf2ef;
+}
+
+.purchasing-page .sticky-top {
+  top: 6.25rem !important;
+}
+
+@media (max-width: 767px) {
+  .purchasing-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .purchasing-header > .d-flex {
+    flex-direction: column;
+  }
+
+  .purchasing-header .btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .supplier-modal-backdrop {
+    padding: 0.75rem;
+  }
+
+  .supplier-modal-dialog {
+    max-height: 94vh;
+  }
+}
