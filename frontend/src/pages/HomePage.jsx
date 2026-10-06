@@ -7,6 +7,7 @@ export function HomePage() {
 
   return (
     <main>
+      <nav className="home-nav container"><Link to="/" className="brand-link">Gia Dụng Việt</Link><Link to="/products">Xem sản phẩm</Link></nav>
       <section className="hero-section">
         <div className="container hero-grid">
           <div>

@@ -4,18 +4,17 @@ import { verifyEmail } from '../api/http'
 
 export function VerifyEmailPage() {
     const [searchParams] = useSearchParams()
+    const token = searchParams.get('token')
 
-    const [status, setStatus] = useState('loading')
-    const [message, setMessage] = useState(
-        'Đang xác minh email...',
+    const [status, setStatus] = useState(() => (!token ? 'error' : 'loading'))
+    const [message, setMessage] = useState(() =>
+        !token
+            ? 'Liên kết xác minh không hợp lệ.'
+            : 'Đang xác minh email...'
     )
 
     useEffect(() => {
-        const token = searchParams.get('token')
-
         if (!token) {
-            setStatus('error')
-            setMessage('Liên kết xác minh không hợp lệ.')
             return
         }
 
@@ -51,7 +50,7 @@ export function VerifyEmailPage() {
         return () => {
             active = false
         }
-    }, [searchParams])
+    }, [token])
 
     return (
         <main className="login-page">

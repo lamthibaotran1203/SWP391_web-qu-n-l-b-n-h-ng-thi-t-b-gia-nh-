@@ -8,7 +8,7 @@
     "npm": ">=11 <12"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
     "test": "vitest run",

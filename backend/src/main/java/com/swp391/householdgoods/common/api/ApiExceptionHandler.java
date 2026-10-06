@@ -1,5 +1,7 @@
 package com.swp391.householdgoods.common.api;
 
+import com.swp391.householdgoods.catalog.application.ProductNotFoundException;
+import com.swp391.householdgoods.catalog.application.CatalogException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
@@ -25,13 +28,8 @@ public class ApiExceptionHandler {
             HttpServletRequest request) {
 
         Map<String, String> fieldErrors = new LinkedHashMap<>();
-
-        exception.getBindingResult()
-                .getFieldErrors()
-                .forEach(error ->
-                        fieldErrors.putIfAbsent(
-                                error.getField(),
-                                error.getDefaultMessage()));
+        exception.getBindingResult().getFieldErrors()
+                .forEach(error -> fieldErrors.putIfAbsent(error.getField(), error.getDefaultMessage()));
 
         return problem(
                 HttpStatus.BAD_REQUEST,
@@ -53,12 +51,22 @@ public class ApiExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(
-            com.swp391.householdgoods.catalog.application.CatalogException.class)
-    ResponseEntity<ApiProblem> handleCatalog(
-            com.swp391.householdgoods.catalog.application.CatalogException exception,
+    @ExceptionHandler(ProductNotFoundException.class)
+    ResponseEntity<ApiProblem> handleProductNotFound(
+            ProductNotFoundException exception,
             HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "PRODUCT_NOT_FOUND",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
 
+    @ExceptionHandler(CatalogException.class)
+    ResponseEntity<ApiProblem> handleCatalog(
+            CatalogException exception,
+            HttpServletRequest request) {
         return problem(
                 exception.status(),
                 exception.code(),
@@ -67,11 +75,9 @@ public class ApiExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(
-            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     ResponseEntity<ApiProblem> handleParameter(
             HttpServletRequest request) {
-
         return problem(
                 HttpStatus.BAD_REQUEST,
                 "PARAMETER_INVALID",
@@ -84,7 +90,6 @@ public class ApiExceptionHandler {
     ResponseEntity<ApiProblem> handleIllegalArgument(
             IllegalArgumentException exception,
             HttpServletRequest request) {
-
         return problem(
                 HttpStatus.BAD_REQUEST,
                 "REQUEST_INVALID",
