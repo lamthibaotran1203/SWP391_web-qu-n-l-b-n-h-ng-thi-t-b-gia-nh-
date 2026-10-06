@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getProducts } from '../api/productApi'
 import { getCatalogBrands, getCatalogCategories } from '../features/catalog/api'
@@ -10,11 +10,14 @@ export function ProductListPage() {
   const [draft, setDraft] = useState(defaultCriteria)
   const [criteria, setCriteria] = useState(defaultCriteria)
   const [page, setPage] = useState(0)
-  const [result, setResult] = useState({ content: [], totalPages: 0, totalElements: 0 })
+  const [response, setResponse] = useState(null)
+  const [retry, setRetry] = useState(0)
   const [brands, setBrands] = useState([])
   const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const requestKey = JSON.stringify({ criteria, page, retry })
+  const loading = response?.key !== requestKey
+  const error = loading ? '' : response.error
+  const result = loading || !response.data ? { content: [], totalPages: 0, totalElements: 0 } : response.data
 
   useEffect(() => {
     Promise.all([getCatalogBrands(), getCatalogCategories()])
@@ -25,22 +28,16 @@ export function ProductListPage() {
       .catch(() => {})
   }, [])
 
-  const loadProducts = useCallback(() => {
-    setLoading(true)
-    setError('')
-    getProducts({ ...criteria, page })
-      .then((data) => {
-        setResult(data)
-        if (typeof data.number === 'number' && data.number !== page) setPage(data.number)
-      })
-      .catch((requestError) => setError(requestError.message))
-      .finally(() => setLoading(false))
-  }, [criteria, page])
-
   useEffect(() => {
-    const timer = setTimeout(loadProducts, 0)
-    return () => clearTimeout(timer)
-  }, [loadProducts])
+    const controller = new AbortController()
+    let active = true
+    getProducts({ ...criteria, page }, { signal: controller.signal })
+      .then((data) => { if (active) setResponse({ key: requestKey, data, error: '' }) })
+      .catch((requestError) => { if (active) setResponse({ key: requestKey, error: requestError.message }) })
+    return () => { active = false; controller.abort() }
+  }, [criteria, page, requestKey])
+
+  function loadProducts() { setRetry((value) => value + 1) }
 
   function submit(event) {
     event.preventDefault()
@@ -69,12 +66,12 @@ export function ProductListPage() {
           <input className="form-control" type="number" min="0" value={draft.maxPrice} onChange={(event) => setDraft({ ...draft, maxPrice: event.target.value })} placeholder="Giá đến" aria-label="Giá đến" />
           <select className="form-select" value={draft.sort} onChange={(event) => { const sort = event.target.value; setDraft({ ...draft, sort }); setCriteria({ ...criteria, sort }); setPage(0) }} aria-label="Sắp xếp"><option value="newest">Mới nhất</option><option value="oldest">Cũ nhất</option><option value="name_asc">Tên A-Z</option><option value="name_desc">Tên Z-A</option><option value="price_asc">Giá thấp đến cao</option><option value="price_desc">Giá cao đến thấp</option></select>
           <button className="btn btn-dark" type="submit">Tìm kiếm</button>
-          {hasCriteria && <button className="btn btn-outline-secondary" type="button" onClick={clearCriteria}>Xóa tiêu chí</button>}
+          {hasCriteria && <button className="btn btn-outline-secondary" type="button" onClick={clearCriteria}>Xóa</button>}
         </form>
         {error && <div className="alert alert-danger d-flex justify-content-between align-items-center"><span>{error}</span><button className="btn btn-sm btn-danger" onClick={loadProducts}>Thử lại</button></div>}
-        {loading ? <p>Đang tải sản phẩm...</p> : result.content.length === 0 ? <div className="empty-results"><h2>Không tìm thấy sản phẩm</h2><p>Hãy thử sửa tiêu chí tìm kiếm hoặc xóa bộ lọc.</p><button className="btn btn-outline-dark" onClick={clearCriteria}>Xóa tiêu chí</button></div> : <>
-          <div className="product-grid">{result.content.map((product) => <Link to={`/products/${product.id}`} className="product-card" key={product.id}><div className="product-image">{product.imageUrl ? <img src={product.imageUrl} alt={product.name} /> : <span>Gia dụng</span>}</div><div className="p-3"><small className="text-secondary">{product.brand || product.category || 'Sản phẩm gia dụng'}</small><h2>{product.name}</h2><strong>{money.format(product.price)}</strong><p className="stock-note">SKU: {product.sku} · Còn {product.stockQuantity}</p></div></Link>)}</div>
-          {result.totalPages > 1 && <nav className="catalog-pagination" aria-label="Phân trang"><button className="btn btn-outline-dark" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button><span>Trang {page + 1} / {result.totalPages}</span><button className="btn btn-outline-dark" disabled={page + 1 >= result.totalPages} onClick={() => setPage(page + 1)}>Sau</button></nav>}
+        {loading ? <p>Đang tải sản phẩm...</p> : result.content.length === 0 ? <div className="empty-results"><h2>Không tìm thấy sản phẩm</h2><p>Hãy thử sửa tiêu chí tìm kiếm hoặc xóa bộ lọc.</p><button className="btn btn-outline-dark" onClick={clearCriteria}>Xóa</button></div> : <>
+          <div className="product-grid">{result.content.map((product) => <Link to={`/products/${product.productId}?sku=${product.id}`} className="product-card" key={product.id}><div className="product-image">{product.imageUrl ? <img src={product.imageUrl} alt={product.name} /> : <span>Gia dụng</span>}</div><div className="p-3"><small className="text-secondary">{product.brand || product.category || 'Sản phẩm gia dụng'}</small><h2>{product.name}</h2><strong>{money.format(product.price)}</strong><p className="stock-note">SKU: {product.sku} · Còn {product.stockQuantity}</p></div></Link>)}</div>
+          {result.totalPages > 1 && <nav className="catalog-pagination" aria-label="Phân trang"><button className="btn btn-outline-dark" disabled={result.number === 0} onClick={() => setPage(result.number - 1)}>Trước</button><span>Trang {result.number + 1} / {result.totalPages}</span><button className="btn btn-outline-dark" disabled={result.number + 1 >= result.totalPages} onClick={() => setPage(result.number + 1)}>Sau</button></nav>}
         </>}
       </section>
     </main>

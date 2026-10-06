@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,6 +13,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final SecurityResponseHandlers handlers;
@@ -59,6 +61,12 @@ public class SecurityConfig {
                                 "/api/v1/auth/me",
                                 "/api/v1/auth/verify-email")
                         .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/products/**")
+                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/**")
+                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**")
+                        .hasRole("MANAGER")
                         .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register")

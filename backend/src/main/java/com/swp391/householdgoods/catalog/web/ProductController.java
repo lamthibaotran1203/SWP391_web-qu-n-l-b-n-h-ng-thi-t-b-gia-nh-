@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.math.BigDecimal;
 
 @RestController
@@ -75,19 +76,23 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('MANAGER')")
     @ResponseStatus(HttpStatus.CREATED)
     ApiEnvelope<ProductResponse> create(@Valid @RequestBody CreateProductRequest request) {
         return new ApiEnvelope<>(service.create(request));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     ApiEnvelope<ProductResponse> update(@PathVariable Long id, @Valid @RequestBody CreateProductRequest request) {
         return new ApiEnvelope<>(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@PathVariable Long id) {
-        service.delete(id);
+    void delete(@PathVariable Long id, @RequestParam(required = false) Long productVersion,
+                @RequestParam(required = false) Long skuVersion) {
+        service.delete(id, productVersion, skuVersion);
     }
 }

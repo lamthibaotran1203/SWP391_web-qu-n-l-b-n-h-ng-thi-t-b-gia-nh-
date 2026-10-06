@@ -251,7 +251,7 @@ Online payment chưa làm. SMTP chỉ cần cấu hình khi bắt đầu phần 
 
 Supabase was upgraded through Flyway V5 on 2026-10-05. It contains 24 business tables plus
 Flyway history. Existing V1–V3 and product data were preserved; incomplete catalogue items
-are INACTIVE. See [shared catalogue contract and verification](docs/contracts/Catalog_Shared_Contract.md).
+are INACTIVE.
 
 On macOS/Linux or Windows PowerShell, from repository root with JDK 21 and the ignored
 local DB environment configured:
@@ -269,8 +269,8 @@ shared Supabase. Run integration tests against isolated PostgreSQL, not the shar
 
 ## Shared catalogue foundation
 
-Read [the catalogue contract](docs/contracts/Catalog_Shared_Contract.md) before implementing
-product, cart, order or stock code. Supabase is now at V5. Live prices belong to `hm_sku` and
+Preserve the shared catalogue boundaries when implementing product, cart, order or stock
+code. Supabase is now at V5. Live prices belong to `hm_sku` and
 live quantities to `hm_inventory`; old product fields are immutable `legacy_*` archives.
 The public read API is `/api/v1/catalog/skus`; management UC-13 remains to be implemented.
 

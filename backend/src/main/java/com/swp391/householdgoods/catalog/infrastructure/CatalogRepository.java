@@ -1,6 +1,7 @@
 package com.swp391.householdgoods.catalog.infrastructure;
 
 import com.swp391.householdgoods.catalog.api.CatalogReference;
+import com.swp391.householdgoods.catalog.api.CatalogProductDetail;
 import com.swp391.householdgoods.catalog.api.CatalogSku;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -65,6 +66,22 @@ public class CatalogRepository {
 
     public List<CatalogSku> byProduct(long id) {
         return jdbc.query(SELECT + FROM + " and p.product_id=? order by s.id", MAPPER, id);
+    }
+
+    public CatalogProductDetail productDetail(long id, List<CatalogSku> eligibleSkus) {
+        CatalogSku first = eligibleSkus.getFirst();
+        return jdbc.queryForObject("select description,image_url from app.product where product_id=?",
+                (row, number) -> {
+                    var images = new java.util.LinkedHashSet<String>();
+                    String cover = row.getString("image_url");
+                    if (cover != null && !cover.isBlank()) images.add(cover.trim());
+                    for (CatalogSku sku : eligibleSkus) {
+                        if (sku.imageUrl() != null && !sku.imageUrl().isBlank()) images.add(sku.imageUrl().trim());
+                    }
+                    return new CatalogProductDetail(id, first.productName(), row.getString("description"),
+                            first.categoryId(), first.categoryName(), first.brandId(), first.brandName(),
+                            List.copyOf(images), eligibleSkus);
+                }, id);
     }
 
     public List<CatalogReference> categories() {

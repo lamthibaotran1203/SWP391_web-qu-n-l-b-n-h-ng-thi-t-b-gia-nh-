@@ -129,6 +129,11 @@ public class ApiExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    ResponseEntity<ApiProblem> handleAccessDenied(HttpServletRequest request) {
+        return problem(HttpStatus.FORBIDDEN, "ACCESS_DENIED", "Bạn không có quyền thực hiện thao tác này.", Map.of(), request);
+    }
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<ApiProblem> handleUnexpected(
             Exception exception,
