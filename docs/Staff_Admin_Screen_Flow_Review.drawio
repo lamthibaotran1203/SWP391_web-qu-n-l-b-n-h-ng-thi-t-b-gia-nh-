@@ -1,0 +1,766 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-09-25T00:00:00.000Z" agent="Codex" version="24.7.17" type="device" pages="2">
+  <diagram id="staff-flow" name="Staff Screen Flow">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="3100" pageHeight="2560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="home" value="Home Page" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="105" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="login" value="Login" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="400" y="105" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="hub" value="Staff Dashboard" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="330" width="255" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="change_password" value="Change Password" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="400" y="315" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="confirm_logout" value="Confirm Logout" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="800" y="315" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="e_login_hub" value="Click “Sign In” [valid credentials]" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="login" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hub_password" value="Click “Change Password”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="change_password">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hub_logout" value="Click “Logout”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="confirm_logout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order1" value="Sales Order List&lt;br&gt;(search/filter inline)" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order2" value="Sales Order Detail&lt;br&gt;(selected order)" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="670" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e1" value="Click an order" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order1" target="staff_orders_order2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order3" value="Confirm Order&lt;br&gt;{Pending Confirmation}" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e2" value="Click “Confirm Order”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order2" target="staff_orders_order3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order4" value="Order Detail&lt;br&gt;Confirmed" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e3" value="Click “Confirm”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order3" target="staff_orders_order4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order5" value="Dispatch Preparation&lt;br&gt;{Confirmed + reserved}" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1690" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e4" value="Click “Prepare Dispatch”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order4" target="staff_orders_order5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order6" value="Order Detail&lt;br&gt;Dispatched" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2030" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e5" value="Click “Dispatch”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order5" target="staff_orders_order6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order7" value="Delivery Outcome&lt;br&gt;{Dispatched}" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2370" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e6" value="Click “Record Delivery”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order6" target="staff_orders_order7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_order8" value="Order Detail&lt;br&gt;Delivered / Failed" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2710" y="460" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e7" value="Click “Save Outcome”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order7" target="staff_orders_order8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e8" value="Click “Sales Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="staff_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_pos1" value="POS Sale&lt;br&gt;search SKU + edit lines" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="765" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_pos2" value="Payment Summary&lt;br&gt;confirm method/amount" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="820" y="765" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e9" value="Click “Review Payment”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos1" target="staff_orders_pos2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_pos3" value="Sale Receipt&lt;br&gt;stock issued once" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="765" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e10" value="Click “Confirm Payment”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos2" target="staff_orders_pos3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e11" value="Click “New Sale”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos3" target="staff_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e12" value="Click “Counter Sales”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="staff_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_orders_e13" value="Click “Confirm Payment” [failed; draft retained]" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos2" target="staff_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_inv1" value="Stock List&lt;br&gt;physical/reserved/available" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1405" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_inv2" value="SKU Stock Detail&lt;br&gt;low-stock threshold" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="780" y="1405" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e1" value="Click a SKU" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_inv1" target="staff_stock_inv2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e2" value="Click “Inventory”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="staff_stock_inv1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_rec1" value="Purchase Order List&lt;br&gt;receivable POs" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1700" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_rec2" value="Purchase Order Detail&lt;br&gt;ordered/received/remaining" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1700" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e3" value="Click a purchase order" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec1" target="staff_stock_rec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_rec3" value="Goods Receipt Form&lt;br&gt;actual quantity per item" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="1700" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e4" value="Click “Receive Stock”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec2" target="staff_stock_rec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_rec4" value="Confirm Receipt" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1740" y="1700" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e5" value="Click “Review Receipt”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec3" target="staff_stock_rec4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_rec5" value="Receipt Detail&lt;br&gt;PO remaining updated" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2210" y="1700" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e6" value="Click “Confirm Receipt”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec4" target="staff_stock_rec5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e7" value="Click “Purchase Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="staff_stock_rec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_returns" value="Return Request List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2010" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_detail" value="Return Detail&lt;br&gt;selected request" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="2010" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_inspect" value="Inspection Form&lt;br&gt;condition + evidence" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="2010" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_pending" value="Return Detail&lt;br&gt;Awaiting Admin Decision" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="2010" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e8" value="Click “Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="staff_stock_returns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e9" value="Click a return request" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_returns" target="staff_stock_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e10" value="Click “Inspect”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_detail" target="staff_stock_inspect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e11" value="Click “Submit Inspection”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_inspect" target="staff_stock_pending">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_intake" value="In-Store Return Intake" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="2260" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_select" value="Select Original Order&lt;br&gt;and purchased item" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="2260" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_newreturn" value="Return Detail&lt;br&gt;Awaiting Inspection" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="2260" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e12" value="Click “New In-store Return”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_returns" target="staff_stock_intake">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e13" value="Click “Find Original Purchase”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_intake" target="staff_stock_select">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="staff_stock_e14" value="Select item, then click “Submit”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_select" target="staff_stock_newreturn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_home_login" value="Click “Login”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="home" target="login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_login_home" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="login" target="home">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_password_hub" value="Click “Back” or save successfully" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="change_password" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_logout_hub" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="confirm_logout" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_logout_login" value="Click “Confirm Logout”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="confirm_logout" target="login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_order_list_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_order_detail_list" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order2" target="staff_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_confirm_order" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order3" target="staff_orders_order2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_confirmed_list" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order4" target="staff_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_dispatch_prep" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order5" target="staff_orders_order4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_dispatched_list" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order6" target="staff_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_delivery" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order7" target="staff_orders_order6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_outcome_list" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_order8" target="staff_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_pos_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_payment" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos2" target="staff_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_receipt_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_orders_pos3" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_stock_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_inv1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_sku_stock" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_inv2" target="staff_stock_inv1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_po_list_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_po_detail_list" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec2" target="staff_stock_rec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_receipt_form_po" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec3" target="staff_stock_rec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_receipt_confirm" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec4" target="staff_stock_rec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_receipt_po" value="Click “Back to PO”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_rec5" target="staff_stock_rec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_return_list_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_returns" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_return_detail_list" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_detail" target="staff_stock_returns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_inspection_detail" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_inspect" target="staff_stock_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_pending_list" value="Click “Back to Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_pending" target="staff_stock_returns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_intake_list" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_intake" target="staff_stock_returns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_select_purchase" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_select" target="staff_stock_intake">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_new_return_list" value="Click “Back to Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="staff_stock_newreturn" target="staff_stock_returns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="admin-flow" name="Admin Screen Flow">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="3200" pageHeight="5260" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="home" value="Home Page" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="105" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="login" value="Login" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="400" y="105" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="hub" value="Admin Dashboard" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="35" y="330" width="255" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="change_password" value="Change Password" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="400" y="315" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="confirm_logout" value="Confirm Logout" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="800" y="315" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="e_login_hub" value="Click “Sign In” [valid credentials]" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="login" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hub_password" value="Click “Change Password”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="change_password">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hub_logout" value="Click “Logout”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="confirm_logout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_acc_list" value="Account List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="445" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_acc_form" value="Account Form" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="445" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_acc_lock" value="Lock/Unlock&lt;br&gt;confirm + reason" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="560" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e1" value="Click “Accounts”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_acc_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e2" value="Click “Add Account” or “Edit”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_list" target="admin_catalog_acc_form">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e3" value="Click “Save”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_form" target="admin_catalog_acc_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e4" value="Click “Lock/Unlock”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_list" target="admin_catalog_acc_lock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e5" value="Click “Confirm”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_lock" target="admin_catalog_acc_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_cat1" value="Category List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="750" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_cat2" value="Category Form&lt;br&gt;add/edit/deactivate" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="710" y="750" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e6" value="Click “Add Category” or “Edit”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_cat1" target="admin_catalog_cat2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e7" value="Click “Save”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_cat2" target="admin_catalog_cat1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e8" value="Click “Categories”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_cat1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_brand1" value="Brand List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1020" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_brand2" value="Brand Form&lt;br&gt;add/edit/deactivate" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="710" y="1020" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e9" value="Click “Add Brand” or “Edit”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_brand1" target="admin_catalog_brand2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e10" value="Click “Save”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_brand2" target="admin_catalog_brand1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e11" value="Click “Brands”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_brand1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_prod1" value="Product List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1290" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_prod2" value="Product Detail&lt;br&gt;and SKU Editor" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="710" y="1290" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e12" value="Click a product" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_prod1" target="admin_catalog_prod2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e13" value="Click “Save”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_prod2" target="admin_catalog_prod2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e14" value="Click “Products &amp; SKUs”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_prod1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_financial" value="Financial Reports&lt;br&gt;filter period/channel" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1630" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_roll" value="Inventory Roll-Forward&lt;br&gt;filter period/SKU" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1780" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_movement" value="Movement History&lt;br&gt;SKU/reference detail" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="1780" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e15" value="Click “Financial Reports”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_financial">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e16" value="Click “Inventory Report”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_catalog_roll">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_catalog_e17" value="Click a movement reference" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_roll" target="admin_catalog_movement">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order1" value="Sales Order List&lt;br&gt;search/filter inline" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order2" value="Sales Order Detail&lt;br&gt;selected order" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="680" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e1" value="Click an order" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order1" target="admin_orders_order2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order3" value="Confirm Order&lt;br&gt;{Pending Confirmation}" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e2" value="Click “Confirm Order”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order2" target="admin_orders_order3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order4" value="Order Detail&lt;br&gt;Confirmed" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e3" value="Click “Confirm”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order3" target="admin_orders_order4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order5" value="Dispatch Preparation&lt;br&gt;{Confirmed}" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e4" value="Click “Prepare Dispatch”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order4" target="admin_orders_order5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order6" value="Order Detail&lt;br&gt;Dispatched" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e5" value="Click “Dispatch”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order5" target="admin_orders_order6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order7" value="Delivery Outcome&lt;br&gt;{Dispatched}" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2430" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e6" value="Click “Record Delivery”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order6" target="admin_orders_order7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_order8" value="Order Detail&lt;br&gt;Delivered / Failed" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2780" y="2335" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e7" value="Click “Save Outcome”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order7" target="admin_orders_order8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e8" value="Click “Sales Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_cancel_popup" value="Cancel by Store&lt;br&gt;reason + refund effect" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="700" y="2595" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_cancelled" value="Order Detail&lt;br&gt;Cancelled / Refund Pending" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="2595" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e9" value="Click “Cancel Order”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order2" target="admin_orders_cancel_popup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e10" value="Click “Confirm Cancellation”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_cancel_popup" target="admin_orders_cancelled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_pos1" value="POS Sale&lt;br&gt;search SKU + edit lines" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="2930" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_pos2" value="Payment Summary" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="800" y="2930" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e11" value="Click “Review Payment”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos1" target="admin_orders_pos2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_pos3" value="Sale Receipt" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="2930" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e12" value="Click “Confirm Payment”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos2" target="admin_orders_pos3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e13" value="Click “Counter Sales”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_orders_e14" value="Click “Confirm Payment” [failed; draft retained]" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos2" target="admin_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_stock" value="Stock List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="3550" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_sku" value="SKU Stock Detail" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="3550" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_adjust" value="Stock Count&lt;br&gt;actual count + reason" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="3550" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_movement" value="Movement History&lt;br&gt;read only" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="3680" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e1" value="Click “Inventory”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_stock_stock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e2" value="Click a SKU" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_stock" target="admin_stock_sku">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e3" value="Click “Adjust Stock”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_sku" target="admin_stock_adjust">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e4" value="Click “Confirm Adjustment”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_adjust" target="admin_stock_sku">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e5" value="Click “View Movements”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_sku" target="admin_stock_movement">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_supplier_list" value="Supplier List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="3900" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_supplier_form" value="Supplier Form" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="3900" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e6" value="Click “Suppliers”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_stock_supplier_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e7" value="Click “Add Supplier” or “Edit”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_supplier_list" target="admin_stock_supplier_form">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e8" value="Click “Save”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_supplier_form" target="admin_stock_supplier_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_po_list" value="Purchase Order List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="4065" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_po_editor" value="PO Editor&lt;br&gt;supplier + SKU/qty/cost" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="4065" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_po_detail" value="PO Detail&lt;br&gt;ordered/received/remaining" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="4065" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e9" value="Click “Purchase Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_stock_po_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e10" value="Click “Create PO”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_list" target="admin_stock_po_editor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e11" value="Click “Submit PO”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_editor" target="admin_stock_po_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e12" value="Click a purchase order" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_list" target="admin_stock_po_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_rec2" value="Goods Receipt Form&lt;br&gt;actual items" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="810" y="4345" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_rec3" value="Confirm Receipt" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="4345" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e14" value="Click “Review Receipt”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_rec2" target="admin_stock_rec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_rec4" value="Receipt Detail&lt;br&gt;stock + movement updated" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="4345" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e15" value="Click “Confirm Receipt”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_rec3" target="admin_stock_rec4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e16" value="Click “Receive Stock”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_detail" target="admin_stock_rec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_return_list" value="Return Request List" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_return_detail" value="Return Detail&lt;br&gt;original order items" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_inspect" value="Inspection Form&lt;br&gt;condition/evidence" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_decision" value="Approve / Reject&lt;br&gt;reason + disposition" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_approved" value="Return Detail&lt;br&gt;Approved / Rejected" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e17" value="Click “Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="hub" target="admin_stock_return_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e18" value="Click a return request" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_list" target="admin_stock_return_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e19" value="Click “Inspect”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_detail" target="admin_stock_inspect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e20" value="Click “Submit Inspection”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_inspect" target="admin_stock_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e21" value="Click “Review Inspection”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_detail" target="admin_stock_decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e22" value="Click “Approve” or “Reject”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_decision" target="admin_stock_approved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_intake" value="In-Store Return Intake&lt;br&gt;find original purchase" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="690" y="4885" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e23" value="Click “New In-store Return”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_list" target="admin_stock_intake">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e24" value="Click “Submit Intake”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_intake" target="admin_stock_return_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_refund" value="Refund Form&lt;br&gt;{Approved + refund due}" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2130" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_refund_state" value="Return Detail&lt;br&gt;Refund Pending / Refunded" style="whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;strokeColor=#000000;fillColor=#FFFFFF;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="2490" y="4660" width="250" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e25" value="Click “Create Refund”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_approved" target="admin_stock_refund">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_stock_e26" value="Click “Complete Refund”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_refund" target="admin_stock_refund_state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_home_login" value="Click “Login”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="home" target="login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_login_home" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="login" target="home">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_password_hub" value="Click “Back” or save successfully" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="change_password" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_logout_hub" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="confirm_logout" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_logout_login" value="Click “Confirm Logout”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="confirm_logout" target="login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_accounts_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_list" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_account_form" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_form" target="admin_catalog_acc_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_account_lock" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_acc_lock" target="admin_catalog_acc_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_categories_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_cat1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_category_form" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_cat2" target="admin_catalog_cat1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_brands_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_brand1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_brand_form" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_brand2" target="admin_catalog_brand1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_products_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_prod1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_product_detail" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_prod2" target="admin_catalog_prod1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_financial_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_financial" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_inventory_report_dashboard" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_roll" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_movement_report" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_catalog_movement" target="admin_catalog_roll">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_order_list" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_order_detail" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order2" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_admin_confirm_order" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order3" target="admin_orders_order2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_confirmed" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order4" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_dispatch_prep" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order5" target="admin_orders_order4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_dispatched" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order6" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_admin_delivery" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order7" target="admin_orders_order6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_outcome" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_order8" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_store_cancel" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_cancel_popup" target="admin_orders_order2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_cancelled_list" value="Click “Back to Orders”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_cancelled" target="admin_orders_order1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_pos" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos1" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_admin_payment" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos2" target="admin_orders_pos1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_receipt" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_orders_pos3" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_stock" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_stock" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_sku" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_sku" target="admin_stock_stock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_stock_adjust" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_adjust" target="admin_stock_sku">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_stock_movement" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_movement" target="admin_stock_sku">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_suppliers" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_supplier_list" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_supplier_form" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_supplier_form" target="admin_stock_supplier_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_po_list" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_list" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_po_editor" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_editor" target="admin_stock_po_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_po_detail" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_po_detail" target="admin_stock_po_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_receipt_form" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_rec2" target="admin_stock_po_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_admin_receipt" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_rec3" target="admin_stock_rec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_receipt_detail" value="Click “Back to PO”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_rec4" target="admin_stock_po_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_returns" value="Click “Dashboard”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_list" target="hub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_return_detail" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_return_detail" target="admin_stock_return_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_inspection" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_inspect" target="admin_stock_return_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_admin_decision" value="Click “Cancel”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_decision" target="admin_stock_return_detail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_decision_state" value="Click “Back to Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_approved" target="admin_stock_return_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_intake" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_intake" target="admin_stock_return_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_refund" value="Click “Back”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_refund" target="admin_stock_approved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="back_admin_refund_state" value="Click “Back to Returns”" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;endArrow=block;endFill=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin_stock_refund_state" target="admin_stock_return_list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
