@@ -20,22 +20,22 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "legacy_sku", unique = true, length = 50)
     private String sku;
 
     @Column(nullable = false, length = 200)
     private String name;
 
-    @Column(length = 100)
+    @Column(name = "legacy_brand", length = 100)
     private String brand;
 
-    @Column(length = 100)
+    @Column(name = "legacy_category", length = 100)
     private String category;
 
-    @Column(nullable = false, precision = 19, scale = 2)
+    @Column(name = "legacy_price", precision = 19, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "stock_quantity", nullable = false)
+    @Column(name = "legacy_stock_quantity")
     private int stockQuantity;
 
     @Column(columnDefinition = "TEXT")

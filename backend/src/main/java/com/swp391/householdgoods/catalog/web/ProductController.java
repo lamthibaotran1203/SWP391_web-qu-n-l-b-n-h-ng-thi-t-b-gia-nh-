@@ -1,12 +1,14 @@
 package com.swp391.householdgoods.catalog.web;
 
 import com.swp391.householdgoods.catalog.application.ProductService;
+import com.swp391.householdgoods.catalog.application.CatalogQueryService;
 import com.swp391.householdgoods.catalog.application.dto.CreateProductRequest;
 import com.swp391.householdgoods.catalog.application.dto.ProductResponse;
 import com.swp391.householdgoods.common.api.ApiEnvelope;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,9 +27,11 @@ import java.math.BigDecimal;
 @RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService service;
+    private final CatalogQueryService catalog;
 
-    public ProductController(ProductService service) {
+    public ProductController(ProductService service, CatalogQueryService catalog) {
         this.service = service;
+        this.catalog = catalog;
     }
 
     @GetMapping
@@ -45,8 +49,12 @@ public class ProductController {
         if (brand != null && brand.trim().length() > 100 || category != null && category.trim().length() > 100) {
             throw new IllegalArgumentException("Bộ lọc không hợp lệ.");
         }
-        return new ApiEnvelope<>(service.findPublic(search, brand, category, minPrice, maxPrice,
-                PageRequest.of(safePage, safeSize, sortOf(sort))));
+        var catalogPage = catalog.page(search, brand, category, minPrice, maxPrice,
+                sort, safePage, safeSize);
+        var products = catalogPage.items().stream().map(ProductResponse::from).toList();
+        return new ApiEnvelope<>(new PageImpl<>(products,
+                PageRequest.of(catalogPage.page(), catalogPage.size(), sortOf(sort)),
+                catalogPage.totalElements()));
     }
 
     private Sort sortOf(String value) {
@@ -63,7 +71,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     ApiEnvelope<ProductResponse> get(@PathVariable Long id) {
-        return new ApiEnvelope<>(service.findById(id));
+        return new ApiEnvelope<>(ProductResponse.from(catalog.sku(id)));
     }
 
     @PostMapping
