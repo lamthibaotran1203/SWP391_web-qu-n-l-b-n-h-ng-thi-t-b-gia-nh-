@@ -80,11 +80,13 @@ describe('StaffOrdersPage', () => {
     expect(screen.getByText('Nguyễn Minh Anh')).toBeInTheDocument()
     expect(screen.getAllByText('Nhân viên')).toHaveLength(2)
 
+    await user.selectOptions(screen.getByLabelText('Kênh bán'), 'COUNTER')
     await user.selectOptions(screen.getByLabelText('Trạng thái đơn'), 'PROCESSING')
     await user.click(screen.getByRole('button', { name: 'Tìm đơn hàng' }))
 
     await waitFor(() => {
       expect(getSalesOrders).toHaveBeenLastCalledWith(expect.objectContaining({
+        channel: 'COUNTER',
         status: 'PROCESSING',
         page: 0,
         size: 20,

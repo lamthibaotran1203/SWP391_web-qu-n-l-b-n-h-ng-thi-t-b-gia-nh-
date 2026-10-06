@@ -43,6 +43,11 @@ public class CatalogController {
         return new ApiEnvelope<>(service.product(id));
     }
 
+    @GetMapping("/products/{id}/detail")
+    public ApiEnvelope<CatalogProductDetail> productDetail(@PathVariable long id) {
+        return new ApiEnvelope<>(service.productDetail(id));
+    }
+
     @GetMapping("/categories")
     public ApiEnvelope<List<CatalogReference>> categories() {
         return new ApiEnvelope<>(service.categories());

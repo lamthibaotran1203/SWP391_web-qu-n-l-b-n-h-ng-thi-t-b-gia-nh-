@@ -2,25 +2,20 @@ package com.swp391.householdgoods.orders.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import com.swp391.householdgoods.orders.domain.SalesOrder;
+import com.swp391.householdgoods.orders.api.SalesOrderPage;
+import com.swp391.householdgoods.orders.api.SalesOrderSummary;
 import com.swp391.householdgoods.orders.infrastructure.SalesOrderRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class SalesOrderQueryServiceTest {
@@ -32,29 +27,15 @@ class SalesOrderQueryServiceTest {
     private SalesOrderQueryService service;
 
     @Test
-    void searchReturnsPaginationMetadataAndSortsNewestFirst() {
-        when(repository.findAll(
-                        org.mockito.ArgumentMatchers.<Specification<SalesOrder>>any(),
-                        any(Pageable.class)))
-                .thenReturn(new PageImpl<>(List.of(), PageRequest.of(1, 10), 21));
+    void searchReturnsRepositoryPage() {
+        SalesOrderPage<SalesOrderSummary> expected = new SalesOrderPage<>(List.of(), 1, 10, 21, 3);
+        SalesOrderSearch search = new SalesOrderSearch(null, null, null, null, null, null);
+        when(repository.search(search, 1, 10)).thenReturn(expected);
 
-        SalesOrderPage<SalesOrderSummary> result = service.search(
-                new SalesOrderSearch(null, null, null, null, null, null),
-                1,
-                10);
+        SalesOrderPage<SalesOrderSummary> result = service.search(search, 1, 10);
 
-        assertThat(result.content()).isEmpty();
-        assertThat(result.page()).isEqualTo(1);
-        assertThat(result.size()).isEqualTo(10);
-        assertThat(result.totalElements()).isEqualTo(21);
-        assertThat(result.totalPages()).isEqualTo(3);
-
-        ArgumentCaptor<Pageable> pageable = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findAll(
-                org.mockito.ArgumentMatchers.<Specification<SalesOrder>>any(),
-                pageable.capture());
-        assertThat(pageable.getValue().getSort().getOrderFor("placedAt").isDescending()).isTrue();
-        assertThat(pageable.getValue().getSort().getOrderFor("id").isDescending()).isTrue();
+        assertThat(result).isEqualTo(expected);
+        verify(repository).search(search, 1, 10);
     }
 
     @Test
@@ -73,19 +54,10 @@ class SalesOrderQueryServiceTest {
     }
 
     @Test
-    void searchPassesThroughRequestedPageAndSize() {
-        when(repository.findAll(
-                        org.mockito.ArgumentMatchers.<Specification<SalesOrder>>any(),
-                        any(Pageable.class)))
-                .thenReturn(new PageImpl<>(List.of(), PageRequest.of(2, 15), 0));
+    void detailsRaiseNotFoundForUnknownOrder() {
+        when(repository.findDetails(404)).thenReturn(java.util.Optional.empty());
 
-        service.search(new SalesOrderSearch(null, null, null, null, null, null), 2, 15);
-
-        ArgumentCaptor<Pageable> pageable = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findAll(
-                org.mockito.ArgumentMatchers.<Specification<SalesOrder>>any(),
-                pageable.capture());
-        assertThat(pageable.getValue().getPageNumber()).isEqualTo(2);
-        assertThat(pageable.getValue().getPageSize()).isEqualTo(15);
+        assertThatThrownBy(() -> service.getDetails(404))
+                .isInstanceOf(SalesOrderNotFoundException.class);
     }
 }

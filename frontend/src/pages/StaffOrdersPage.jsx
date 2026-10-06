@@ -2,59 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { getRoleLabel } from '../auth/role-labels'
-import { getSalesOrderDetails, getSalesOrders } from '../api/http'
+import { getSalesOrders } from '../api/http'
+import { OrderDetailsDialog } from './orders/OrderDetailsDialog'
+import { SalesOrdersTable } from './orders/SalesOrdersTable'
+import { orderStatusLabels, paymentStatusLabels } from './orders/order-formatters'
+import '../styles/orders.css'
 
 const pageSize = 20
-
-const orderStatusLabels = {
-  PENDING_PAYMENT: 'Chờ thanh toán',
-  CONFIRMED: 'Đã xác nhận',
-  PROCESSING: 'Đang xử lý',
-  SHIPPED: 'Đang giao',
-  DELIVERED: 'Đã giao',
-  CANCELLED: 'Đã hủy',
-}
-
-const paymentStatusLabels = {
-  PENDING: 'Chờ thanh toán',
-  PAID: 'Đã thanh toán',
-  FAILED: 'Thanh toán lỗi',
-  REFUNDED: 'Đã hoàn tiền',
-  COD: 'Thanh toán khi nhận hàng',
-}
-
-const channelLabels = {
-  ONLINE: 'Trực tuyến',
-  IN_STORE: 'Tại cửa hàng',
-}
-
-const paymentMethodLabels = {
-  COD: 'COD',
-  CASH: 'Tiền mặt',
-  CARD: 'Thẻ',
-  BANK_TRANSFER: 'Chuyển khoản',
-  ONLINE_GATEWAY: 'Cổng thanh toán',
-}
-
-function formatLabel(labels, value) {
-  return labels[value] || value?.replaceAll('_', ' ') || '—'
-}
-
-function formatCurrency(amount) {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-    maximumFractionDigits: 0,
-  }).format(amount)
-}
-
-function formatDate(value) {
-  return new Intl.DateTimeFormat('vi-VN', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'Asia/Ho_Chi_Minh',
-  }).format(new Date(value))
-}
 
 function StaffOrdersContent({ user }) {
   const [draft, setDraft] = useState({
@@ -177,7 +131,7 @@ function StaffOrdersContent({ user }) {
             <select className="form-select" id="order-channel" name="channel" value={draft.channel} onChange={updateDraft}>
               <option value="">Tất cả kênh</option>
               <option value="ONLINE">Trực tuyến</option>
-              <option value="IN_STORE">Tại cửa hàng</option>
+              <option value="COUNTER">Tại quầy</option>
             </select>
           </div>
           <div>
@@ -225,88 +179,16 @@ function StaffOrdersContent({ user }) {
           </div>
         )}
 
-        <section className="orders-table-card" aria-label="Danh sách đơn hàng">
-          <div className="orders-table-heading">
-            <div>
-              <h2>Danh sách đơn</h2>
-              <p>Đơn mới nhất được hiển thị trước.</p>
-            </div>
-            {loading && <span className="orders-loading" role="status">Đang tải…</span>}
-          </div>
-          <div className="table-responsive">
-            <table className="table orders-table align-middle mb-0">
-              <thead>
-                <tr>
-                  <th scope="col">Mã đơn / Thời gian</th>
-                  <th scope="col">Khách hàng</th>
-                  <th scope="col">Kênh</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Thanh toán</th>
-                  <th scope="col" className="text-end">Tổng tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                {!loading && !error && orders.map((order) => (
-                  <tr key={order.id}>
-                    <td>
-                      <button
-                        className="order-number-button"
-                        type="button"
-                        onClick={() => setSelectedOrderId(order.id)}
-                        aria-label={`Xem chi tiết đơn ${order.orderNumber}`}
-                      >
-                        {order.orderNumber}
-                      </button>
-                      <span className="orders-cell-note">{formatDate(order.placedAt)}</span>
-                    </td>
-                    <td>
-                      <strong>{order.customerName}</strong>
-                      <span className="orders-cell-note">{order.customerPhone || order.customerEmail || '—'}</span>
-                    </td>
-                    <td>{formatLabel(channelLabels, order.channel)}</td>
-                    <td><span className={`order-badge order-badge--${order.status.toLowerCase()}`}>{formatLabel(orderStatusLabels, order.status)}</span></td>
-                    <td>{formatLabel(paymentStatusLabels, order.paymentStatus)}</td>
-                    <td className="text-end fw-semibold">{formatCurrency(order.totalAmount)}</td>
-                  </tr>
-                ))}
-                {!loading && !error && orders.length === 0 && (
-                  <tr>
-                    <td className="orders-empty-cell" colSpan="6">
-                      <span className="orders-empty-icon" aria-hidden="true">⌕</span>
-                      <strong>Chưa tìm thấy đơn hàng</strong>
-                      <span>Thử thay đổi từ khóa hoặc bộ lọc để tìm kết quả khác.</span>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-          <footer className="orders-pagination">
-            <span>
-              {result?.totalElements
-                ? `Trang ${page + 1} / ${totalPages}`
-                : 'Không có kết quả'}
-            </span>
-            <div>
-              <button
-                className="btn btn-sm btn-outline-secondary"
-                type="button"
-                onClick={() => changePage(Math.max(0, page - 1))}
-                disabled={loading || page === 0 || totalPages === 0}
-              >
-                Trước
-              </button>
-              <button
-                className="btn btn-sm btn-outline-secondary"
-                type="button"
-                onClick={() => changePage(page + 1)}
-                disabled={loading || page + 1 >= totalPages}
-              >
-                Sau
-              </button>
-            </div>
-          </footer>
-        </section>
+        <SalesOrdersTable
+          orders={orders}
+          loading={loading}
+          page={page}
+          totalPages={totalPages}
+          totalElements={result?.totalElements ?? 0}
+          showResults={!error}
+          onSelectOrder={setSelectedOrderId}
+          onPageChange={changePage}
+        />
       </div>
 
       {selectedOrderId !== null && (
@@ -316,113 +198,6 @@ function StaffOrdersContent({ user }) {
         />
       )}
     </main>
-  )
-}
-
-function OrderDetailsDialog({ orderId, onClose }) {
-  const [order, setOrder] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    let active = true
-    getSalesOrderDetails(orderId)
-      .then((details) => {
-        if (active) setOrder(details)
-      })
-      .catch((requestError) => {
-        if (active) setError(requestError.message || 'Không tải được chi tiết đơn hàng.')
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
-    return () => {
-      active = false
-    }
-  }, [orderId])
-
-  return (
-    <div className="order-dialog-backdrop" onClick={onClose}>
-      <section
-        className="order-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="order-dialog-title"
-        onClick={(event) => event.stopPropagation()}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape') onClose()
-        }}
-      >
-        <header className="order-dialog-header">
-          <div>
-            <p className="orders-eyebrow">CHI TIẾT ĐƠN HÀNG</p>
-            <h2 id="order-dialog-title">{order?.orderNumber || 'Đơn hàng'}</h2>
-          </div>
-          <button className="order-dialog-close" type="button" onClick={onClose} aria-label="Đóng chi tiết" autoFocus>
-            ×
-          </button>
-        </header>
-        {loading && <p role="status">Đang tải chi tiết đơn hàng…</p>}
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
-        {order && (
-          <div className="order-details-body">
-            <div className="order-details-summary">
-              <div>
-                <span>Ngày đặt</span>
-                <strong>{formatDate(order.placedAt)}</strong>
-              </div>
-              <div>
-                <span>Kênh</span>
-                <strong>{formatLabel(channelLabels, order.channel)}</strong>
-              </div>
-              <div>
-                <span>Trạng thái</span>
-                <strong>{formatLabel(orderStatusLabels, order.status)}</strong>
-              </div>
-              <div>
-                <span>Thanh toán</span>
-                <strong>{formatLabel(paymentStatusLabels, order.paymentStatus)}</strong>
-              </div>
-              <div>
-                <span>Phương thức</span>
-                <strong>{formatLabel(paymentMethodLabels, order.paymentMethod)}</strong>
-              </div>
-            </div>
-            <section className="order-detail-section">
-              <h3>Thông tin khách hàng</h3>
-              <p><strong>{order.customerName}</strong></p>
-              {order.customerPhone && <p>{order.customerPhone}</p>}
-              {order.customerEmail && <p>{order.customerEmail}</p>}
-              {order.shippingAddress && <p>{order.shippingAddress}</p>}
-            </section>
-            <section className="order-detail-section">
-              <h3>Sản phẩm</h3>
-              {order.items.length === 0 ? (
-                <p>Đơn hàng chưa có sản phẩm.</p>
-              ) : (
-                <div className="order-line-list">
-                  {order.items.map((item) => (
-                    <div className="order-line" key={item.id}>
-                      <div>
-                        <strong>{item.productName}</strong>
-                        <span>{item.productSku} · {item.quantity} × {formatCurrency(item.unitPrice)}</span>
-                      </div>
-                      <strong>{formatCurrency(item.lineTotal)}</strong>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-            <section className="order-detail-section order-totals">
-              <p><span>Tạm tính</span><strong>{formatCurrency(order.subtotal)}</strong></p>
-              <p><span>Giảm giá</span><strong>−{formatCurrency(order.discountAmount)}</strong></p>
-              <p><span>Phí giao hàng</span><strong>{formatCurrency(order.shippingFee)}</strong></p>
-              <p className="order-grand-total"><span>Tổng thanh toán</span><strong>{formatCurrency(order.totalAmount)}</strong></p>
-            </section>
-          </div>
-        )}
-      </section>
-    </div>
   )
 }
 

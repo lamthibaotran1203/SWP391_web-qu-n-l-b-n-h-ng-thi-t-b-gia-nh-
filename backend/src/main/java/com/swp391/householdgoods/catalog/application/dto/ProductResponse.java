@@ -17,20 +17,23 @@ public record ProductResponse(
         String imageUrl,
         ProductStatus status,
         Instant createdAt,
-        Instant updatedAt) {
+        Instant updatedAt,
+        Long productId,
+        Long productVersion,
+        Long skuVersion) {
     public static ProductResponse from(CatalogSku sku) {
         return new ProductResponse(
                 sku.skuId(),
                 sku.skuCode(),
-                sku.skuName() == null || sku.skuName().isBlank() ? sku.productName() : sku.skuName(),
+                sku.productName(),
                 sku.brandName(),
                 sku.categoryName(),
                 new BigDecimal(sku.sellingPrice()),
                 sku.availableQuantity(),
                 null,
                 sku.imageUrl(),
-                sku.purchasable() ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
+                ProductStatus.ACTIVE,
                 null,
-                null);
+                null, sku.productId(), sku.productVersion(), sku.skuVersion());
     }
 }
