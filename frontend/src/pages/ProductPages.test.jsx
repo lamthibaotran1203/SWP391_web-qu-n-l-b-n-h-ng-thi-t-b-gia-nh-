@@ -6,7 +6,11 @@ import { getProducts } from '../api/productApi'
 import { ProductListPage } from './ProductListPage'
 
 vi.mock('../api/productApi', () => ({ getProducts: vi.fn(), getProductById: vi.fn() }))
-vi.mock('../features/catalog/api', () => ({ getCatalogBrands: vi.fn().mockResolvedValue([]), getCatalogCategories: vi.fn().mockResolvedValue([]) }))
+vi.mock('../features/catalog/api', () => ({
+  formatVnd: (value) => `${value} ₫`,
+  getCatalogBrands: vi.fn().mockResolvedValue([]),
+  getCatalogCategories: vi.fn().mockResolvedValue([]),
+}))
 const page = (name) => ({ content: [{ id: 42, productId: 100, name, sku: 'SKU', price: '200000', stockQuantity: 5 }], number: 0, totalPages: 1, totalElements: 1 })
 beforeEach(() => { vi.clearAllMocks(); getProducts.mockResolvedValue(page('Nồi inox')) })
 afterEach(cleanup)

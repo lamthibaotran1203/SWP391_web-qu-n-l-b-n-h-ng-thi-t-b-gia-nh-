@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { getProductDetail } from '../api/productApi'
+import { AppFooter, AppHeader } from '../components/AppShell'
 import { formatVnd } from '../features/catalog/api'
 import { useAuth } from '../auth/useAuth'
 
@@ -23,13 +24,17 @@ export function ProductDetailPage({ onAddToCart }) {
     return () => { active = false; controller.abort() }
   }, [id, requestKey])
 
-  if (!current) return <main className="container py-5" role="status">Đang tải chi tiết sản phẩm...</main>
-  if (current.error) return <main className="container py-5">
-    <Link to="/products">← Danh sách sản phẩm</Link>
-    <div className="alert alert-danger mt-4" role="alert">{current.error.status === 404
-      ? 'Sản phẩm không tồn tại hoặc hiện không được công khai.'
-      : current.error.message || 'Không tải được chi tiết sản phẩm.'}</div>
-    {current.error.status !== 404 && <button className="btn btn-dark" onClick={() => setRetry((value) => value + 1)}>Thử lại</button>}
+  if (!current) return <main className="catalog-page min-vh-100"><AppHeader /><div className="catalog-loading" role="status"><span className="loading-spinner" />Đang tải chi tiết sản phẩm...</div><AppFooter /></main>
+  if (current.error) return <main className="catalog-page min-vh-100">
+    <AppHeader />
+    <div className="container py-5">
+      <Link className="back-link" to="/products">← Danh sách sản phẩm</Link>
+      <div className="alert alert-danger mt-4" role="alert">{current.error.status === 404
+        ? 'Sản phẩm không tồn tại hoặc hiện không được công khai.'
+        : current.error.message || 'Không tải được chi tiết sản phẩm.'}</div>
+      {current.error.status !== 404 && <button className="btn btn-dark" onClick={() => setRetry((value) => value + 1)}>Thử lại</button>}
+    </div>
+    <AppFooter />
   </main>
 
   return <ProductDetailContent key={requestKey + ':' + searchParams.get('sku')}
@@ -73,8 +78,9 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
   }
 
   return <main className="catalog-page min-vh-100">
-    <nav className="catalog-nav container"><Link to="/" className="brand-link">Gia Dụng Việt</Link><Link to="/products">← Danh sách</Link></nav>
-    <section className="container py-5 product-detail">
+    <AppHeader />
+    <div className="container product-detail-breadcrumb"><Link to="/products">← Quay lại danh sách sản phẩm</Link></div>
+    <section className="container product-detail">
       <div>
         <div className="detail-image">{image && failedImage !== image
           ? <img src={image} alt={product.name} onError={() => setFailedImage(image)} style={{ objectFit: 'contain' }} />
@@ -86,7 +92,7 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
           </button>)}
         </div>}
       </div>
-      <div>
+      <div className="product-detail-copy">
         <p className="eyebrow">{product.categoryName}</p>
         <h1>{product.name}</h1>
         <p>Thương hiệu: <strong>{product.brandName}</strong></p>
@@ -118,5 +124,6 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
         </form>
       </div>
     </section>
+    <AppFooter />
   </main>
 }

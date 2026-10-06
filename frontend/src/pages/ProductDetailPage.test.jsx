@@ -22,7 +22,7 @@ it('loads public product metadata and automatically selects its only SKU', async
   await screen.findByRole('heading', { name: 'Nồi inox' })
   expect(getProductDetail).toHaveBeenCalledWith('100', expect.objectContaining({ signal: expect.any(AbortSignal) }))
   expect(screen.getByText(/Đáy dày/)).toBeInTheDocument()
-  expect(screen.getByText('HomeMart')).toBeInTheDocument()
+  expect(screen.getAllByText('HomeMart').length).toBeGreaterThan(0)
   expect(screen.getByLabelText('Phiên bản / quy cách')).toHaveValue('2')
   expect(screen.getByText('Còn 5 sản phẩm')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Thêm vào giỏ hàng' })).toBeDisabled()

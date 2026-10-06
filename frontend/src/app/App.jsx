@@ -15,6 +15,8 @@ import { VerifyEmailPage } from '../pages/VerifyEmailPage'
 import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { ProductListPage } from '../pages/ProductListPage'
 import { StaffOrdersPage } from '../pages/StaffOrdersPage'
+import { SuppliersPage } from '../pages/SuppliersPage'
+import { CreatePurchaseOrderPage } from '../pages/CreatePurchaseOrderPage'
 
 export function App() {
   return (
@@ -30,6 +32,8 @@ export function App() {
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/staff/orders" element={<StaffOrdersPage />} />
+          <Route path="/manager/suppliers" element={<SuppliersPage />} />
+          <Route path="/manager/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

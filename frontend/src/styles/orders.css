@@ -463,3 +463,92 @@
     padding-left: 0.9rem;
   }
 }
+
+/* HomeMart shared workspace treatment */
+.orders-page {
+  color: var(--hm-ink);
+  background: var(--hm-page);
+}
+
+.orders-content {
+  padding-top: 2.75rem;
+}
+
+.orders-title-row h1 {
+  color: var(--hm-ink);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 850;
+}
+
+.orders-eyebrow {
+  color: var(--hm-primary);
+}
+
+.orders-total,
+.orders-filter-card,
+.orders-table-card {
+  border-color: var(--hm-line);
+  border-radius: var(--hm-radius-lg);
+  box-shadow: var(--hm-shadow-sm);
+}
+
+.orders-total strong,
+.order-number-button {
+  color: var(--hm-primary);
+}
+
+.orders-filter-card {
+  padding: 1.25rem;
+}
+
+.orders-filter-card .form-control,
+.orders-filter-card .form-select {
+  border-color: #d7e1dc;
+}
+
+.orders-table-heading {
+  padding: 1.35rem 1.4rem 1rem;
+}
+
+.orders-table thead th {
+  border-color: var(--hm-line);
+  color: #687770;
+  background: var(--hm-surface-soft);
+}
+
+.orders-table tbody td {
+  border-color: #edf2ef;
+}
+
+.orders-table tbody tr:hover {
+  background: #f9fcfa;
+}
+
+.order-badge {
+  color: var(--hm-primary-dark);
+  background: var(--hm-primary-soft);
+}
+
+.orders-pagination {
+  border-color: var(--hm-line);
+  background: #fbfcfb;
+}
+
+.order-dialog-backdrop {
+  background: rgb(11 31 24 / 62%);
+  backdrop-filter: blur(4px);
+}
+
+.order-dialog {
+  border-radius: var(--hm-radius-lg);
+  box-shadow: 0 2rem 5rem rgb(0 0 0 / 24%);
+}
+
+.order-dialog-header h2 {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 850;
+}
+
+.order-details-summary {
+  background: var(--hm-surface-soft);
+}

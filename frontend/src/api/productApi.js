@@ -43,24 +43,3 @@ function toProduct(sku) {
     status: 'ACTIVE',
   }
 }
-
-export function createProduct(data) {
-  return apiRequest('/api/v1/products', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-}
-
-export function updateProduct(id, data) {
-  return apiRequest(`/api/v1/products/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-}
-
-export function deleteProduct(id, { productVersion, skuVersion }) {
-  const params = new URLSearchParams({ productVersion, skuVersion })
-  return apiRequest(`/api/v1/products/${encodeURIComponent(id)}?${params}`, { method: 'DELETE' })
-}
