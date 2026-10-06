@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiRequest, getSalesOrders, refreshCsrfToken, updateCurrentUser } from './http'
+import { apiRequest, changeOwnPassword, getSalesOrders, refreshCsrfToken, updateCurrentUser } from './http'
 
 function jsonResponse(body, status = 200) {
   return {
@@ -35,6 +35,18 @@ describe('API client CSRF flow', () => {
     expect(requestOptions.headers.get('X-XSRF-TOKEN')).toBe('server-token')
     expect(requestOptions.credentials).toBe('same-origin')
     expect(result).toEqual({ saved: true })
+  })
+
+  it('does not automatically replay a password change when CSRF expires', async () => {
+    fetch.mockResolvedValueOnce(jsonResponse({ data: { headerName: 'X-XSRF-TOKEN', token: 'fresh-token' } }))
+      .mockResolvedValueOnce(jsonResponse({ code: 'CSRF_INVALID', detail: 'Phiên đã hết hạn.' }, 403))
+    await refreshCsrfToken()
+    await expect(changeOwnPassword('old password', 'new password', 'new password')).rejects.toMatchObject({ status: 403 })
+    expect(fetch).toHaveBeenCalledTimes(2)
+    const [path, options] = fetch.mock.calls[1]
+    expect(path).toBe('/api/v1/auth/password')
+    expect(JSON.parse(options.body)).toEqual({ currentPassword: 'old password', newPassword: 'new password', confirmation: 'new password' })
+    expect(options.headers.get('X-XSRF-TOKEN')).toBe('fresh-token')
   })
 
   it('sends supported order search filters as query parameters', async () => {

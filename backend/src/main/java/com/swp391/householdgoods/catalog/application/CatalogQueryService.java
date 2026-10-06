@@ -1,6 +1,7 @@
 package com.swp391.householdgoods.catalog.application;
 
 import com.swp391.householdgoods.catalog.api.CatalogPage;
+import com.swp391.householdgoods.catalog.api.CatalogProductDetail;
 import com.swp391.householdgoods.catalog.api.CatalogReference;
 import com.swp391.householdgoods.catalog.api.CatalogSku;
 import com.swp391.householdgoods.catalog.infrastructure.CatalogRepository;
@@ -57,6 +58,11 @@ public class CatalogQueryService {
 
     public List<CatalogSku> product(long id) {
         return require(repository.byProduct(id));
+    }
+
+    public CatalogProductDetail productDetail(long id) {
+        // Same repeatable-read snapshot: public guards, eligible SKUs and metadata.
+        return repository.productDetail(id, require(repository.byProduct(id)));
     }
 
     public List<CatalogReference> categories() {

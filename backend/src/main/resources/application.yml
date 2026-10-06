@@ -1,4 +1,7 @@
-﻿spring:
+spring:
+  jackson:
+    deserialization:
+      accept-float-as-int: false
   application:
     name: household-goods-backend
   datasource:
@@ -66,7 +69,7 @@ app:
 
   mail:
     from-email: ${MAIL_FROM_EMAIL:}
-    from-name: ${MAIL_FROM_NAME:Gia Dá»¥ng Viá»‡t}
+    from-name: ${MAIL_FROM_NAME:Gia Dụng Việt}
 
   bootstrap-manager:
     email: ${BOOTSTRAP_MANAGER_EMAIL:}

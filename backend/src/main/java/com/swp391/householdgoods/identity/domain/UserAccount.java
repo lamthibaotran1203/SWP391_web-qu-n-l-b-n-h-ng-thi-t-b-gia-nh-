@@ -95,6 +95,11 @@ public class UserAccount {
                 now);
     }
 
+    public void changePassword(String encodedPassword, Instant now) {
+        this.passwordHash = encodedPassword;
+        this.updatedAt = now;
+    }
+
     /**
      * Tạo tài khoản Customer mới khi đăng ký.
      * Tài khoản chưa được kích hoạt cho đến khi xác minh email.
