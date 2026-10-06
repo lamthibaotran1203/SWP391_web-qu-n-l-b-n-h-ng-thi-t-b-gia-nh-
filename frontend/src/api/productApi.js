@@ -8,11 +8,34 @@ export function getProducts({ search = '', brand = '', category = '', minPrice =
   if (String(minPrice).trim()) params.set('minPrice', String(minPrice).trim())
   if (String(maxPrice).trim()) params.set('maxPrice', String(maxPrice).trim())
   if (sort) params.set('sort', sort)
-  return apiRequest(`/api/v1/products?${params.toString()}`)
+  return apiRequest(`/api/v1/catalog/skus?${params.toString()}`).then((result) => ({
+    content: result.items.map(toProduct),
+    number: result.page,
+    size: result.size,
+    totalElements: result.totalElements,
+    totalPages: Math.ceil(result.totalElements / result.size),
+  }))
 }
 
 export function getProductById(id) {
-  return apiRequest(`/api/v1/products/${id}`)
+  return apiRequest(`/api/v1/catalog/skus/${encodeURIComponent(id)}`).then(toProduct)
+}
+
+function toProduct(sku) {
+  return {
+    id: sku.skuId,
+    productId: sku.productId,
+    sku: sku.skuCode,
+    // The card/detail title is the product name; skuName is only the sale-unit label.
+    name: sku.productName || sku.skuName,
+    brand: sku.brandName,
+    category: sku.categoryName,
+    price: sku.sellingPrice,
+    stockQuantity: sku.availableQuantity,
+    description: '',
+    imageUrl: sku.imageUrl,
+    status: sku.purchasable ? 'ACTIVE' : 'INACTIVE',
+  }
 }
 
 export function createProduct(data) {
