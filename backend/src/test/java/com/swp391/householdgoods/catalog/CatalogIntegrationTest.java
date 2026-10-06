@@ -62,7 +62,7 @@ class CatalogIntegrationTest {
         mvc.perform(get("/api/v1/catalog/skus")
                 .param("sort", "oldest")
                 .param("size", "1"))
-            .andExpect(status().isOk()).andExpect(jsonPath("$.data.totalElements").value(2))
+            .andExpect(status().isOk()).andExpect(jsonPath("$.data.totalElements").value(5))
             .andExpect(jsonPath("$.data.items.length()").value(1))
             .andExpect(jsonPath("$.data.items[0].sellingPrice").value("180000"))
             .andExpect(jsonPath("$.data.items[0].availableQuantity").value(3))
@@ -74,7 +74,8 @@ class CatalogIntegrationTest {
                 .param("size", "1"))
             .andExpect(status().isOk()).andExpect(jsonPath("$.data.items[0].availableQuantity").value(0))
             .andExpect(jsonPath("$.data.items[0].purchasable").value(false));
-        assertThat(jdbc.queryForObject("select count(*) from app.hm_stock_movement where posting_key like 'DEMO_OPENING_%'",Integer.class)).isEqualTo(1);
+        // Original fixture plus three photo products; only three have positive opening stock.
+        assertThat(jdbc.queryForObject("select count(*) from app.hm_stock_movement where posting_key like 'DEMO_OPENING_%'",Integer.class)).isEqualTo(3);
         jdbc.update("delete from app.hm_inventory where sku_id=?",sku());
         mvc.perform(get("/api/v1/catalog/skus/"+sku()))
             .andExpect(status().isOk()).andExpect(jsonPath("$.data.availableQuantity").value(0));
@@ -88,8 +89,10 @@ class CatalogIntegrationTest {
         mvc.perform(get("/api/v1/catalog/skus/"+sku())).andExpect(status().isNotFound());
         jdbc.update("update app.hm_sku set is_deleted=false where id=?",sku());
         jdbc.update("update app.hm_brand set is_deleted=true where name='HomeMart Demo'");
-        mvc.perform(get("/api/v1/catalog/skus")).andExpect(status().isOk())
+        mvc.perform(get("/api/v1/catalog/skus").param("brand","HomeMart Demo")).andExpect(status().isOk())
             .andExpect(jsonPath("$.data.totalElements").value(0));
+        mvc.perform(get("/api/v1/catalog/skus")).andExpect(status().isOk())
+            .andExpect(jsonPath("$.data.totalElements").value(3));
     }
     @Test void invalidParametersAre400AndAnonymousWritesStayProtected() throws Exception {
         mvc.perform(get("/api/v1/catalog/skus").param("page","-1")).andExpect(status().isBadRequest());

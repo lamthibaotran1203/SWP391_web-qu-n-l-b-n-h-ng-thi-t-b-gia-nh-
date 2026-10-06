@@ -95,6 +95,8 @@ export function HomePage() {
                     </Link>
                   )}
                 </div>
+                {user.role === 'MANAGER' && <Link className="btn btn-outline-light" to="/manager/catalog">Quản lý sản phẩm</Link>}
+                <Link className="btn btn-outline-light" to="/account/password">Đổi mật khẩu</Link>
                 <button className="btn btn-outline-light" type="button" onClick={logout}>
                   Đăng xuất
                 </button>

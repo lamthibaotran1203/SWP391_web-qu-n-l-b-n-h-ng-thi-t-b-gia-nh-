@@ -142,3 +142,11 @@ export function verifyEmail(token) {
     `/api/v1/auth/verify-email?${query.toString()}`,
   )
 }
+
+export function changeOwnPassword(currentPassword, newPassword, confirmation) {
+  return apiRequest('/api/v1/auth/password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ currentPassword, newPassword, confirmation }),
+  }, false) // Never silently resubmit a credential change after a CSRF failure.
+}

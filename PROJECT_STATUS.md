@@ -98,6 +98,18 @@ Pop-Location
   browser checklist, then integrate UC-10 when its API/page exists. RDS synchronization
   remains deferred; no canonical Backlog status was changed.
 
+## MR !11 integration update (2026-10-07)
+
+- Merged `origin/develop` through `92eb44c` into the UC-13 branch in an isolated worktree.
+  Existing storefront, account and Orders UI changes from `develop` were retained.
+- UC-13 remains the canonical catalog write path at `/api/v1/manager/catalog/products`.
+  Legacy `/api/v1/products` writes remain retired with HTTP 410; public reads retain the
+  product/SKU version fields added on `develop`.
+- Conflict resolution removed duplicated Orders styles from `main.css`; Orders continues to
+  use its dedicated `orders.css`. No changes were made in the active UI working tree.
+- Verification passed: frontend lint, 31 React/client tests and production build; disposable
+  PostgreSQL verification ran all 53 backend tests with zero failures and packaged the JAR.
+
 ## Exact verification commands
 
 From repository root, with Node 24/npm 11 and Docker running:

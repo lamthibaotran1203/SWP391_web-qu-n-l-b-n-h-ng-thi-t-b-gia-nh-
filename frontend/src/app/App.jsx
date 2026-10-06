@@ -6,7 +6,9 @@ import {
 } from 'react-router-dom'
 
 import { AuthProvider } from '../auth/AuthProvider'
+import { CatalogManagementPage } from '../features/catalog/management/CatalogManagementPage'
 import { HomePage } from '../pages/HomePage'
+import { ChangePasswordPage } from '../pages/ChangePasswordPage'
 import { LoginPage } from '../pages/LoginPage'
 import { RegisterPage } from '../pages/RegisterPage'
 import { VerifyEmailPage } from '../pages/VerifyEmailPage'
@@ -20,6 +22,8 @@ export function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/manager/catalog" element={<CatalogManagementPage />} />
+          <Route path="/account/password" element={<ChangePasswordPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />

@@ -17,9 +17,18 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 public class SecurityConfig {
 
     private final SecurityResponseHandlers handlers;
+    private final CredentialSessionFilter credentialSessionFilter;
 
-    public SecurityConfig(SecurityResponseHandlers handlers) {
+    public SecurityConfig(SecurityResponseHandlers handlers, CredentialSessionFilter credentialSessionFilter) {
         this.handlers = handlers;
+        this.credentialSessionFilter = credentialSessionFilter;
+    }
+
+    @Bean
+    org.springframework.boot.web.servlet.FilterRegistrationBean<CredentialSessionFilter> credentialFilterRegistration() {
+        var registration = new org.springframework.boot.web.servlet.FilterRegistrationBean<>(credentialSessionFilter);
+        registration.setEnabled(false); // Runs once inside Spring Security, after context is loaded.
+        return registration;
     }
 
     @Bean
@@ -35,6 +44,8 @@ public class SecurityConfig {
 
         csrfRequestHandler.setCsrfRequestAttributeName("_csrf");
 
+        http.addFilterAfter(credentialSessionFilter,
+                org.springframework.security.web.context.SecurityContextHolderFilter.class);
         http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(csrfRepository)
@@ -61,12 +72,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/me",
                                 "/api/v1/auth/verify-email")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/products/**")
-                        .hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/products/**")
-                        .hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**")
-                        .hasRole("MANAGER")
+                        .requestMatchers("/api/v1/products/**").hasRole("MANAGER")
                         .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register")

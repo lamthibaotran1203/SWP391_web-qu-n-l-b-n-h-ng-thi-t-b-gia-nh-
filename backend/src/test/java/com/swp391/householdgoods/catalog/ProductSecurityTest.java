@@ -3,10 +3,8 @@ package com.swp391.householdgoods.catalog;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.swp391.householdgoods.catalog.application.CatalogQueryService;
-import com.swp391.householdgoods.catalog.application.ProductService;
 import com.swp391.householdgoods.catalog.web.ProductController;
 import com.swp391.householdgoods.common.api.ApiProblemWriter;
 import com.swp391.householdgoods.identity.application.AccountQueryService;
@@ -23,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @Import({SecurityConfig.class, SecurityResponseHandlers.class, ApiProblemWriter.class})
 class ProductSecurityTest {
     @Autowired MockMvc mvc;
-    @MockitoBean ProductService service;
     @MockitoBean CatalogQueryService catalog;
     @MockitoBean AccountQueryService accounts;
 
@@ -35,7 +32,6 @@ class ProductSecurityTest {
                 .andExpect(status().isOk()).andExpect(jsonPath("$.data.productId").value(100))
                 .andExpect(jsonPath("$.data.description").value("Mô tả"))
                 .andExpect(jsonPath("$.data.images[0]").value("/cover.svg"));
-        verifyNoInteractions(service);
     }
 
     @Test void detailReturns404ForHiddenProductsAnd400ForMalformedIds() throws Exception {
@@ -48,7 +44,6 @@ class ProductSecurityTest {
 
     @Test void anonymousCannotWriteEvenWithCsrf() throws Exception {
         mvc.perform(post("/api/v1/products").with(csrf())).andExpect(status().isUnauthorized());
-        verifyNoInteractions(service);
     }
 
     @Test void customersAndStaffCannotCreateUpdateOrDelete() throws Exception {
@@ -57,13 +52,11 @@ class ProductSecurityTest {
             mvc.perform(put("/api/v1/products/123").with(user("test").roles(role)).with(csrf())).andExpect(status().isForbidden());
             mvc.perform(delete("/api/v1/products/123").with(user("test").roles(role)).with(csrf())).andExpect(status().isForbidden());
         }
-        verifyNoInteractions(service);
     }
 
-    @Test void managerStillNeedsCsrfAndCanDeleteWithVersions() throws Exception {
+    @Test void managerStillNeedsCsrfAndLegacyWritesAreRetired() throws Exception {
         mvc.perform(delete("/api/v1/products/123").with(user("manager").roles("MANAGER"))).andExpect(status().isForbidden());
         mvc.perform(delete("/api/v1/products/123").param("productVersion","0").param("skuVersion","0")
-                .with(user("manager").roles("MANAGER")).with(csrf())).andExpect(status().isNoContent());
-        org.mockito.Mockito.verify(service).delete(123L,0L,0L);
+                .with(user("manager").roles("MANAGER")).with(csrf())).andExpect(status().isGone());
     }
 }

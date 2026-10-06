@@ -1,7 +1,6 @@
 package com.swp391.householdgoods.common.api;
 
 import com.swp391.householdgoods.catalog.application.CatalogException;
-import com.swp391.householdgoods.catalog.application.ProductNotFoundException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
 import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
@@ -69,18 +68,6 @@ public class ApiExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    ResponseEntity<ApiProblem> handleProductNotFound(
-            ProductNotFoundException exception,
-            HttpServletRequest request) {
-        return problem(
-                HttpStatus.NOT_FOUND,
-                "PRODUCT_NOT_FOUND",
-                exception.getMessage(),
-                Map.of(),
-                request);
-    }
-
     @ExceptionHandler(SalesOrderNotFoundException.class)
     ResponseEntity<ApiProblem> handleSalesOrderNotFound(
             SalesOrderNotFoundException exception,
@@ -127,6 +114,21 @@ public class ApiExceptionHandler {
                 exception.getMessage(),
                 Map.of(),
                 request);
+    }
+
+    @ExceptionHandler(com.swp391.householdgoods.identity.application.PasswordChangeException.class)
+    ResponseEntity<ApiProblem> handlePasswordChange(
+            com.swp391.householdgoods.identity.application.PasswordChangeException exception,
+            HttpServletRequest request) {
+        Map<String, String> fields = exception.field() == null ? Map.of()
+                : Map.of(exception.field(), exception.getMessage());
+        return problem(exception.status(), exception.code(), exception.getMessage(), fields, request);
+    }
+
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    ResponseEntity<ApiProblem> handleUnreadableBody(HttpServletRequest request) {
+        return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST_BODY",
+                "Dữ liệu gửi lên chưa hợp lệ.", Map.of(), request);
     }
 
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)

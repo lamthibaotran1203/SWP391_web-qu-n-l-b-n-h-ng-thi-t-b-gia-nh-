@@ -1,7 +1,7 @@
 # External integration boundaries
 
 This file records the last verified runtime configuration, not an approved future RDS scope.
-See [PROJECT_STATUS.md](../PROJECT_STATUS.md) for the submitted-document status. It does not
+See the root [README](../README.md) for the current shared implementation status. It does not
 claim completion of the use cases that own email or online payment behavior.
 
 ## Secret boundary
