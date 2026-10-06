@@ -77,3 +77,11 @@ export function login(email, password) {
 export function logout() {
   return apiRequest('/api/v1/auth/logout', { method: 'POST' })
 }
+
+export function changeOwnPassword(currentPassword, newPassword, confirmation) {
+  return apiRequest('/api/v1/auth/password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ currentPassword, newPassword, confirmation }),
+  }, false) // Never silently resubmit a credential change after a CSRF failure.
+}

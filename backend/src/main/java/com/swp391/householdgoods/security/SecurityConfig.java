@@ -15,9 +15,18 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 public class SecurityConfig {
 
     private final SecurityResponseHandlers handlers;
+    private final CredentialSessionFilter credentialSessionFilter;
 
-    public SecurityConfig(SecurityResponseHandlers handlers) {
+    public SecurityConfig(SecurityResponseHandlers handlers, CredentialSessionFilter credentialSessionFilter) {
         this.handlers = handlers;
+        this.credentialSessionFilter = credentialSessionFilter;
+    }
+
+    @Bean
+    org.springframework.boot.web.servlet.FilterRegistrationBean<CredentialSessionFilter> credentialFilterRegistration() {
+        var registration = new org.springframework.boot.web.servlet.FilterRegistrationBean<>(credentialSessionFilter);
+        registration.setEnabled(false); // Runs once inside Spring Security, after context is loaded.
+        return registration;
     }
 
     @Bean
@@ -28,6 +37,8 @@ public class SecurityConfig {
         CsrfTokenRequestAttributeHandler csrfRequestHandler = new CsrfTokenRequestAttributeHandler();
         csrfRequestHandler.setCsrfRequestAttributeName("_csrf");
 
+        http.addFilterAfter(credentialSessionFilter,
+                org.springframework.security.web.context.SecurityContextHolderFilter.class);
         http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(csrfRepository)
@@ -50,6 +61,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/me")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
+                        .requestMatchers("/api/v1/products/**").hasRole("MANAGER")
                         .requestMatchers("/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/manager/**").hasRole("MANAGER")
                         .requestMatchers("/api/v1/staff/**").hasAnyRole("STAFF", "MANAGER")

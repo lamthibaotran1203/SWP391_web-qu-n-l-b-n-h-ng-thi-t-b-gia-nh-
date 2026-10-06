@@ -3,7 +3,9 @@
 Approved by the user and recorded in canonical Backlog J14 before implementation.
 Applies to AnNP UC-13 prerequisites and teammates' integration. RDS changes are deferred;
 personal follow-up notes and intermediate review evidence remain local and are not versioned. Search/detail/cart/stock workflows owned by
-other members are not implemented here; UC-13 management UI/write API is not yet complete.
+other members are not implemented here; UC-13 management API/basic UI have since been implemented locally; see
+[the current management contract](UC13_Catalog_Management_Contract.md) for writes and versions.
+The dated read contract below records the earlier foundation; teammate filter/sort additions still need documentation reconciliation.
 
 ## Data sources
 

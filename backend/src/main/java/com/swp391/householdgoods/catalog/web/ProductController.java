@@ -1,36 +1,26 @@
 package com.swp391.householdgoods.catalog.web;
 
-import com.swp391.householdgoods.catalog.application.ProductService;
 import com.swp391.householdgoods.catalog.application.CatalogQueryService;
-import com.swp391.householdgoods.catalog.application.dto.CreateProductRequest;
 import com.swp391.householdgoods.catalog.application.dto.ProductResponse;
 import com.swp391.householdgoods.common.api.ApiEnvelope;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
-    private final ProductService service;
     private final CatalogQueryService catalog;
 
-    public ProductController(ProductService service, CatalogQueryService catalog) {
-        this.service = service;
+    public ProductController(CatalogQueryService catalog) {
         this.catalog = catalog;
     }
 
@@ -74,20 +64,22 @@ public class ProductController {
         return new ApiEnvelope<>(ProductResponse.from(catalog.sku(id)));
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    ApiEnvelope<ProductResponse> create(@Valid @RequestBody CreateProductRequest request) {
-        return new ApiEnvelope<>(service.create(request));
+    // Retired writes used immutable legacy_* fields. Public GET compatibility remains unchanged.
+    @RequestMapping(method = {org.springframework.web.bind.annotation.RequestMethod.POST,
+            org.springframework.web.bind.annotation.RequestMethod.PUT,
+            org.springframework.web.bind.annotation.RequestMethod.DELETE})
+    void retiredCollectionWrite() {
+        throw retiredWrite();
     }
 
-    @PutMapping("/{id}")
-    ApiEnvelope<ProductResponse> update(@PathVariable Long id, @Valid @RequestBody CreateProductRequest request) {
-        return new ApiEnvelope<>(service.update(id, request));
+    @RequestMapping(value = "/{id}", method = {org.springframework.web.bind.annotation.RequestMethod.PUT,
+            org.springframework.web.bind.annotation.RequestMethod.DELETE})
+    void retiredItemWrite() {
+        throw retiredWrite();
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@PathVariable Long id) {
-        service.delete(id);
+    private com.swp391.householdgoods.catalog.application.CatalogException retiredWrite() {
+        return new com.swp391.householdgoods.catalog.application.CatalogException(HttpStatus.GONE,
+                "CATALOG_WRITE_MOVED", "Dùng API quản lý /api/v1/manager/catalog/products với productId và SKU riêng.");
     }
 }

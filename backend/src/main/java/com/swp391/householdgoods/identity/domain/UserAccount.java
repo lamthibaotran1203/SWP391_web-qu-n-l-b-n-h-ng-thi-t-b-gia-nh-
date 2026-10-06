@@ -92,6 +92,13 @@ public class UserAccount {
                 now);
     }
 
+    public void changePassword(String encodedPassword, Instant now) {
+        this.passwordHash = encodedPassword;
+        this.updatedAt = now;
+    }
+
+    public long getVersion() { return version; }
+
     public Long getId() {
         return id;
     }

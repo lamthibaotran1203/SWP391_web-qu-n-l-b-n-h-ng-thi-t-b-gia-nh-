@@ -1,6 +1,5 @@
 package com.swp391.householdgoods.catalog.application.dto;
 
-import com.swp391.householdgoods.catalog.domain.Product;
 import com.swp391.householdgoods.catalog.domain.ProductStatus;
 import com.swp391.householdgoods.catalog.api.CatalogSku;
 import java.math.BigDecimal;
@@ -19,12 +18,6 @@ public record ProductResponse(
         ProductStatus status,
         Instant createdAt,
         Instant updatedAt) {
-    public static ProductResponse from(Product product) {
-        return new ProductResponse(product.getId(), product.getSku(), product.getName(), product.getBrand(), product.getCategory(),
-                product.getPrice(), product.getStockQuantity(), product.getDescription(), product.getImageUrl(),
-                product.getStatus(), product.getCreatedAt(), product.getUpdatedAt());
-    }
-
     public static ProductResponse from(CatalogSku sku) {
         return new ProductResponse(
                 sku.skuId(),
