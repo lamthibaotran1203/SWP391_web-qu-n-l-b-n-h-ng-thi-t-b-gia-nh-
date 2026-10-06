@@ -19,12 +19,14 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(ApiExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ApiProblem> handleValidation(
             MethodArgumentNotValidException exception,
             HttpServletRequest request) {
+
         Map<String, String> fieldErrors = new LinkedHashMap<>();
         exception.getBindingResult().getFieldErrors()
                 .forEach(error -> fieldErrors.putIfAbsent(error.getField(), error.getDefaultMessage()));
@@ -38,7 +40,9 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    ResponseEntity<ApiProblem> handleNotFound(HttpServletRequest request) {
+    ResponseEntity<ApiProblem> handleNotFound(
+            HttpServletRequest request) {
+
         return problem(
                 HttpStatus.NOT_FOUND,
                 "RESOURCE_NOT_FOUND",
@@ -48,17 +52,32 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    ResponseEntity<ApiProblem> handleProductNotFound(ProductNotFoundException exception, HttpServletRequest request) {
-        return problem(HttpStatus.NOT_FOUND, "PRODUCT_NOT_FOUND", exception.getMessage(), Map.of(), request);
+    ResponseEntity<ApiProblem> handleProductNotFound(
+            ProductNotFoundException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "PRODUCT_NOT_FOUND",
+                exception.getMessage(),
+                Map.of(),
+                request);
     }
 
     @ExceptionHandler(CatalogException.class)
-    ResponseEntity<ApiProblem> handleCatalog(CatalogException exception, HttpServletRequest request) {
-        return problem(exception.status(), exception.code(), exception.getMessage(), Map.of(), request);
+    ResponseEntity<ApiProblem> handleCatalog(
+            CatalogException exception,
+            HttpServletRequest request) {
+        return problem(
+                exception.status(),
+                exception.code(),
+                exception.getMessage(),
+                Map.of(),
+                request);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    ResponseEntity<ApiProblem> handleParameter(HttpServletRequest request) {
+    ResponseEntity<ApiProblem> handleParameter(
+            HttpServletRequest request) {
         return problem(
                 HttpStatus.BAD_REQUEST,
                 "PARAMETER_INVALID",
@@ -68,14 +87,29 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<ApiProblem> handleIllegalArgument(IllegalArgumentException exception, HttpServletRequest request) {
-        return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST", exception.getMessage(), Map.of(), request);
+    ResponseEntity<ApiProblem> handleIllegalArgument(
+            IllegalArgumentException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "REQUEST_INVALID",
+                exception.getMessage(),
+                Map.of(),
+                request);
     }
 
     @ExceptionHandler(Exception.class)
-    ResponseEntity<ApiProblem> handleUnexpected(Exception exception, HttpServletRequest request) {
+    ResponseEntity<ApiProblem> handleUnexpected(
+            Exception exception,
+            HttpServletRequest request) {
+
         String traceId = TraceIdFilter.getTraceId(request);
-        log.error("Unhandled request failure traceId={}", traceId, exception);
+
+        log.error(
+                "Unhandled request failure traceId={}",
+                traceId,
+                exception);
+
         return problem(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "UNEXPECTED_ERROR",
@@ -90,6 +124,7 @@ public class ApiExceptionHandler {
             String detail,
             Map<String, String> fieldErrors,
             HttpServletRequest request) {
+
         ApiProblem body = ApiProblem.of(
                 status.value(),
                 status.getReasonPhrase(),
@@ -97,6 +132,9 @@ public class ApiExceptionHandler {
                 detail,
                 fieldErrors,
                 TraceIdFilter.getTraceId(request));
-        return ResponseEntity.status(status).body(body);
+
+        return ResponseEntity
+                .status(status)
+                .body(body);
     }
 }
