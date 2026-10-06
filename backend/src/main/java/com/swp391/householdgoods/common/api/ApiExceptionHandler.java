@@ -5,6 +5,8 @@ import com.swp391.householdgoods.catalog.application.ProductNotFoundException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
 import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
+import com.swp391.householdgoods.purchasing.application.SupplierDuplicateException;
+import com.swp391.householdgoods.purchasing.application.SupplierNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
@@ -112,6 +114,42 @@ public class ApiExceptionHandler {
         return problem(
                 exception.status(),
                 exception.code(),
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(SupplierNotFoundException.class)
+    ResponseEntity<ApiProblem> handleSupplierNotFound(
+            SupplierNotFoundException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "SUPPLIER_NOT_FOUND",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(SupplierDuplicateException.class)
+    ResponseEntity<ApiProblem> handleSupplierDuplicate(
+            SupplierDuplicateException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.CONFLICT,
+                "SUPPLIER_DUPLICATE",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(com.swp391.householdgoods.purchasing.application.PurchaseOrderValidationException.class)
+    ResponseEntity<ApiProblem> handlePurchaseOrderValidation(
+            com.swp391.householdgoods.purchasing.application.PurchaseOrderValidationException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "PURCHASE_ORDER_INVALID",
                 exception.getMessage(),
                 Map.of(),
                 request);

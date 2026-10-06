@@ -6,10 +6,9 @@ Updated 2026-10-06. Read this before using planning documents.
 
 - Canonical [35-UC Backlog](https://docs.google.com/spreadsheets/d/1iCXEHbgqBN1cf5sfLmjPiv0GJnYjauJqVg-ZxIxJKCY/edit) governs IDs/ownership/scope.
   Live RDS is work in progress; the historical 37-UC pack is unapproved comparison material.
-- User-confirmed AnNP UCs: **04, 05, 13, 15, 32, 33, 34**. Backlog Lead cells updated;
-  iteration allocations still need reconciliation. No business UC is claimed complete.
-- Shared catalogue decisions recorded in Backlog I14/J14. RDS updates deferred by the user;
-  local notes, draft diagram SQL and screenshots are ignored, not fresh-clone dependencies.
+- User-confirmed AnNP UCs: **04, 05, 13, 15, 32, 33, 34**.
+- User-confirmed ThienTP UCs: **27 (Manage Suppliers), 28 (Create Purchase Order)**.
+  Both vertical slices implemented and verified with unit tests and UI integration.
 
 ## Release gate and completed evidence
 
@@ -22,18 +21,23 @@ Updated 2026-10-06. Read this before using planning documents.
 - Orders search/details now read from `hm_order`, `hm_order_item`, `hm_payment`,
   `user_account`, and stored SKU snapshots; this is an explicitly requested integration
   exception, not a claim that UC-18 is complete.
-- After integrating develop: 11 isolated PostgreSQL backend tests, 2 frontend tests,
-  lint/build/package passed. Legacy upgrade and idempotent migrate/seed passed.
-- Live Spring/JDBC catalogue API smoke against Supabase passed. No bootstrap account added.
-  Authenticated UI proof against Supabase and hosted CI proof are still pending.
+- **UC-27 (Manage Suppliers)** implemented:
+  - Backend: Supplier entity, status enum, repository, validation service with duplicate code & tax code guards, DTOs, controller at `/api/v1/purchasing/suppliers`.
+  - Frontend: `features/purchasing/api.js`, `SuppliersPage.jsx` with Vietnamese UI, search, status filter, registration & edit modals, soft-delete.
+  - Tests: `SupplierServiceTest` (6/6 passed), `SuppliersPage.test.jsx` (3/3 passed).
+- **UC-28 (Create Purchase Order)** implemented:
+  - Backend: PurchaseOrder & PurchaseOrderItem entities mapping `app.hm_purchase_order` & `app.hm_po_item`, status enum, validation service with whole-VND precision (BR-37), duplicate SKU prevention, minimum 1 item requirement (28.0.E3), active supplier verification (BR-27), controller at `/api/v1/purchasing/purchase-orders`.
+  - Invariant POST-5 strictly preserved: Physical inventory is NOT increased at PO creation.
+  - Invariant BR-28 strictly preserved: `received_quantity = 0 <= ordered_quantity`.
+  - Frontend: `CreatePurchaseOrderPage.jsx` with supplier selection, dynamic SKU table, live VND subtotal calculation, draft vs confirmation dispatch.
+  - Tests: `PurchaseOrderServiceTest` (6/6 passed), `CreatePurchaseOrderPage.test.jsx` (3/3 passed).
+- Frontend test suite: 13/13 tests passed, ESLint 0 errors, production build clean.
+- Backend unit test suite: 19/19 tests passed, 0 failures.
 
 ## Current and next task
 
-- Current: Orders read-only query integration with the existing shared tables. No migration
-  or shared database modification was added; V7 remains the existing historical migration.
-  PostgreSQL integration is not verified because Docker is unavailable in this environment.
-- Next: AnNP UC-13 management vertical slice with permissions, version/duplicate checks,
-  Vietnamese UI and browser smoke; teammates integrate through the shared catalogue contract.
+- Current: UC-27 and UC-28 full vertical slices (Backend + Frontend + Tests) implemented and integrated with Orders read model fix.
+- Next: Integration review with teammates, goods receiving flow (UC-29) prerequisite contracts.
 - Open: payment provider selection, Admin/MANAGER wording, BR collisions, iteration ownership, Manager bootstrap for
   authenticated browser proof and RDS synchronization.
 

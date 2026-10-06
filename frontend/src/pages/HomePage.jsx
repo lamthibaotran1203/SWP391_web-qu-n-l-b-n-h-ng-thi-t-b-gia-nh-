@@ -94,6 +94,16 @@ export function HomePage() {
                       Tra cứu đơn hàng
                     </Link>
                   )}
+                  {user.role === 'MANAGER' && (
+                    <>
+                      <Link className="btn btn-primary btn-sm mt-2 ms-2" to="/manager/suppliers">
+                        Quản lý nhà cung cấp
+                      </Link>
+                      <Link className="btn btn-success btn-sm mt-2 ms-2" to="/manager/purchase-orders/create">
+                        Lập đơn PO
+                      </Link>
+                    </>
+                  )}
                 </div>
                 <button className="btn btn-outline-light" type="button" onClick={logout}>
                   Đăng xuất
