@@ -59,14 +59,19 @@ class CatalogIntegrationTest {
         seed(); seed();
         jdbc.update("update app.hm_sku set selling_price=180000 where id=?",sku());
         jdbc.update("update app.hm_inventory set reserved_quantity=2 where sku_id=?",sku());
-        mvc.perform(get("/api/v1/catalog/skus").param("size","1"))
+        mvc.perform(get("/api/v1/catalog/skus")
+                .param("sort", "oldest")
+                .param("size", "1"))
             .andExpect(status().isOk()).andExpect(jsonPath("$.data.totalElements").value(2))
             .andExpect(jsonPath("$.data.items.length()").value(1))
             .andExpect(jsonPath("$.data.items[0].sellingPrice").value("180000"))
             .andExpect(jsonPath("$.data.items[0].availableQuantity").value(3))
             .andExpect(jsonPath("$.data.items[0].purchasable").value(true))
             .andExpect(jsonPath("$.data.items[0].legacyPrice").doesNotExist());
-        mvc.perform(get("/api/v1/catalog/skus").param("page","1").param("size","1"))
+        mvc.perform(get("/api/v1/catalog/skus")
+                .param("sort", "oldest")
+                .param("page", "1")
+                .param("size", "1"))
             .andExpect(status().isOk()).andExpect(jsonPath("$.data.items[0].availableQuantity").value(0))
             .andExpect(jsonPath("$.data.items[0].purchasable").value(false));
         assertThat(jdbc.queryForObject("select count(*) from app.hm_stock_movement where posting_key like 'DEMO_OPENING_%'",Integer.class)).isEqualTo(1);
