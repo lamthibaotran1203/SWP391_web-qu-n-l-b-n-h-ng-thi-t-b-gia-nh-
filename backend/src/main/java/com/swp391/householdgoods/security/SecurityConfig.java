@@ -49,6 +49,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/csrf",
                                 "/api/v1/auth/me")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                         .requestMatchers("/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/manager/**").hasRole("MANAGER")
                         .requestMatchers("/api/v1/staff/**").hasAnyRole("STAFF", "MANAGER")
