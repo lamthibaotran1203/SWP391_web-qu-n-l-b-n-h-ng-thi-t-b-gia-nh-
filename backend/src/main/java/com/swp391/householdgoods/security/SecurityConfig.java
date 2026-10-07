@@ -75,7 +75,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/products/**").hasRole("MANAGER")
                         .requestMatchers(
                                 "/api/v1/auth/login",
-                                "/api/v1/auth/register")
+                                "/api/v1/auth/register",
+                                "/api/v1/auth/resend-verification")
                         .permitAll()
                         .requestMatchers(
                                 HttpMethod.POST,

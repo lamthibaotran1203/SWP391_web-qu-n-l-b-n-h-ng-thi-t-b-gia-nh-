@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { verifyEmail } from '../api/http'
 
@@ -6,17 +6,28 @@ export function VerifyEmailPage() {
     const [searchParams] = useSearchParams()
     const token = searchParams.get('token')
 
-    const [status, setStatus] = useState(() => (!token ? 'error' : 'loading'))
+    const verificationTokenRef = useRef(null)
+
+    const [status, setStatus] = useState(() =>
+        token ? 'loading' : 'error',
+    )
+
     const [message, setMessage] = useState(() =>
-        !token
-            ? 'Liên kết xác minh không hợp lệ.'
-            : 'Đang xác minh email...'
+        token
+            ? 'Đang xác minh email...'
+            : 'Liên kết xác minh không hợp lệ.',
     )
 
     useEffect(() => {
         if (!token) {
             return
         }
+
+        if (verificationTokenRef.current === token) {
+            return
+        }
+
+        verificationTokenRef.current = token
 
         let active = true
 
