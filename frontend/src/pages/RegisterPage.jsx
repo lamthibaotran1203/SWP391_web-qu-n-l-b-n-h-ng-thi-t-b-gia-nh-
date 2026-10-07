@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { register } from '../api/http'
+import {
+    register,
+    resendVerification,
+} from '../api/http'
 
 export function RegisterPage() {
     const [form, setForm] = useState({
@@ -13,6 +16,8 @@ export function RegisterPage() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const [submitting, setSubmitting] = useState(false)
+    const [resending, setResending] = useState(false)
+    const [verificationEmail, setVerificationEmail] = useState('')
 
     function updateField(event) {
         setForm((current) => ({
@@ -40,11 +45,15 @@ export function RegisterPage() {
         setSubmitting(true)
 
         try {
+            const submittedEmail = form.email.trim()
+
             const response = await register(
-                form.email,
+                submittedEmail,
                 form.password,
                 form.fullName,
             )
+
+            setVerificationEmail(submittedEmail)
 
             setSuccess(
                 response?.message
@@ -67,6 +76,35 @@ export function RegisterPage() {
         }
     }
 
+    async function handleResendVerification() {
+        if (!verificationEmail) {
+            return
+        }
+
+        setError('')
+        setSuccess('')
+        setResending(true)
+
+        try {
+            const response =
+                await resendVerification(
+                    verificationEmail,
+                )
+
+            setSuccess(
+                response?.message
+                || 'Nếu tài khoản cần xác minh, email xác minh mới đã được gửi.',
+            )
+        } catch (requestError) {
+            setError(
+                requestError.message
+                || 'Không thể gửi lại email xác minh.',
+            )
+        } finally {
+            setResending(false)
+        }
+    }
+
     return (
         <main className="login-page">
             <section
@@ -77,7 +115,9 @@ export function RegisterPage() {
                     ← Quay lại trang chủ
                 </Link>
 
-                <p className="eyebrow">Gia Dụng Việt</p>
+                <p className="eyebrow">
+                    Gia Dụng Việt
+                </p>
 
                 <h1 id="register-title">
                     Đăng ký tài khoản
@@ -202,6 +242,25 @@ export function RegisterPage() {
                             : 'Đăng ký'}
                     </button>
                 </form>
+
+                {verificationEmail && (
+                    <div className="mt-3">
+                        <p className="text-secondary mb-2">
+                            Chưa nhận được email xác minh?
+                        </p>
+
+                        <button
+                            className="btn btn-outline-dark w-100"
+                            type="button"
+                            onClick={handleResendVerification}
+                            disabled={resending}
+                        >
+                            {resending
+                                ? 'Đang gửi lại…'
+                                : 'Gửi lại email xác minh'}
+                        </button>
+                    </div>
+                )}
 
                 <p className="text-secondary mt-4 mb-0">
                     Đã có tài khoản?{' '}

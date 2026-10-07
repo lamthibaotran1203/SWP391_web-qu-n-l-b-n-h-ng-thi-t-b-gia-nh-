@@ -1,6 +1,7 @@
-﻿spring:
+spring:
   application:
     name: household-goods-backend
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -8,12 +9,14 @@
     hikari:
       maximum-pool-size: 5
       minimum-idle: 1
+
   flyway:
     enabled: true
     create-schemas: true
     default-schema: app
     schemas: app
     locations: classpath:db/migration
+
   jpa:
     open-in-view: false
     hibernate:
@@ -23,6 +26,7 @@
         default_schema: app
         jdbc:
           time_zone: UTC
+
   mail:
     host: ${SMTP_HOST:}
     port: ${SMTP_PORT:587}
@@ -47,6 +51,7 @@ server:
         http-only: true
         secure: ${SESSION_COOKIE_SECURE:true}
         same-site: lax
+
   error:
     include-message: never
     include-binding-errors: never
@@ -57,16 +62,17 @@ management:
     web:
       exposure:
         include: health
+
   endpoint:
     health:
       show-details: never
 
 app:
-  base-url: ${APP_BASE_URL:http://localhost:5173}
+  base-url: ${APP_BASE_URL}
 
   mail:
     from-email: ${MAIL_FROM_EMAIL:}
-    from-name: ${MAIL_FROM_NAME:Gia Dá»¥ng Viá»‡t}
+    from-name: ${MAIL_FROM_NAME:Gia Dụng Việt}
 
   bootstrap-manager:
     email: ${BOOTSTRAP_MANAGER_EMAIL:}
