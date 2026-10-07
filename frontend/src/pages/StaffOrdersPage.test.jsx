@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -102,7 +102,10 @@ describe('StaffOrdersPage', () => {
       name: 'Xem chi tiết đơn HG-2026-0041',
     }))
 
-    expect(await screen.findByRole('dialog', { name: 'HG-2026-0041' })).toBeInTheDocument()
+    const dialog = await screen.findByRole('dialog', { name: 'HG-2026-0041' })
+    expect(dialog).toBeInTheDocument()
+    expect(within(dialog).getByText('Đang xử lý')).toBeInTheDocument()
+    expect(within(dialog).getByText('Đã thanh toán')).toBeInTheDocument()
     expect(screen.getByText('Ấm siêu tốc')).toBeInTheDocument()
     expect(screen.getByText('12 Nguyễn Huệ, Quận 1')).toBeInTheDocument()
     expect(getSalesOrderDetails).toHaveBeenCalledWith(41)

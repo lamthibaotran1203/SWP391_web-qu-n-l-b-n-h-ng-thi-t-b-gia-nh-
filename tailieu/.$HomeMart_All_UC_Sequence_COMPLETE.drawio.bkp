@@ -1,0 +1,1541 @@
+<mxfile host="Electron" agent="Grok" pages="7">
+  <diagram id="uc18" name="UC-18 View Order">
+    <mxGraphModel dx="1585" dy="1015" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-18 View Sales Order Details (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Online Ordering Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="60" y="27" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="68" y="115" as="sourcePoint" />
+            <mxPoint x="68" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderController" vertex="1">
+          <mxGeometry height="34" width="148" x="160" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="234" y="92" as="sourcePoint" />
+            <mxPoint x="234" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderService" vertex="1">
+          <mxGeometry height="34" width="130" x="360" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="92" as="sourcePoint" />
+            <mxPoint x="425" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="580" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="654" y="92" as="sourcePoint" />
+            <mxPoint x="654" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=9;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="Database" vertex="1">
+          <mxGeometry height="50" width="80" x="800" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="dln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="98" as="sourcePoint" />
+            <mxPoint x="840" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: getOrderDetail(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="68" y="140" as="sourcePoint" />
+            <mxPoint x="225" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: getOrderDetail(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="185" as="sourcePoint" />
+            <mxPoint x="425" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="3: checkPermission(staff, order)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="465" y="200" />
+              <mxPoint x="465" y="240" />
+            </Array>
+            <mxPoint x="425" y="200" as="sourcePoint" />
+            <mxPoint x="425" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="4: findByIdWithDetails(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="280" as="sourcePoint" />
+            <mxPoint x="645" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="5: SELECT order+items+payment+timeline">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="325" as="sourcePoint" />
+            <mxPoint x="840" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="6: Order data">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="370" as="sourcePoint" />
+            <mxPoint x="645" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="7: Order entity">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="415" as="sourcePoint" />
+            <mxPoint x="425" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="8: OrderDetailResponse">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="460" as="sourcePoint" />
+            <mxPoint x="225" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="9: Display order details">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="505" as="sourcePoint" />
+            <mxPoint x="68" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="4a: findByIdWithDetails">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="600" as="sourcePoint" />
+            <mxPoint x="645" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5a: SELECT empty">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="645" as="sourcePoint" />
+            <mxPoint x="840" y="645" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6a: null">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="690" as="sourcePoint" />
+            <mxPoint x="645" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="7a: OrderNotFoundException">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="735" as="sourcePoint" />
+            <mxPoint x="425" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="8a: Error response">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="780" as="sourcePoint" />
+            <mxPoint x="225" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="9a: Show Order not found">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="825" as="sourcePoint" />
+            <mxPoint x="68" y="825" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="3b: checkPermission FAIL">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="900" as="sourcePoint" />
+            <mxPoint x="425" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="4b: AuthorizationException">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="425" y="945" as="sourcePoint" />
+            <mxPoint x="225" y="945" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="5b: Redirect / show error">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="990" as="sourcePoint" />
+            <mxPoint x="68" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af550" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="280" width="1250" x="25" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="al550" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="alb5500" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Order found + permission OK]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="554" as="geometry" />
+        </mxCell>
+        <mxCell id="alb5501" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Order not found]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="576" as="geometry" />
+        </mxCell>
+        <mxCell id="adiv550" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;dashPattern=4 4;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="25" y="578" as="sourcePoint" />
+            <mxPoint x="1275" y="578" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af870" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="150" width="1250" x="25" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="al870" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="alb8700" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Insufficient permission]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="874" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc19" name="UC-19 Confirm Order">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-19 Confirm Sales Order (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Online Ordering Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="40" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="58" y="115" as="sourcePoint" />
+            <mxPoint x="58" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderController" vertex="1">
+          <mxGeometry height="34" width="148" x="140" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="214" y="92" as="sourcePoint" />
+            <mxPoint x="214" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderService" vertex="1">
+          <mxGeometry height="34" width="130" x="330" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="92" as="sourcePoint" />
+            <mxPoint x="395" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="520" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="92" as="sourcePoint" />
+            <mxPoint x="585" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="NotificationService" vertex="1">
+          <mxGeometry height="34" width="148" x="710" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="nln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="784" y="92" as="sourcePoint" />
+            <mxPoint x="784" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="900" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="974" y="92" as="sourcePoint" />
+            <mxPoint x="974" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=9;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="Database" vertex="1">
+          <mxGeometry height="50" width="80" x="1090" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="dln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1130" y="98" as="sourcePoint" />
+            <mxPoint x="1130" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: confirmOrder(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="58" y="140" as="sourcePoint" />
+            <mxPoint x="205" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: confirmOrder(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="205" y="185" as="sourcePoint" />
+            <mxPoint x="395" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="3: findById(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="230" as="sourcePoint" />
+            <mxPoint x="965" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="4: SELECT order+items">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="965" y="275" as="sourcePoint" />
+            <mxPoint x="1130" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="5: Order entity">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1130" y="320" as="sourcePoint" />
+            <mxPoint x="965" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="6: Order">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="965" y="365" as="sourcePoint" />
+            <mxPoint x="395" y="365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="7: validateStatus(Pending Confirmation)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="435" y="380" />
+              <mxPoint x="435" y="420" />
+            </Array>
+            <mxPoint x="395" y="380" as="sourcePoint" />
+            <mxPoint x="395" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="8: checkAndReserve(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="460" as="sourcePoint" />
+            <mxPoint x="585" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="9: Reserve OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="505" as="sourcePoint" />
+            <mxPoint x="395" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="10: updateStatus(CONFIRMED)+log">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="550" as="sourcePoint" />
+            <mxPoint x="965" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="11: UPDATE">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="965" y="595" as="sourcePoint" />
+            <mxPoint x="1130" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="12: OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1130" y="640" as="sourcePoint" />
+            <mxPoint x="965" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="13: sendConfirmation(customer)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="685" as="sourcePoint" />
+            <mxPoint x="775" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="14: Sent">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="730" as="sourcePoint" />
+            <mxPoint x="395" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m15" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="15: Success">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="775" as="sourcePoint" />
+            <mxPoint x="205" y="775" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m16" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="16: Display Confirmed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="205" y="820" as="sourcePoint" />
+            <mxPoint x="58" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="8a: checkAndReserve SHORTAGE">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="910" as="sourcePoint" />
+            <mxPoint x="585" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="9a: Shortage list">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="955" as="sourcePoint" />
+            <mxPoint x="395" y="955" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="10a: Block confirm">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="1000" as="sourcePoint" />
+            <mxPoint x="205" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="7b: status != Pending Confirmation">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="1070" as="sourcePoint" />
+            <mxPoint x="395" y="1070" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="8b: InvalidStatusException">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="395" y="1115" as="sourcePoint" />
+            <mxPoint x="205" y="1115" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="9b: Show current status">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="205" y="1160" as="sourcePoint" />
+            <mxPoint x="58" y="1160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af870" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="160" width="1250" x="25" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="al870" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="alb8700" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Insufficient stock] - block + shortage list" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="874" as="geometry" />
+        </mxCell>
+        <mxCell id="af1040" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="150" width="1250" x="25" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="al1040" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="alb10400" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Already Confirmed / Cancelled]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1044" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc20" name="UC-20 POS Transaction">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-20 Process Point-of-Sale Transaction (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Counter Sales Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="35" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="115" as="sourcePoint" />
+            <mxPoint x="53" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PosController" vertex="1">
+          <mxGeometry height="34" width="130" x="130" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="92" as="sourcePoint" />
+            <mxPoint x="195" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PosService" vertex="1">
+          <mxGeometry height="34" width="130" x="310" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="92" as="sourcePoint" />
+            <mxPoint x="375" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="490" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="555" y="92" as="sourcePoint" />
+            <mxPoint x="555" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PaymentService" vertex="1">
+          <mxGeometry height="34" width="130" x="680" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="745" y="92" as="sourcePoint" />
+            <mxPoint x="745" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rc" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="ReceiptService" vertex="1">
+          <mxGeometry height="34" width="130" x="870" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rcln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="935" y="92" as="sourcePoint" />
+            <mxPoint x="935" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="1060" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1134" y="92" as="sourcePoint" />
+            <mxPoint x="1134" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: processPosSale(cart, paymentMethod)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="140" as="sourcePoint" />
+            <mxPoint x="195" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: processPosSale(...)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="185" as="sourcePoint" />
+            <mxPoint x="375" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="3: checkAvailable(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="230" as="sourcePoint" />
+            <mxPoint x="555" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="4: Available OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="555" y="275" as="sourcePoint" />
+            <mxPoint x="375" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="5: processPayment(amount, method)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="320" as="sourcePoint" />
+            <mxPoint x="745" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="6: PaymentResult(success, txnRef)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="745" y="365" as="sourcePoint" />
+            <mxPoint x="375" y="365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="7: save(Order status=COMPLETED)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="410" as="sourcePoint" />
+            <mxPoint x="1125" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="8: Order saved">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1125" y="455" as="sourcePoint" />
+            <mxPoint x="375" y="455" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="9: deductPhysicalStock(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="500" as="sourcePoint" />
+            <mxPoint x="555" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="10: Stock deducted">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="555" y="545" as="sourcePoint" />
+            <mxPoint x="375" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="11: printOrSendReceipt(order)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="590" as="sourcePoint" />
+            <mxPoint x="935" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="12: Receipt issued">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="935" y="635" as="sourcePoint" />
+            <mxPoint x="375" y="635" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="13: Success">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="680" as="sourcePoint" />
+            <mxPoint x="195" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="14: Ready for next sale">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="725" as="sourcePoint" />
+            <mxPoint x="53" y="725" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5a: processPayment FAIL">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="820" as="sourcePoint" />
+            <mxPoint x="745" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6a: Payment failed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="745" y="865" as="sourcePoint" />
+            <mxPoint x="375" y="865" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="7a: Rollback - no order, no stock change">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="910" as="sourcePoint" />
+            <mxPoint x="195" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="3b: checkAvailable SHORTAGE">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="990" as="sourcePoint" />
+            <mxPoint x="555" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="4b: Available qty list">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="555" y="1035" as="sourcePoint" />
+            <mxPoint x="375" y="1035" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="5b: Block - cannot oversell">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="1080" as="sourcePoint" />
+            <mxPoint x="195" y="1080" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af780" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="160" width="1250" x="25" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="al780" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="alb7800" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Payment failed] - atomic rollback" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="784" as="geometry" />
+        </mxCell>
+        <mxCell id="af960" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="150" width="1250" x="25" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="al960" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="alb9600" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Insufficient stock] - prevent oversell (BR-18, BR-10)" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="964" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc21" name="UC-21 Pack and Ship">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-21 Pack and Ship Order (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Fulfillment Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="35" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="115" as="sourcePoint" />
+            <mxPoint x="53" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="FulfillmentController" vertex="1">
+          <mxGeometry height="34" width="148" x="130" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="204" y="92" as="sourcePoint" />
+            <mxPoint x="204" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="FulfillmentService" vertex="1">
+          <mxGeometry height="34" width="148" x="320" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="394" y="92" as="sourcePoint" />
+            <mxPoint x="394" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="520" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="92" as="sourcePoint" />
+            <mxPoint x="585" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="DeliveryProvider" vertex="1">
+          <mxGeometry height="34" width="130" x="720" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="crln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="92" as="sourcePoint" />
+            <mxPoint x="785" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="910" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="984" y="92" as="sourcePoint" />
+            <mxPoint x="984" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=9;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="Database" vertex="1">
+          <mxGeometry height="50" width="80" x="1100" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="dln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1140" y="98" as="sourcePoint" />
+            <mxPoint x="1140" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: startPacking(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="140" as="sourcePoint" />
+            <mxPoint x="195" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: packOrder(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="185" as="sourcePoint" />
+            <mxPoint x="385" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="3: validateStatus(Confirmed)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="200" />
+              <mxPoint x="425" y="240" />
+            </Array>
+            <mxPoint x="385" y="200" as="sourcePoint" />
+            <mxPoint x="385" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="4: updateStatus(PACKED)+log staff">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="280" as="sourcePoint" />
+            <mxPoint x="975" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="5: UPDATE status=PACKED">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="975" y="325" as="sourcePoint" />
+            <mxPoint x="1140" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="6: OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1140" y="370" as="sourcePoint" />
+            <mxPoint x="975" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="7: Packed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="975" y="415" as="sourcePoint" />
+            <mxPoint x="385" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="8: Success - status Packed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="460" as="sourcePoint" />
+            <mxPoint x="195" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="9: shipOrder(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="520" as="sourcePoint" />
+            <mxPoint x="195" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="10: shipOrder(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="565" as="sourcePoint" />
+            <mxPoint x="385" y="565" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="11: createShipment(order)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="610" as="sourcePoint" />
+            <mxPoint x="785" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="12: trackingNumber">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="655" as="sourcePoint" />
+            <mxPoint x="385" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="13: moveReservedToOutbound(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="700" as="sourcePoint" />
+            <mxPoint x="585" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="14: Done">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="745" as="sourcePoint" />
+            <mxPoint x="385" y="745" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m15" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="15: updateStatus(OUT_FOR_DELIVERY)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="790" as="sourcePoint" />
+            <mxPoint x="975" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m16" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="16: Success + tracking">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="835" as="sourcePoint" />
+            <mxPoint x="195" y="835" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m17" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="17: Display Out for Delivery">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="880" as="sourcePoint" />
+            <mxPoint x="53" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="11a: createShipment FAIL">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="970" as="sourcePoint" />
+            <mxPoint x="785" y="970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="12a: API error">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="1015" as="sourcePoint" />
+            <mxPoint x="385" y="1015" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="13a: status=Packed-Pending Handover">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="1060" as="sourcePoint" />
+            <mxPoint x="195" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mi1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="3b: items missing during pack">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="1130" as="sourcePoint" />
+            <mxPoint x="385" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mi2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="4b: Mark missing / cancel partial (UC-23)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="1175" as="sourcePoint" />
+            <mxPoint x="195" y="1175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af930" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="160" width="1250" x="25" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="al930" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="alb9300" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Carrier API fail] - Packed-Pending Handover" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="934" as="geometry" />
+        </mxCell>
+        <mxCell id="af1100" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="110" width="1250" x="25" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="al1100" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="alb11000" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Missing items when packing]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1104" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc22" name="UC-22 Delivery Outcome">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-22 Record Delivery Outcome (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Fulfillment Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="35" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="115" as="sourcePoint" />
+            <mxPoint x="53" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="FulfillmentController" vertex="1">
+          <mxGeometry height="34" width="148" x="130" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="204" y="92" as="sourcePoint" />
+            <mxPoint x="204" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="FulfillmentService" vertex="1">
+          <mxGeometry height="34" width="148" x="320" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="394" y="92" as="sourcePoint" />
+            <mxPoint x="394" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="520" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="92" as="sourcePoint" />
+            <mxPoint x="585" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PaymentService" vertex="1">
+          <mxGeometry height="34" width="130" x="720" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="92" as="sourcePoint" />
+            <mxPoint x="785" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="NotificationService" vertex="1">
+          <mxGeometry height="34" width="148" x="910" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="nln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="984" y="92" as="sourcePoint" />
+            <mxPoint x="984" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="1100" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1174" y="92" as="sourcePoint" />
+            <mxPoint x="1174" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: recordDelivered(orderId, collectedAmount?)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="140" as="sourcePoint" />
+            <mxPoint x="195" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: recordSuccessfulDelivery(...)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="185" as="sourcePoint" />
+            <mxPoint x="385" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="3: validateStatus(Out for Delivery)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="200" />
+              <mxPoint x="425" y="240" />
+            </Array>
+            <mxPoint x="385" y="200" as="sourcePoint" />
+            <mxPoint x="385" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="4: recordCodCollected(amount) [if COD]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="280" as="sourcePoint" />
+            <mxPoint x="785" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="5: COD recorded / note if mismatch">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="785" y="325" as="sourcePoint" />
+            <mxPoint x="385" y="325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="6: updateStatus(DELIVERED)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="370" as="sourcePoint" />
+            <mxPoint x="1165" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="7: OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1165" y="415" as="sourcePoint" />
+            <mxPoint x="385" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="8: notifyCustomer(delivered)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="460" as="sourcePoint" />
+            <mxPoint x="975" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="9: Sent">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="975" y="505" as="sourcePoint" />
+            <mxPoint x="385" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="10: Success">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="550" as="sourcePoint" />
+            <mxPoint x="195" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="11: Display Delivered">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="595" as="sourcePoint" />
+            <mxPoint x="53" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="1b: recordFailed(orderId, reason)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="700" as="sourcePoint" />
+            <mxPoint x="195" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="2b: recordFailedDelivery(...)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="745" as="sourcePoint" />
+            <mxPoint x="385" y="745" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="3b: returnOutboundToAvailable(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="790" as="sourcePoint" />
+            <mxPoint x="585" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f4" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="4b: Stock returned to Available">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="585" y="835" as="sourcePoint" />
+            <mxPoint x="385" y="835" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5b: updateStatus(DELIVERY_FAILED)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="880" as="sourcePoint" />
+            <mxPoint x="1165" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f6" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6b: Success - stock returned">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="925" as="sourcePoint" />
+            <mxPoint x="195" y="925" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f7" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="7b: Display Delivery Failed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="970" as="sourcePoint" />
+            <mxPoint x="53" y="970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="3c: status != Out for Delivery">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="1060" as="sourcePoint" />
+            <mxPoint x="385" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="4c: Block action">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385" y="1105" as="sourcePoint" />
+            <mxPoint x="195" y="1105" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af660" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="340" width="1250" x="25" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="al660" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="alb6600" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Successful delivery] optional COD (BR-49, BR-51)" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="664" as="geometry" />
+        </mxCell>
+        <mxCell id="alb6601" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Failed delivery] return stock (BR-26)" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="686" as="geometry" />
+        </mxCell>
+        <mxCell id="adiv660" edge="1" parent="1" style="endArrow=none;html=1;dashed=1;dashPattern=4 4;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="25" y="688" as="sourcePoint" />
+            <mxPoint x="1275" y="688" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af1030" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="100" width="1250" x="25" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="al1030" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="alb10300" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Order not in Out for Delivery]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1034" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc23" name="UC-23 Cancel Order">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1350" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-23 Cancel Order by Store (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Admin / Online Ordering Staff" vertex="1">
+          <mxGeometry height="65" width="36" x="35" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="115" as="sourcePoint" />
+            <mxPoint x="53" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderController" vertex="1">
+          <mxGeometry height="34" width="148" x="145" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="219" y="92" as="sourcePoint" />
+            <mxPoint x="219" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderService" vertex="1">
+          <mxGeometry height="34" width="130" x="340" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="92" as="sourcePoint" />
+            <mxPoint x="405" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="540" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="605" y="92" as="sourcePoint" />
+            <mxPoint x="605" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PaymentGateway" vertex="1">
+          <mxGeometry height="34" width="130" x="740" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="805" y="92" as="sourcePoint" />
+            <mxPoint x="805" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="NotificationService" vertex="1">
+          <mxGeometry height="34" width="148" x="930" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="nln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1004" y="92" as="sourcePoint" />
+            <mxPoint x="1004" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="1120" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1194" y="92" as="sourcePoint" />
+            <mxPoint x="1194" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: cancelOrder(orderId, reason)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="140" as="sourcePoint" />
+            <mxPoint x="210" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: cancelByStore(orderId, reason)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="185" as="sourcePoint" />
+            <mxPoint x="405" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="3: findById(orderId)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="230" as="sourcePoint" />
+            <mxPoint x="1185" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="4: Order entity">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="275" as="sourcePoint" />
+            <mxPoint x="405" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="5: validateCancellable + permission">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="445" y="290" />
+              <mxPoint x="445" y="330" />
+            </Array>
+            <mxPoint x="405" y="290" as="sourcePoint" />
+            <mxPoint x="405" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="6: releaseStock(Reserved/Outbound)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="370" as="sourcePoint" />
+            <mxPoint x="605" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="7: Stock released to Available">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="605" y="415" as="sourcePoint" />
+            <mxPoint x="405" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="8: initiateRefund(order) [if paid]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="460" as="sourcePoint" />
+            <mxPoint x="805" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="9: Refund initiated / Refund Pending">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="805" y="505" as="sourcePoint" />
+            <mxPoint x="405" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="10: updateStatus(CANCELLED_BY_STORE)+audit">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="550" as="sourcePoint" />
+            <mxPoint x="1185" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="11: OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1185" y="595" as="sourcePoint" />
+            <mxPoint x="405" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="12: notifyCustomer(cancelled)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="640" as="sourcePoint" />
+            <mxPoint x="995" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="13: Sent">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="995" y="685" as="sourcePoint" />
+            <mxPoint x="405" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="14: Success">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="730" as="sourcePoint" />
+            <mxPoint x="210" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m15" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="15: Display Cancelled">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="775" as="sourcePoint" />
+            <mxPoint x="53" y="775" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5a: status = Out for Delivery / Delivered">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="880" as="sourcePoint" />
+            <mxPoint x="405" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6a: Block - use Return UC-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="925" as="sourcePoint" />
+            <mxPoint x="210" y="925" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="7a: Show cannot cancel">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="970" as="sourcePoint" />
+            <mxPoint x="53" y="970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5b: Staff no permission after Packed">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="1050" as="sourcePoint" />
+            <mxPoint x="405" y="1050" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6b: AuthorizationException">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="1095" as="sourcePoint" />
+            <mxPoint x="210" y="1095" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="9c: Refund API fail">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="805" y="1160" as="sourcePoint" />
+            <mxPoint x="405" y="1160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="10c: status=Cancelled-Refund Pending">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="1205" as="sourcePoint" />
+            <mxPoint x="210" y="1205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af840" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="160" width="1250" x="25" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="al840" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="alb8400" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Already Out for Delivery / Delivered] - block" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="844" as="geometry" />
+        </mxCell>
+        <mxCell id="af1020" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="100" width="1250" x="25" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="al1020" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="alb10200" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Insufficient permission]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1024" as="geometry" />
+        </mxCell>
+        <mxCell id="af1140" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="90" width="1250" x="25" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="al1140" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="alb11400" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Refund fail] - Cancelled-Refund Pending" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1144" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="uc31" name="UC-31 In-Store Return">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1450" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;labelBackgroundColor=none;" value="UC-31 Create In-Store Return Request (complete)" vertex="1">
+          <mxGeometry height="26" width="1200" x="40" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="a" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;fontStyle=1;labelBackgroundColor=none;" value="Returns Staff / Admin" vertex="1">
+          <mxGeometry height="65" width="36" x="35" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="115" as="sourcePoint" />
+            <mxPoint x="53" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="ReturnController" vertex="1">
+          <mxGeometry height="34" width="130" x="130" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="cln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="92" as="sourcePoint" />
+            <mxPoint x="195" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="ReturnService" vertex="1">
+          <mxGeometry height="34" width="130" x="310" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="sln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="92" as="sourcePoint" />
+            <mxPoint x="375" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="or" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="SalesOrderRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="500" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="orln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="574" y="92" as="sourcePoint" />
+            <mxPoint x="574" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="InventoryService" vertex="1">
+          <mxGeometry height="34" width="130" x="700" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="iln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="92" as="sourcePoint" />
+            <mxPoint x="765" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="PaymentService" vertex="1">
+          <mxGeometry height="34" width="130" x="890" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="955" y="92" as="sourcePoint" />
+            <mxPoint x="955" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;labelBackgroundColor=none;" value="ReturnRequestRepository" vertex="1">
+          <mxGeometry height="34" width="148" x="1080" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="rrln" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=8 4;strokeWidth=1;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1154" y="92" as="sourcePoint" />
+            <mxPoint x="1154" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="1: createReturn(orderCode, items, condition, type)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="53" y="140" as="sourcePoint" />
+            <mxPoint x="195" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="2: createInStoreReturn(...)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="185" as="sourcePoint" />
+            <mxPoint x="375" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="3: findCompletedOrder(orderCode)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="230" as="sourcePoint" />
+            <mxPoint x="565" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="4: Order + delivered items">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="565" y="275" as="sourcePoint" />
+            <mxPoint x="375" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="5: validate window&lt;=7d, qty, eligibility">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="290" />
+              <mxPoint x="415" y="335" />
+            </Array>
+            <mxPoint x="375" y="290" as="sourcePoint" />
+            <mxPoint x="375" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.3;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;labelBackgroundColor=none;fontColor=default;" value="6: recordInspection(condition)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="350" />
+              <mxPoint x="415" y="390" />
+            </Array>
+            <mxPoint x="375" y="350" as="sourcePoint" />
+            <mxPoint x="375" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="7: save(ReturnRequest Pending/Approved)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="430" as="sourcePoint" />
+            <mxPoint x="1145" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="8: ReturnRequest saved">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1145" y="475" as="sourcePoint" />
+            <mxPoint x="375" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="9: restockIfResalable(items)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="520" as="sourcePoint" />
+            <mxPoint x="765" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="10: Stock updated (if Good)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="765" y="565" as="sourcePoint" />
+            <mxPoint x="375" y="565" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;labelBackgroundColor=none;fontColor=default;" value="11: initiateRefund OR createExchange">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="610" as="sourcePoint" />
+            <mxPoint x="955" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="12: Refund/Exchange done">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="955" y="655" as="sourcePoint" />
+            <mxPoint x="375" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="13: Success + return receipt">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="700" as="sourcePoint" />
+            <mxPoint x="195" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;labelBackgroundColor=none;fontColor=default;" value="14: Print return receipt">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="745" as="sourcePoint" />
+            <mxPoint x="53" y="745" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5a: Window expired / qty exceed / not eligible">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="860" as="sourcePoint" />
+            <mxPoint x="375" y="860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6a: Validation error">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="910" as="sourcePoint" />
+            <mxPoint x="195" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="7a: Show policy message">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195" y="960" as="sourcePoint" />
+            <mxPoint x="53" y="960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ar1" edge="1" parent="1" style="endArrow=block;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;fontColor=default;labelBackgroundColor=none;" value="5b: Item already fully returned">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="1040" as="sourcePoint" />
+            <mxPoint x="375" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ar2" edge="1" parent="1" style="endArrow=open;html=1;fontSize=9;strokeWidth=1.4;verticalAlign=bottom;dashed=1;dashPattern=5 4;fontColor=default;labelBackgroundColor=none;" value="6b: Block duplicate return">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="1085" as="sourcePoint" />
+            <mxPoint x="195" y="1085" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="af820" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="170" width="1250" x="25" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="al820" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="alb8200" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Invalid: over 7 days / qty exceed / not eligible] (BR-30,31,32)" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="824" as="geometry" />
+        </mxCell>
+        <mxCell id="af1010" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="110" width="1250" x="25" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="al1010" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fontSize=10;align=center;labelBackgroundColor=none;" value="alt" vertex="1">
+          <mxGeometry height="20" width="38" x="25" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="alb10100" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=2;labelBackgroundColor=none;" value="[Item already returned / exchanged]" vertex="1">
+          <mxGeometry height="18" width="600" x="70" y="1014" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -48,57 +48,89 @@ export function OrderDetailsDialog({ orderId, onClose }) {
           <div>
             <p className="orders-eyebrow">CHI TIẾT ĐƠN HÀNG</p>
             <h2 id="order-dialog-title">{order?.orderNumber || 'Đơn hàng'}</h2>
+            {order && (
+              <div className="order-dialog-badges">
+                <span className={`order-badge order-badge--${order.status.toLowerCase()}`}>
+                  {formatLabel(orderStatusLabels, order.status)}
+                </span>
+                <span className={`order-payment-badge order-payment-badge--${order.paymentStatus.toLowerCase()}`}>
+                  {formatLabel(paymentStatusLabels, order.paymentStatus)}
+                </span>
+              </div>
+            )}
           </div>
           <button className="order-dialog-close" type="button" onClick={onClose} aria-label="Đóng chi tiết" autoFocus>
             ×
           </button>
         </header>
-        {loading && <p role="status">Đang tải chi tiết đơn hàng…</p>}
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        {loading && <p className="order-dialog-loading" role="status"><span className="loading-spinner" />Đang tải chi tiết đơn hàng…</p>}
+        {error && <div className="alert alert-danger order-dialog-error" role="alert">{error}</div>}
         {order && (
           <div className="order-details-body">
             <div className="order-details-summary">
-              <div>
+              <div className="order-summary-item">
                 <span>Ngày đặt</span>
                 <strong>{formatDate(order.placedAt)}</strong>
               </div>
-              <div>
+              <div className="order-summary-item">
                 <span>Kênh</span>
                 <strong>{formatLabel(channelLabels, order.channel)}</strong>
               </div>
-              <div>
-                <span>Trạng thái</span>
-                <strong>{formatLabel(orderStatusLabels, order.status)}</strong>
-              </div>
-              <div>
-                <span>Thanh toán</span>
-                <strong>{formatLabel(paymentStatusLabels, order.paymentStatus)}</strong>
-              </div>
-              <div>
+              <div className="order-summary-item">
                 <span>Phương thức</span>
                 <strong>{formatLabel(paymentMethodLabels, order.paymentMethod)}</strong>
               </div>
             </div>
-            <section className="order-detail-section">
-              <h3>Thông tin khách hàng</h3>
-              <p><strong>{order.customerName}</strong></p>
-              {order.customerPhone && <p>{order.customerPhone}</p>}
-              {order.customerEmail && <p>{order.customerEmail}</p>}
-              {order.shippingAddress && <p>{order.shippingAddress}</p>}
+            <section className="order-detail-section order-customer-section">
+              <div className="order-detail-section-heading">
+                <span className="order-section-icon" aria-hidden="true">KH</span>
+                <div>
+                  <h3>Thông tin khách hàng</h3>
+                  <p>Thông tin liên hệ và nhận hàng</p>
+                </div>
+              </div>
+              <div className="order-customer-card">
+                <div className="order-customer-name">
+                  <span className="order-customer-avatar" aria-hidden="true">
+                    {order.customerName?.charAt(0)?.toUpperCase() || '?'}
+                  </span>
+                  <strong>{order.customerName || 'Khách hàng'}</strong>
+                </div>
+                <div className="order-customer-details">
+                  {order.customerPhone && (
+                    <p><span>Số điện thoại</span><strong>{order.customerPhone}</strong></p>
+                  )}
+                  {order.customerEmail && (
+                    <p><span>Email</span><strong>{order.customerEmail}</strong></p>
+                  )}
+                  {order.shippingAddress && (
+                    <p className="order-customer-address"><span>Địa chỉ giao hàng</span><strong>{order.shippingAddress}</strong></p>
+                  )}
+                </div>
+              </div>
             </section>
             <section className="order-detail-section">
-              <h3>Sản phẩm</h3>
+              <div className="order-detail-section-heading">
+                <span className="order-section-icon" aria-hidden="true">SP</span>
+                <div>
+                  <h3>Sản phẩm</h3>
+                  <p>{order.items.length} mặt hàng trong đơn</p>
+                </div>
+              </div>
               {order.items.length === 0 ? (
-                <p>Đơn hàng chưa có sản phẩm.</p>
+                <p className="order-empty-items">Đơn hàng chưa có sản phẩm.</p>
               ) : (
                 <div className="order-line-list">
                   {order.items.map((item) => (
                     <div className="order-line" key={item.id}>
-                      <div>
+                      <span className="order-product-mark" aria-hidden="true">G</span>
+                      <div className="order-line-info">
                         <strong>{item.productName}</strong>
-                        <span>{item.productSku} · {item.quantity} × {formatCurrency(item.unitPrice)}</span>
+                        <span>Mã SKU: {item.productSku}</span>
+                        <span>{formatCurrency(item.unitPrice)} / sản phẩm</span>
                       </div>
-                      <strong>{formatCurrency(item.lineTotal)}</strong>
+                      <div className="order-line-quantity">x {item.quantity}</div>
+                      <strong className="order-line-total">{formatCurrency(item.lineTotal)}</strong>
                     </div>
                   ))}
                 </div>
