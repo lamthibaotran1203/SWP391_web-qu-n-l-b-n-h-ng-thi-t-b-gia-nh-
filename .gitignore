@@ -48,3 +48,13 @@ outputs/
 # Local database review drafts, personal RDS follow-up notes and browser evidence.
 # Executable schema stays in backend migrations; team contract stays in docs/contracts.
 /docs/database/
+
+# Personal agent context and unapproved planning/review drafts (keep local).
+/AGENTS.md
+/PROJECT_STATUS.md
+/household-goods-sales-planning-handoff/
+/docs/HomeMart_RDS_Consolidated_Review.docx
+/docs/Iter1_Group3_AnNP_UC_Descriptions_Clone.docx
+/docs/Staff_Admin_Screen_Flow_Review.md
+/docs/Staff_Admin_Screen_Flow_Review.drawio
+/ok.md

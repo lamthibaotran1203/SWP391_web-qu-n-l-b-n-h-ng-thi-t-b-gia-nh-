@@ -1,9 +1,13 @@
 package com.swp391.householdgoods.common.api;
 
-import com.swp391.householdgoods.catalog.application.ProductNotFoundException;
 import com.swp391.householdgoods.catalog.application.CatalogException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
+import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
+import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
+import com.swp391.householdgoods.purchasing.application.SupplierDuplicateException;
+import com.swp391.householdgoods.purchasing.application.SupplierNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -13,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -39,6 +44,20 @@ public class ApiExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler({
+            ConstraintViolationException.class,
+            MethodArgumentTypeMismatchException.class,
+            HandlerMethodValidationException.class
+    })
+    ResponseEntity<ApiProblem> handleRequestParameterValidation(HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "VALIDATION_FAILED",
+                "Tham số tìm kiếm chưa hợp lệ.",
+                Map.of(),
+                request);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     ResponseEntity<ApiProblem> handleNotFound(
             HttpServletRequest request) {
@@ -51,13 +70,25 @@ public class ApiExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    ResponseEntity<ApiProblem> handleProductNotFound(
-            ProductNotFoundException exception,
+    @ExceptionHandler(SalesOrderNotFoundException.class)
+    ResponseEntity<ApiProblem> handleSalesOrderNotFound(
+            SalesOrderNotFoundException exception,
             HttpServletRequest request) {
         return problem(
                 HttpStatus.NOT_FOUND,
-                "PRODUCT_NOT_FOUND",
+                "ORDER_NOT_FOUND",
+                "Không tìm thấy đơn hàng.",
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(InvalidSalesOrderSearchException.class)
+    ResponseEntity<ApiProblem> handleInvalidSalesOrderSearch(
+            InvalidSalesOrderSearchException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "INVALID_ORDER_SEARCH",
                 exception.getMessage(),
                 Map.of(),
                 request);
@@ -75,13 +106,38 @@ public class ApiExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    ResponseEntity<ApiProblem> handleParameter(
+    @ExceptionHandler(SupplierNotFoundException.class)
+    ResponseEntity<ApiProblem> handleSupplierNotFound(
+            SupplierNotFoundException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "SUPPLIER_NOT_FOUND",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(SupplierDuplicateException.class)
+    ResponseEntity<ApiProblem> handleSupplierDuplicate(
+            SupplierDuplicateException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.CONFLICT,
+                "SUPPLIER_DUPLICATE",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(com.swp391.householdgoods.purchasing.application.PurchaseOrderValidationException.class)
+    ResponseEntity<ApiProblem> handlePurchaseOrderValidation(
+            com.swp391.householdgoods.purchasing.application.PurchaseOrderValidationException exception,
             HttpServletRequest request) {
         return problem(
                 HttpStatus.BAD_REQUEST,
-                "PARAMETER_INVALID",
-                "Tham số gửi lên chưa hợp lệ.",
+                "PURCHASE_ORDER_INVALID",
+                exception.getMessage(),
                 Map.of(),
                 request);
     }
@@ -96,6 +152,26 @@ public class ApiExceptionHandler {
                 exception.getMessage(),
                 Map.of(),
                 request);
+    }
+
+    @ExceptionHandler(com.swp391.householdgoods.identity.application.PasswordChangeException.class)
+    ResponseEntity<ApiProblem> handlePasswordChange(
+            com.swp391.householdgoods.identity.application.PasswordChangeException exception,
+            HttpServletRequest request) {
+        Map<String, String> fields = exception.field() == null ? Map.of()
+                : Map.of(exception.field(), exception.getMessage());
+        return problem(exception.status(), exception.code(), exception.getMessage(), fields, request);
+    }
+
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    ResponseEntity<ApiProblem> handleUnreadableBody(HttpServletRequest request) {
+        return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST_BODY",
+                "Dữ liệu gửi lên chưa hợp lệ.", Map.of(), request);
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    ResponseEntity<ApiProblem> handleAccessDenied(HttpServletRequest request) {
+        return problem(HttpStatus.FORBIDDEN, "ACCESS_DENIED", "Bạn không có quyền thực hiện thao tác này.", Map.of(), request);
     }
 
     @ExceptionHandler(Exception.class)

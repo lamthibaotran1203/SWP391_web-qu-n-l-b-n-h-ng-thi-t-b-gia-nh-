@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 
 export function LoginPage() {
   const { login } = useAuth()
+  const location = useLocation()
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
@@ -28,12 +29,8 @@ export function LoginPage() {
     setSubmitting(true)
 
     try {
-      await login(
-        form.email,
-        form.password,
-      )
-
-      navigate('/')
+      await login(form.email, form.password)
+      navigate(location.state?.from || '/')
     } catch (requestError) {
       setError(
         requestError.message
@@ -45,23 +42,10 @@ export function LoginPage() {
   }
 
   return (
-    <main className="login-page">
-      <section
-        className="login-shell"
-        aria-labelledby="login-title"
-      >
-        <Link className="back-link" to="/">
-          ← Quay lại trang chủ
-        </Link>
-
-        <p className="eyebrow">
-          Gia Dụng Việt
-        </p>
-
-        <h1 id="login-title">
-          Đăng nhập hệ thống
-        </h1>
-
+    <main className="plain-page">
+      <section className="plain-container plain-form" aria-labelledby="login-title">
+        <Link to="/">← Quay lại trang chủ</Link>
+        <h1 className="mt-4" id="login-title">Đăng nhập hệ thống</h1>
         <p className="text-secondary">
           Đăng nhập bằng tài khoản của bạn.
         </p>
@@ -85,7 +69,7 @@ export function LoginPage() {
             </label>
 
             <input
-              className="form-control form-control-lg"
+              className="form-control"
               id="email"
               name="email"
               type="email"
@@ -105,7 +89,7 @@ export function LoginPage() {
             </label>
 
             <input
-              className="form-control form-control-lg"
+              className="form-control"
               id="password"
               name="password"
               type="password"
@@ -115,15 +99,8 @@ export function LoginPage() {
               required
             />
           </div>
-
-          <button
-            className="btn btn-dark btn-lg w-100"
-            type="submit"
-            disabled={submitting}
-          >
-            {submitting
-              ? 'Đang đăng nhập…'
-              : 'Đăng nhập'}
+          <button className="btn btn-dark" type="submit" disabled={submitting}>
+            {submitting ? 'Đang đăng nhập…' : 'Đăng nhập'}
           </button>
         </form>
 

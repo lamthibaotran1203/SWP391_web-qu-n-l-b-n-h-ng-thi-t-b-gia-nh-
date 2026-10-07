@@ -1,0 +1,297 @@
+/* Purchasing Feature Styles */
+.purchasing-page {
+  padding: 2rem 0 4rem;
+  min-height: calc(100vh - 80px);
+}
+
+.purchasing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.purchasing-title h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.purchasing-title p {
+  color: #64748b;
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+}
+
+.purchasing-filter-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.purchasing-table-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.purchasing-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.purchasing-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.purchasing-table td {
+  padding: 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.925rem;
+}
+
+.purchasing-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.badge-active {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.775rem;
+  display: inline-block;
+}
+
+.badge-inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.775rem;
+  display: inline-block;
+}
+
+.supplier-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.supplier-modal-dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.supplier-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.supplier-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.supplier-modal-body {
+  padding: 1.5rem;
+  max-height: calc(85vh - 140px);
+  overflow-y: auto;
+}
+
+.supplier-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background: #f8fafc;
+}
+
+/* HomeMart shared workspace treatment */
+.purchasing-page {
+  padding-top: 2.75rem;
+}
+
+.purchasing-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-color: var(--hm-line);
+}
+
+.purchasing-title h1 {
+  color: var(--hm-ink);
+  font-size: clamp(1.8rem, 4vw, 2.55rem);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+
+.purchasing-title p {
+  color: var(--hm-muted);
+}
+
+.purchasing-filter-card,
+.purchasing-table-container {
+  border-color: var(--hm-line);
+  border-radius: var(--hm-radius-lg);
+  box-shadow: var(--hm-shadow-sm);
+}
+
+.purchasing-filter-card {
+  padding: 1.25rem;
+}
+
+.purchasing-table th {
+  border-color: var(--hm-line);
+  color: #687770;
+  background: var(--hm-surface-soft);
+}
+
+.purchasing-table td {
+  border-color: #edf2ef;
+}
+
+.purchasing-table tbody tr:hover {
+  background: #f9fcfa;
+}
+
+.purchasing-table td.text-primary,
+.purchasing-table .text-primary {
+  color: var(--hm-primary) !important;
+}
+
+.badge-active {
+  color: #087454;
+  background: #e7f7f0;
+}
+
+.badge-inactive {
+  color: #a53838;
+  background: #faeaea;
+}
+
+.supplier-modal-backdrop {
+  background: rgb(11 31 24 / 62%);
+  backdrop-filter: blur(4px);
+}
+
+.supplier-modal-dialog {
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: var(--hm-radius-lg);
+}
+
+.supplier-modal-header,
+.supplier-modal-footer {
+  border-color: var(--hm-line);
+  background: var(--hm-surface-soft);
+}
+
+.supplier-modal-header h2 {
+  color: var(--hm-ink);
+  font-weight: 850;
+}
+
+.purchasing-page .card-header.bg-light {
+  background: var(--hm-surface-soft) !important;
+}
+
+.purchasing-page .card-header.bg-dark {
+  border-color: var(--hm-primary-dark);
+  background: linear-gradient(135deg, var(--hm-primary-dark), var(--hm-primary)) !important;
+}
+
+.purchasing-page .bg-light {
+  background: var(--hm-surface-soft) !important;
+}
+
+.purchasing-page .table thead th {
+  padding: 0.85rem 1rem;
+  border-color: var(--hm-line);
+  color: #687770;
+  background: var(--hm-surface-soft);
+  font-size: 0.75rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.purchasing-page .table tbody td {
+  padding: 0.9rem 1rem;
+  border-color: #edf2ef;
+}
+
+.purchasing-page .sticky-top {
+  top: 6.25rem !important;
+}
+
+@media (max-width: 767px) {
+  .purchasing-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .purchasing-header > .d-flex {
+    flex-direction: column;
+  }
+
+  .purchasing-header .btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .supplier-modal-backdrop {
+    padding: 0.75rem;
+  }
+
+  .supplier-modal-dialog {
+    max-height: 94vh;
+  }
+}

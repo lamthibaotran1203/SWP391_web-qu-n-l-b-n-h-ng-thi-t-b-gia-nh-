@@ -1,20 +1,23 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getProducts } from '../api/productApi'
-import { getCatalogBrands, getCatalogCategories } from '../features/catalog/api'
+import { AppFooter, AppHeader, WorkspaceHeader } from '../components/AppShell'
+import { formatVnd, getCatalogBrands, getCatalogCategories } from '../features/catalog/api'
 
-const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
 const defaultCriteria = { search: '', brand: '', category: '', minPrice: '', maxPrice: '', sort: 'newest' }
 
 export function ProductListPage() {
   const [draft, setDraft] = useState(defaultCriteria)
   const [criteria, setCriteria] = useState(defaultCriteria)
   const [page, setPage] = useState(0)
-  const [result, setResult] = useState({ content: [], totalPages: 0, totalElements: 0 })
+  const [response, setResponse] = useState(null)
+  const [retry, setRetry] = useState(0)
   const [brands, setBrands] = useState([])
   const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const requestKey = JSON.stringify({ criteria, page, retry })
+  const loading = response?.key !== requestKey
+  const error = loading ? '' : response.error
+  const result = loading || !response.data ? { content: [], totalPages: 0, totalElements: 0 } : response.data
 
   useEffect(() => {
     Promise.all([getCatalogBrands(), getCatalogCategories()])
@@ -25,22 +28,16 @@ export function ProductListPage() {
       .catch(() => {})
   }, [])
 
-  const loadProducts = useCallback(() => {
-    setLoading(true)
-    setError('')
-    getProducts({ ...criteria, page })
-      .then((data) => {
-        setResult(data)
-        if (typeof data.number === 'number' && data.number !== page) setPage(data.number)
-      })
-      .catch((requestError) => setError(requestError.message))
-      .finally(() => setLoading(false))
-  }, [criteria, page])
-
   useEffect(() => {
-    const timer = setTimeout(loadProducts, 0)
-    return () => clearTimeout(timer)
-  }, [loadProducts])
+    const controller = new AbortController()
+    let active = true
+    getProducts({ ...criteria, page }, { signal: controller.signal })
+      .then((data) => { if (active) setResponse({ key: requestKey, data, error: '' }) })
+      .catch((requestError) => { if (active) setResponse({ key: requestKey, error: requestError.message }) })
+    return () => { active = false; controller.abort() }
+  }, [criteria, page, requestKey])
+
+  function loadProducts() { setRetry((value) => value + 1) }
 
   function submit(event) {
     event.preventDefault()
@@ -58,9 +55,11 @@ export function ProductListPage() {
 
   return (
     <main className="catalog-page">
-      <nav className="catalog-nav container"><Link to="/" className="brand-link">Gia Dụng Việt</Link><Link to="/products">Sản phẩm</Link></nav>
-      <section className="container py-5">
-        <div className="catalog-heading"><div><p className="eyebrow">Danh mục sản phẩm</p><h1>Đồ gia dụng cho ngôi nhà hiện đại.</h1></div><span className="text-secondary">{result.totalElements || 0} sản phẩm</span></div>
+      <AppHeader />
+      <section className="container catalog-content">
+        <WorkspaceHeader eyebrow="Danh mục sản phẩm" title="Đồ gia dụng cho ngôi nhà hiện đại." description="Lựa chọn sản phẩm phù hợp theo thương hiệu, danh mục và ngân sách.">
+          <span className="result-count"><strong>{result.totalElements || 0}</strong><small>sản phẩm</small></span>
+        </WorkspaceHeader>
         <form className="catalog-filters" onSubmit={submit}>
           <input className="form-control" value={draft.search} onChange={(event) => setDraft({ ...draft, search: event.target.value })} placeholder="Tên, thương hiệu hoặc SKU" aria-label="Tìm sản phẩm" />
           <select className="form-select" value={draft.brand} onChange={(event) => setDraft({ ...draft, brand: event.target.value })} aria-label="Lọc thương hiệu"><option value="">Thương hiệu</option>{brands.map((brand) => <option value={brand.name} key={brand.id}>{brand.name}</option>)}</select>
@@ -69,14 +68,15 @@ export function ProductListPage() {
           <input className="form-control" type="number" min="0" value={draft.maxPrice} onChange={(event) => setDraft({ ...draft, maxPrice: event.target.value })} placeholder="Giá đến" aria-label="Giá đến" />
           <select className="form-select" value={draft.sort} onChange={(event) => { const sort = event.target.value; setDraft({ ...draft, sort }); setCriteria({ ...criteria, sort }); setPage(0) }} aria-label="Sắp xếp"><option value="newest">Mới nhất</option><option value="oldest">Cũ nhất</option><option value="name_asc">Tên A-Z</option><option value="name_desc">Tên Z-A</option><option value="price_asc">Giá thấp đến cao</option><option value="price_desc">Giá cao đến thấp</option></select>
           <button className="btn btn-dark" type="submit">Tìm kiếm</button>
-          {hasCriteria && <button className="btn btn-outline-secondary" type="button" onClick={clearCriteria}>Xóa tiêu chí</button>}
+          {hasCriteria && <button className="btn btn-outline-secondary" type="button" onClick={clearCriteria}>Xóa</button>}
         </form>
         {error && <div className="alert alert-danger d-flex justify-content-between align-items-center"><span>{error}</span><button className="btn btn-sm btn-danger" onClick={loadProducts}>Thử lại</button></div>}
-        {loading ? <p>Đang tải sản phẩm...</p> : result.content.length === 0 ? <div className="empty-results"><h2>Không tìm thấy sản phẩm</h2><p>Hãy thử sửa tiêu chí tìm kiếm hoặc xóa bộ lọc.</p><button className="btn btn-outline-dark" onClick={clearCriteria}>Xóa tiêu chí</button></div> : <>
-          <div className="product-grid">{result.content.map((product) => <Link to={`/products/${product.id}`} className="product-card" key={product.id}><div className="product-image">{product.imageUrl ? <img src={product.imageUrl} alt={product.name} /> : <span>Gia dụng</span>}</div><div className="p-3"><small className="text-secondary">{product.brand || product.category || 'Sản phẩm gia dụng'}</small><h2>{product.name}</h2><strong>{money.format(product.price)}</strong><p className="stock-note">SKU: {product.sku} · Còn {product.stockQuantity}</p></div></Link>)}</div>
+        {loading ? <div className="catalog-loading" role="status"><span className="loading-spinner" />Đang tải sản phẩm...</div> : result.content.length === 0 ? <div className="empty-results"><span className="empty-state-icon" aria-hidden="true">⌕</span><h2>Không tìm thấy sản phẩm</h2><p>Hãy thử sửa tiêu chí tìm kiếm hoặc xóa bộ lọc.</p><button className="btn btn-outline-dark" onClick={clearCriteria}>Xóa tiêu chí</button></div> : <>
+          <div className="product-grid">{result.content.map((product) => <Link to={`/products/${product.productId}?sku=${product.id}`} className="product-card" key={product.id}><div className="product-image">{product.imageUrl ? <img src={product.imageUrl} alt={product.name} /> : <span>Gia dụng</span>}</div><div className="p-3"><small className="text-secondary">{product.brand || product.category || 'Sản phẩm gia dụng'}</small><h2>{product.name}</h2><strong>{formatVnd(product.price)}</strong><p className="stock-note">SKU: {product.sku} · Còn {product.stockQuantity}</p></div></Link>)}</div>
           {result.totalPages > 1 && <nav className="catalog-pagination" aria-label="Phân trang"><button className="btn btn-outline-dark" disabled={page === 0} onClick={() => setPage(page - 1)}>Trước</button><span>Trang {page + 1} / {result.totalPages}</span><button className="btn btn-outline-dark" disabled={page + 1 >= result.totalPages} onClick={() => setPage(page + 1)}>Sau</button></nav>}
         </>}
       </section>
+      <AppFooter />
     </main>
   )
 }

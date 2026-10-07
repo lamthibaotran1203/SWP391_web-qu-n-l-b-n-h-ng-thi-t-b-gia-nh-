@@ -95,6 +95,11 @@ public class UserAccount {
                 now);
     }
 
+    public void changePassword(String encodedPassword, Instant now) {
+        this.passwordHash = encodedPassword;
+        this.updatedAt = now;
+    }
+
     /**
      * Tạo tài khoản Customer mới khi đăng ký.
      * Tài khoản chưa được kích hoạt cho đến khi xác minh email.
@@ -150,6 +155,15 @@ public class UserAccount {
 
     public AccountStatus getStatus() {
         return status;
+    }
+
+    public boolean updateFullName(String fullName, Instant now) {
+        if (this.fullName.equals(fullName)) {
+            return false;
+        }
+        this.fullName = fullName;
+        this.updatedAt = now;
+        return true;
     }
 
     public Instant getEmailVerifiedAt() {

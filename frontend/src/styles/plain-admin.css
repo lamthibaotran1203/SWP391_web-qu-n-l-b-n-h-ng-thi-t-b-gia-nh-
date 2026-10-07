@@ -1,0 +1,98 @@
+/* Plain classroom/demo pages. Public product pages keep their existing styles. */
+.plain-page {
+  min-height: 100vh;
+  padding: 24px 16px;
+  color: #222;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.plain-container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.plain-form {
+  max-width: 560px;
+}
+
+.plain-page h1 { margin-bottom: 16px; font-size: 28px; font-weight: 700; }
+.plain-page h2 { margin-bottom: 16px; font-size: 22px; font-weight: 700; }
+.plain-page a:not(.btn) { color: #0645ad; text-decoration: underline; }
+.plain-page .form-label { margin-bottom: 4px; font-weight: 700; }
+.plain-page .text-secondary { color: #555 !important; }
+
+.plain-page .btn,
+.plain-page .form-control,
+.plain-page .form-select,
+.plain-page .form-check-input,
+.plain-page .alert {
+  border-radius: 0;
+  box-shadow: none;
+  transition: none;
+  animation: none;
+}
+
+.plain-page .form-control,
+.plain-page .form-select {
+  min-height: 38px;
+  border: 1px solid #777;
+  color: #222;
+  background-color: #fff;
+}
+
+.plain-page .form-control::placeholder { color: #666; opacity: 1; }
+.plain-page .form-control:disabled,
+.plain-page .form-select:disabled { background-color: #eee; }
+.plain-page .form-control.is-invalid { border: 2px solid #a11414; }
+.plain-page .invalid-feedback { color: #a11414; }
+
+.plain-page .btn {
+  padding: 6px 14px;
+  border: 1px solid #666;
+  color: #222;
+  background: #eee;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.plain-page .btn-dark { border-color: #222; color: #fff; background: #333; }
+.plain-page .btn-sm { padding: 4px 10px; font-size: 14px; }
+.plain-page .btn:hover { border-color: #222; color: #111; background: #ddd; }
+.plain-page .btn-dark:hover { color: #fff; background: #111; }
+.plain-page .btn:active { border-color: #222; color: #111; background: #ccc; }
+.plain-page .btn:disabled { color: #555; background: #eee; border-color: #aaa; opacity: 1; }
+
+.plain-page :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid #0645ad;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.plain-page .form-control:focus,
+.plain-page .form-select:focus { border-color: #222; box-shadow: none; }
+.plain-page .form-check-input { border-color: #666; }
+.plain-page .form-check-input:checked { border-color: #333; background-color: #333; }
+.plain-page .alert { padding: 12px; border: 1px solid #777; color: #222; background: #f5f5f5; }
+.plain-page .alert-danger { border-color: #a11414; color: #a11414; background: #fff; }
+.plain-page .table { --bs-table-color: #222; --bs-table-bg: #fff; border-collapse: collapse; }
+.plain-page .table th,
+.plain-page .table td { padding: 10px; border: 1px solid #aaa; }
+.plain-page .table th { background: #eee; }
+.plain-page .table caption { color: #555; }
+.plain-page .table-responsive { margin-bottom: 16px; }
+.plain-page ::selection { color: #fff; background: #0645ad; }
+
+@media (max-width: 600px) {
+  .plain-page { padding: 16px 12px; }
+  .plain-page h1 { font-size: 24px; }
+  .plain-page .table { min-width: 520px; }
+}
+
+.management-product { display: flex; align-items: center; gap: 12px; }
+.management-product > :not(img) { min-width: 0; overflow-wrap: anywhere; }
+.plain-page .visually-hidden { top: 0; left: 0; clip-path: inset(50%); }
+.management-thumbnail { flex: 0 0 64px; width: 64px; height: 64px; object-fit: contain; background: #fff; }
+.management-thumbnail-empty { display: grid; place-items: center; border: 1px solid #ccc; color: #555; font-size: 12px; text-align: center; }

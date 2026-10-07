@@ -1,0 +1,118 @@
+import { useEffect, useState } from 'react'
+import { getSalesOrderDetails } from '../../api/http'
+import {
+  channelLabels,
+  formatCurrency,
+  formatDate,
+  formatLabel,
+  orderStatusLabels,
+  paymentMethodLabels,
+  paymentStatusLabels,
+} from './order-formatters'
+
+export function OrderDetailsDialog({ orderId, onClose }) {
+  const [order, setOrder] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    let active = true
+    getSalesOrderDetails(orderId)
+      .then((details) => {
+        if (active) setOrder(details)
+      })
+      .catch((requestError) => {
+        if (active) setError(requestError.message || 'Không tải được chi tiết đơn hàng.')
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [orderId])
+
+  return (
+    <div className="order-dialog-backdrop" onClick={onClose}>
+      <section
+        className="order-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="order-dialog-title"
+        onClick={(event) => event.stopPropagation()}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') onClose()
+        }}
+      >
+        <header className="order-dialog-header">
+          <div>
+            <p className="orders-eyebrow">CHI TIẾT ĐƠN HÀNG</p>
+            <h2 id="order-dialog-title">{order?.orderNumber || 'Đơn hàng'}</h2>
+          </div>
+          <button className="order-dialog-close" type="button" onClick={onClose} aria-label="Đóng chi tiết" autoFocus>
+            ×
+          </button>
+        </header>
+        {loading && <p role="status">Đang tải chi tiết đơn hàng…</p>}
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        {order && (
+          <div className="order-details-body">
+            <div className="order-details-summary">
+              <div>
+                <span>Ngày đặt</span>
+                <strong>{formatDate(order.placedAt)}</strong>
+              </div>
+              <div>
+                <span>Kênh</span>
+                <strong>{formatLabel(channelLabels, order.channel)}</strong>
+              </div>
+              <div>
+                <span>Trạng thái</span>
+                <strong>{formatLabel(orderStatusLabels, order.status)}</strong>
+              </div>
+              <div>
+                <span>Thanh toán</span>
+                <strong>{formatLabel(paymentStatusLabels, order.paymentStatus)}</strong>
+              </div>
+              <div>
+                <span>Phương thức</span>
+                <strong>{formatLabel(paymentMethodLabels, order.paymentMethod)}</strong>
+              </div>
+            </div>
+            <section className="order-detail-section">
+              <h3>Thông tin khách hàng</h3>
+              <p><strong>{order.customerName}</strong></p>
+              {order.customerPhone && <p>{order.customerPhone}</p>}
+              {order.customerEmail && <p>{order.customerEmail}</p>}
+              {order.shippingAddress && <p>{order.shippingAddress}</p>}
+            </section>
+            <section className="order-detail-section">
+              <h3>Sản phẩm</h3>
+              {order.items.length === 0 ? (
+                <p>Đơn hàng chưa có sản phẩm.</p>
+              ) : (
+                <div className="order-line-list">
+                  {order.items.map((item) => (
+                    <div className="order-line" key={item.id}>
+                      <div>
+                        <strong>{item.productName}</strong>
+                        <span>{item.productSku} · {item.quantity} × {formatCurrency(item.unitPrice)}</span>
+                      </div>
+                      <strong>{formatCurrency(item.lineTotal)}</strong>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+            <section className="order-detail-section order-totals">
+              <p><span>Tạm tính</span><strong>{formatCurrency(order.subtotal)}</strong></p>
+              <p><span>Giảm giá</span><strong>−{formatCurrency(order.discountAmount)}</strong></p>
+              <p><span>Phí giao hàng</span><strong>{formatCurrency(order.shippingFee)}</strong></p>
+              <p className="order-grand-total"><span>Tổng thanh toán</span><strong>{formatCurrency(order.totalAmount)}</strong></p>
+            </section>
+          </div>
+        )}
+      </section>
+    </div>
+  )
+}
