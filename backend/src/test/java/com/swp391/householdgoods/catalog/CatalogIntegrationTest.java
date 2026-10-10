@@ -80,6 +80,22 @@ class CatalogIntegrationTest {
         mvc.perform(get("/api/v1/catalog/skus/"+sku()))
             .andExpect(status().isOk()).andExpect(jsonPath("$.data.availableQuantity").value(0));
     }
+    @Test void searchFiltersAndProductNameSortingUseCanonicalPublicData() throws Exception {
+        seed();
+        mvc.perform(get("/api/v1/catalog/skus").param("search", "SHD1182"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.data.totalElements").value(1))
+            .andExpect(jsonPath("$.data.items[0].skuCode").value("DEMO-SHD1182"));
+        mvc.perform(get("/api/v1/catalog/skus")
+                .param("brand", "SUNHOUSE").param("category", "Ấm siêu tốc")
+                .param("minPrice", "200000").param("maxPrice", "300000"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.data.totalElements").value(1))
+            .andExpect(jsonPath("$.data.items[0].productName").value("Ấm siêu tốc SUNHOUSE SHD1182 1.8 lít"));
+        mvc.perform(get("/api/v1/catalog/skus").param("brand", "SUNHOUSE").param("sort", "name_asc"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.data.items[0].productName").value("Bộ nồi SUNHOUSE ECO SHG1122MX"));
+    }
     @Test void hiddenProductsSkusAndDeletedReferencesNeverLeak() throws Exception {
         seed();
         jdbc.update("update app.product set status='INACTIVE' where product_id=?",product());

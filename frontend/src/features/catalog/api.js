@@ -11,14 +11,14 @@ export function getCatalogSku(skuId) {
 export function getProductSaleUnits(productId) {
   return apiRequest(`/api/v1/catalog/products/${encodeURIComponent(productId)}`)
 }
-export function getCatalogCategories() {
-  return apiRequest('/api/v1/catalog/categories')
+export function getCatalogCategories(options = {}) {
+  return apiRequest('/api/v1/catalog/categories', options)
 }
-export function getCatalogBrands() {
-  return apiRequest('/api/v1/catalog/brands')
+export function getCatalogBrands(options = {}) {
+  return apiRequest('/api/v1/catalog/brands', options)
 }
 // Monetary values are whole-VND decimal strings. Avoid Number conversion/rounding.
 export function formatVnd(value) {
-  if (!/^\d+$/.test(String(value))) throw new TypeError('Giá tiền chưa hợp lệ.')
+  if (!/^\d+$/.test(String(value))) throw new TypeError('Gi\u00e1 ti\u1ec1n ch\u01b0a h\u1ee3p l\u1ec7.')
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(BigInt(value))
 }

@@ -129,8 +129,8 @@ public class CatalogRepository {
     private String orderBy(String sort) {
         return switch (sort) {
             case "oldest" -> " order by s.id";
-            case "name_asc" -> " order by lower(s.sku_name),s.id";
-            case "name_desc" -> " order by lower(s.sku_name) desc,s.id desc";
+            case "name_asc" -> " order by lower(p.name),lower(s.sku_name),s.id";
+            case "name_desc" -> " order by lower(p.name) desc,lower(s.sku_name) desc,s.id desc";
             case "price_asc" -> " order by s.selling_price,s.id";
             case "price_desc" -> " order by s.selling_price desc,s.id desc";
             default -> " order by s.id desc";
