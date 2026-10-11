@@ -54,7 +54,7 @@ export function PersonalProfileForm({ profile, onSave }) {
         {errors.phone ? <div className="invalid-feedback" id="profile-phone-error">{errors.phone}</div>
           : <p className="form-text" id="profile-phone-help">10 chữ số, bắt đầu bằng 0. Có thể để trống.</p>}
       </div>
-      <div className="profile-actions">
+      <div className="account-actions">
         <button className="btn btn-primary" type="submit">{busy ? 'Đang lưu…' : 'Lưu thay đổi'}</button>
         <button className="btn btn-outline-secondary" type="button" onClick={() => {
           setFields(fieldsOf(profile)); setErrors({}); setError(''); setSaved(false)

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../../auth/useAuth'
-import { AppHeader } from '../../components/AppShell'
+import { AccountPage } from '../../components/AccountPage'
 import { getPersonalProfile } from './api'
 import { PersonalProfileForm } from './PersonalProfileForm'
-import './profile.css'
 
 export function PersonalProfilePage() {
   const { user, connection, reload } = useAuth()
@@ -17,13 +16,9 @@ export function PersonalProfilePage() {
   if (user.role !== 'CUSTOMER') return <main className="container py-4">
     <h1>Trang hồ sơ dành cho khách hàng</h1><Link to="/">Về trang chủ</Link>
   </main>
-  return <div className="profile-page"><AppHeader />
-    <main className="container profile-content"><nav aria-label="Đường dẫn"><Link to="/">Trang chủ</Link>
-      <span aria-hidden="true"> / </span><span aria-current="page">Thông tin tài khoản</span></nav>
-      <h1>Thông tin tài khoản</h1><PersonalProfileContent />
-      <Link className="profile-password-link" to="/account/password">Đổi mật khẩu</Link>
-    </main>
-  </div>
+  return <AccountPage title="Thông tin tài khoản"><PersonalProfileContent />
+    <Link className="account-link" to="/account/password">Đổi mật khẩu</Link>
+  </AccountPage>
 }
 
 function PersonalProfileContent() {
@@ -57,7 +52,7 @@ function PersonalProfileContent() {
     {current.error.status === 401 ? <Link to="/login">Đăng nhập lại</Link>
       : <button className="btn btn-outline-dark" onClick={() => setRevision((value) => value + 1)}>Thử tải lại</button>}
   </div>
-  return <section className="profile-form" aria-label="Hồ sơ cá nhân">
+  return <section className="account-form" aria-label="Hồ sơ cá nhân">
     <PersonalProfileForm profile={current.profile} onSave={save} />
   </section>
 }

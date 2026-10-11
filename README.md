@@ -281,7 +281,7 @@ AnNP owns UC-05. The canonical Backlog row 6 records the actor (Authenticated Us
 user-confirmed policy/session decisions on 2026-10-06. The live RDS wording/BR references
 still need synchronization; this implementation does not claim the other owned UCs are done.
 
-Open Home → **Đổi mật khẩu**, or `/account/password`, while logged in. The plain Bootstrap
+Open the avatar menu → **Đổi mật khẩu**, or `/account/password`, while logged in. The Bootstrap
 form calls `POST /api/v1/auth/password` with JSON `currentPassword`, `newPassword`,
 `confirmation`, the server session cookie and CSRF header. No target account ID is accepted.
 CUSTOMER, STAFF and MANAGER can change only their own active account.
@@ -320,8 +320,10 @@ password-change proof and GitLab-hosted pipeline evidence remain pending.
 
 For a direct-link demo, open `/login`, sign in, then enter `/account/password` in the address bar.
 Use the same host/port throughout: `http://localhost:5173` for Vite development or
-`http://localhost:8080` for the packaged Spring application. The password and login pages use
-white backgrounds and simple controls, scoped in `frontend/src/styles/plain-admin.css`.
+`http://localhost:8080` for the packaged Spring application. Password and profile pages share
+the HomeMart header and simple white forms in `frontend/src/styles/account.css`. The password
+form includes an optional **Hiện mật khẩu** checkbox. The avatar menu supports keyboard focus,
+Escape, outside-click dismissal and logout. Login retains `frontend/src/styles/plain-admin.css`.
 UC-13 reuses the team's HomeMart header and accent colour, with restrained controls scoped in
 `frontend/src/features/catalog/management/management.css`. Public product pages retain the
 teammate's search/view implementation.
@@ -387,7 +389,7 @@ were removed. This does not claim hosted CI or new writes to shared Supabase.
 
 ## UC-04 — Personal profile (initial slice)
 
-CUSTOMER opens **Thông tin tài khoản** at `/account/profile` from the header or Home.
+CUSTOMER opens the avatar menu → **Thông tin tài khoản** at `/account/profile`, or the link on Home.
 The basic slice reads the current account's email, full name and phone. Email is read-only;
 name (2–100 characters after normalization) and optional phone (10 digits starting with 0)
 can be saved. Clearing the phone stores NULL. Cancel restores the last loaded/saved values.
