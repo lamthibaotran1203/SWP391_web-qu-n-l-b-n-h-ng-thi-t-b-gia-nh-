@@ -79,26 +79,27 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
 
   return <main className="catalog-page min-vh-100">
     <AppHeader />
-    <div className="container product-detail-breadcrumb"><Link to="/products">← Quay lại danh sách sản phẩm</Link></div>
+    <div className="container product-detail-breadcrumb"><Link to="/products"><span aria-hidden="true">←</span> Danh sách sản phẩm</Link></div>
     <section className="container product-detail">
-      <div>
+      <div className="product-gallery">
         <div className="detail-image">{image && failedImage !== image
-          ? <img src={image} alt={product.name} onError={() => setFailedImage(image)} style={{ objectFit: 'contain' }} />
-          : <span>Chưa có hình ảnh</span>}</div>
-        {product.images.length > 1 && <div className="d-flex flex-wrap gap-2 mt-3" aria-label="Hình ảnh sản phẩm">
-          {product.images.map((url, index) => <button type="button" className="btn btn-outline-secondary" key={url}
+          ? <img src={image} alt={product.name} onError={() => setFailedImage(image)} />
+          : <div className="detail-image-placeholder"><span aria-hidden="true">▧</span><p>Chưa có hình ảnh</p></div>}</div>
+        {product.images.length > 1 && <div className="product-thumbnails" aria-label="Hình ảnh sản phẩm">
+          {product.images.map((url, index) => <button type="button" className="product-thumbnail" key={url}
             aria-label={`Xem ảnh ${index + 1}`} aria-pressed={image === url} onClick={() => setImageChoice(url)}>
+            <img src={url} alt="" onError={(event) => { event.currentTarget.style.display = 'none' }} />
             <span>Ảnh {index + 1}</span>
           </button>)}
         </div>}
       </div>
       <div className="product-detail-copy">
-        <p className="eyebrow">{product.categoryName}</p>
+        <div className="product-detail-meta"><span>{product.categoryName}</span><span>{product.brandName}</span></div>
         <h1>{product.name}</h1>
-        <p>Thương hiệu: <strong>{product.brandName}</strong></p>
-        <div style={{ whiteSpace: 'pre-wrap' }}>{product.description?.trim() || 'Chưa có mô tả sản phẩm.'}</div>
-        <form className="mt-4" onSubmit={addToCart}>
-          <label className="form-label" htmlFor="detail-sku">Phiên bản / quy cách</label>
+        <div className="product-description"><h2>Thông tin sản phẩm</h2><p>{product.description?.trim() || 'Chưa có mô tả sản phẩm.'}</p></div>
+        <form className="product-purchase-card" onSubmit={addToCart}>
+          <div className="purchase-section-heading"><div><span className="purchase-step">1</span><strong>Chọn phiên bản</strong></div><small>{product.skus.length} lựa chọn</small></div>
+          <label className="form-label visually-hidden" htmlFor="detail-sku">Phiên bản / quy cách</label>
           <select id="detail-sku" className="form-select" value={selectedId} disabled={submitting}
             onChange={(event) => chooseSku(event.target.value)}>
             <option value="" disabled>Chọn phiên bản sản phẩm</option>
@@ -106,20 +107,27 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
               {sku.skuName} · {sku.skuCode}{sku.purchasable ? '' : ' · Hết hàng'}
             </option>)}
           </select>
-          <div className="mt-3" aria-live="polite">
-            {selected ? <><p>SKU: {selected.skuCode}</p><p className="detail-price">{formatVnd(selected.sellingPrice)}</p>
-              <p className="stock-note">{selected.purchasable ? `Còn ${selected.availableQuantity} sản phẩm` : 'Hết hàng'}</p></>
-              : <p>Vui lòng chọn phiên bản để xem giá và tình trạng còn hàng.</p>}
+          <div className="product-selection-summary" aria-live="polite">
+            {selected ? <><div><small>Mã sản phẩm</small><strong>{selected.skuCode}</strong></div>
+              <div className="product-price-row"><div><small>Giá bán</small><p className="detail-price">{formatVnd(selected.sellingPrice)}</p></div>
+                <span className={`stock-pill ${selected.purchasable ? 'in-stock' : 'out-of-stock'}`}>{selected.purchasable ? `Còn ${selected.availableQuantity} sản phẩm` : 'Hết hàng'}</span></div></>
+              : <p className="selection-prompt">Vui lòng chọn phiên bản để xem giá và tình trạng còn hàng.</p>}
           </div>
-          <label className="form-label" htmlFor="detail-quantity">Số lượng</label>
-          <input id="detail-quantity" className="form-control mb-3" type="number" min="1" step="1"
-            max={selected?.availableQuantity || undefined} value={quantity}
-            disabled={!selected?.purchasable || submitting} onChange={(event) => setQuantity(event.target.value)} />
+          <div className="purchase-section-heading quantity-heading"><div><span className="purchase-step">2</span><label htmlFor="detail-quantity">Số lượng</label></div></div>
+          <div className="quantity-control">
+            <button type="button" aria-label="Giảm số lượng" disabled={!selected?.purchasable || submitting || amount <= 1}
+              onClick={() => setQuantity(String(Math.max(1, amount - 1)))}>−</button>
+            <input id="detail-quantity" className="form-control" type="number" min="1" step="1"
+              max={selected?.availableQuantity || undefined} value={quantity}
+              disabled={!selected?.purchasable || submitting} onChange={(event) => setQuantity(event.target.value)} />
+            <button type="button" aria-label="Tăng số lượng" disabled={!selected?.purchasable || submitting || amount >= selected.availableQuantity}
+              onClick={() => setQuantity(String(Math.min(selected.availableQuantity, amount + 1)))}>+</button>
+          </div>
           {selected?.purchasable && !validQuantity && <p className="text-danger" role="alert">Số lượng phải là số nguyên từ 1 đến {selected.availableQuantity}.</p>}
-          <button className="btn btn-dark btn-lg" type="submit" disabled={!canAdd}>{submitting ? 'Đang chuyển đến giỏ hàng...' : 'Thêm vào giỏ hàng'}</button>
-          {!user.authenticated ? <p className="mt-3"><Link to="/login" state={{ from: `/products/${product.productId}${selected ? `?sku=${selected.skuId}` : ''}` }}>Đăng nhập</Link> bằng tài khoản khách hàng để mua hàng.</p>
-            : !customer ? <p className="text-secondary mt-3">Chức năng mua hàng dành cho tài khoản khách hàng.</p>
-              : !onAddToCart && <p className="text-secondary mt-3">Giỏ hàng hiện chưa sẵn sàng. Vui lòng quay lại sau.</p>}
+          <button className="btn btn-dark btn-lg product-add-button" type="submit" disabled={!canAdd}><span aria-hidden="true">＋</span>{submitting ? 'Đang chuyển đến giỏ hàng...' : 'Thêm vào giỏ hàng'}</button>
+          {!user.authenticated ? <p className="purchase-help"><Link to="/login" state={{ from: `/products/${product.productId}${selected ? `?sku=${selected.skuId}` : ''}` }}>Đăng nhập</Link> bằng tài khoản khách hàng để mua hàng.</p>
+            : !customer ? <p className="purchase-help">Chức năng mua hàng dành cho tài khoản khách hàng.</p>
+              : !onAddToCart && <p className="purchase-help">Giỏ hàng hiện chưa sẵn sàng. Vui lòng quay lại sau.</p>}
           {message && <div className="alert alert-danger mt-3" role="alert">{message}</div>}
         </form>
       </div>
