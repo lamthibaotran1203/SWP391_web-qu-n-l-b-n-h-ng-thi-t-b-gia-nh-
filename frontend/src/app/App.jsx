@@ -6,7 +6,11 @@ import {
 } from 'react-router-dom'
 
 import { AuthProvider } from '../auth/AuthProvider'
-import { CatalogManagementPage } from '../features/catalog/management/CatalogManagementPage'
+import { CatalogWorkspace } from '../features/catalog/management/CatalogWorkspace'
+import { ManagedProductListPage } from '../features/catalog/management/ManagedProductListPage'
+import { ManagedProductDetailPage } from '../features/catalog/management/ManagedProductDetailPage'
+import { ManagedProductCreatePage, ManagedProductEditPage } from '../features/catalog/management/ManagedProductFormPage'
+import { ManagedSkuFormPage } from '../features/catalog/management/ManagedSkuFormPage'
 import { HomePage } from '../pages/HomePage'
 import { ChangePasswordPage } from '../pages/ChangePasswordPage'
 import { LoginPage } from '../pages/LoginPage'
@@ -24,7 +28,15 @@ export function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/manager/catalog" element={<CatalogManagementPage />} />
+          <Route path="/manager/catalog" element={<Navigate to="/manager/products" replace />} />
+          <Route path="/manager/products" element={<CatalogWorkspace />}>
+            <Route index element={<ManagedProductListPage />} />
+            <Route path="new" element={<ManagedProductCreatePage />} />
+            <Route path=":productId" element={<ManagedProductDetailPage />} />
+            <Route path=":productId/edit" element={<ManagedProductEditPage />} />
+            <Route path=":productId/skus/new" element={<ManagedSkuFormPage />} />
+            <Route path=":productId/skus/:skuId/edit" element={<ManagedSkuFormPage />} />
+          </Route>
           <Route path="/account/password" element={<ChangePasswordPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

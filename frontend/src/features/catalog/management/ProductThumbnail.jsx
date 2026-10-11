@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-export function ProductThumbnail({ src }) {
+export function ProductThumbnail({ src, large = false, name = '' }) {
   const [failedSource, setFailedSource] = useState(null)
+  const className = large ? 'management-large-image' : 'management-thumbnail'
   return src && failedSource !== src
-    ? <img className="management-thumbnail" src={src} alt="" width={64} height={64}
+    ? <img className={className} src={src} alt={name} width={large ? 320 : 64} height={large ? 320 : 64}
       loading="lazy" decoding="async" onError={() => setFailedSource(src)} />
-    : <span className="management-thumbnail management-thumbnail-empty">Chưa có ảnh</span>
+    : <span className={`${className} management-thumbnail-empty`}>Chưa có ảnh</span>
 }

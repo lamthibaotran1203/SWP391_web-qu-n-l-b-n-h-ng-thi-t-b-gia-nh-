@@ -1,12 +1,12 @@
 import { apiRequest } from '../../../api/http'
 
 const base = '/api/v1/manager/catalog/products'
-export function getManagedProducts({ search = '', page = 0, status = '' } = {}) {
+export function getManagedProducts({ search = '', page = 0, status = '' } = {}, options = {}) {
   const query = new URLSearchParams({ search, page: String(page), size: '20' })
   if (status) query.set('status', status)
-  return apiRequest(`${base}?${query}`)
+  return apiRequest(`${base}?${query}`, options)
 }
-export function getManagedProduct(id) { return apiRequest(`${base}/${encodeURIComponent(id)}`) }
+export function getManagedProduct(id, options = {}) { return apiRequest(`${base}/${encodeURIComponent(id)}`, options) }
 function write(path, method, body) {
   return apiRequest(path, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, false)
 }

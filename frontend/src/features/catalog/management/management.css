@@ -1,0 +1,114 @@
+/* Temporary UC-13 presentation: shared HomeMart shell, restrained retail-style content. */
+.catalog-workspace {
+  min-height: 100vh;
+  color: #25322c;
+  background: #f5f6f7;
+  font-family: Arial, Helvetica, sans-serif;
+  --management-line: #d8dedb;
+}
+
+.catalog-workspace-content { padding-top: 24px; padding-bottom: 48px; }
+.management-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; font-size: 14px; }
+.management-breadcrumb > span { color: #59655e; }
+.catalog-workspace .workspace-heading { margin-bottom: 24px; align-items: center; }
+.catalog-workspace .workspace-heading h1 { color: #25322c; font-family: inherit; font-size: 28px; letter-spacing: 0; }
+.catalog-workspace .workspace-heading-actions { flex-wrap: wrap; }
+.catalog-workspace .app-brand-mark { border-radius: 4px; background: var(--hm-primary); box-shadow: none; }
+.catalog-workspace .app-navigation a { border-radius: 4px; }
+
+.catalog-workspace :is(.btn, .form-control, .form-select, .alert, .form-check-input) {
+  border-radius: 4px;
+  box-shadow: none;
+  transition: none;
+  animation: none;
+}
+.catalog-workspace .btn { min-height: 40px; font-size: 14px; }
+.catalog-workspace .btn-sm { min-height: 36px; }
+.catalog-workspace .form-control, .catalog-workspace .form-select { min-height: 42px; border-color: #8c9790; }
+.catalog-workspace .form-label { color: #283c30; font-size: 14px; font-weight: 700; }
+.catalog-workspace :is(input, textarea)::placeholder { color: #626c65; opacity: 1; }
+.catalog-workspace :is(a, button, input, select, textarea):focus-visible { outline: 2px solid #07543f; outline-offset: 3px; box-shadow: none; }
+.catalog-workspace ::selection { background: #d9eee3; color: #173b2a; }
+.catalog-workspace :is(.management-price, .management-pagination) { font-variant-numeric: tabular-nums; }
+.catalog-workspace .visually-hidden { top: 0; left: 0; clip-path: inset(50%); }
+.catalog-workspace a:not(.btn) { color: #07543f; text-underline-offset: 3px; }
+.catalog-workspace a:not(.btn):hover { text-decoration: underline; }
+
+.management-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; padding: 20px; background: #fff; border: 1px solid var(--management-line); border-bottom: 0; }
+.management-filters > div:first-child { flex: 1 1 280px; }
+.management-filters > div:nth-child(2) { flex: 0 1 220px; }
+.management-filters .form-label { margin-bottom: 6px; }
+.management-list { border: 1px solid var(--management-line); background: #fff; }
+.management-list-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px; border-bottom: 1px solid var(--management-line); }
+.management-list-heading h2 { margin: 0; font-size: 18px; font-weight: 700; }
+.management-list-heading p { margin: 6px 0 0; color: #59655e; font-size: 14px; }
+.management-list-heading > span { color: #59655e; font-size: 14px; white-space: nowrap; }
+.management-table { margin: 0; --bs-table-bg: #fff; --bs-table-color: #25322c; }
+.management-table thead th { padding: 12px 20px; color: #48554d; background: #f3f5f4; font-size: 13px; font-weight: 700; }
+.management-table tbody td { padding: 18px 20px; border-color: #e4e8e6; font-size: 14px; }
+.management-table tr:last-child td { border-bottom: 0; }
+.management-table td:first-child { min-width: 280px; width: 42%; }
+.management-table td:not(:first-child) { min-width: 110px; }
+.management-product-link { display: flex; align-items: center; gap: 16px; color: inherit; text-decoration: none; }
+.management-product-link > :not(img) { min-width: 0; overflow-wrap: anywhere; }
+.management-product-link strong { display: block; color: #25322c; font-weight: 700; }
+.management-product-link small { display: block; margin-top: 4px; color: #59655e; }
+.management-row-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.management-row-actions a { white-space: nowrap; }
+.management-status { display: inline-block; padding: 4px 8px; border: 1px solid #bcc5bf; border-radius: 3px; color: #525e56; background: #f3f5f4; font-size: 13px; white-space: nowrap; }
+.management-status.is-active { color: #18513a; border-color: #a3c9b6; background: #f0f7f3; }
+.management-pagination, .management-bottom-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; font-size: 14px; }
+.management-pagination { border-top: 1px solid var(--management-line); }
+.management-pagination > div { display: flex; gap: 8px; }
+.management-bottom-actions { padding-right: 0; padding-left: 0; }
+.management-empty { padding: 40px 20px; text-align: center; }
+.management-empty h3 { font-size: 18px; }
+.management-empty p { color: #59655e; }
+.management-loading { padding: 32px 20px; background: #fff; border: 1px solid var(--management-line); }
+.management-load-error { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.management-load-error .btn { flex-shrink: 0; }
+
+.management-overview { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 32px; padding: 28px; margin-bottom: 24px; background: #fff; border: 1px solid var(--management-line); }
+.management-product-image { display: grid; align-content: start; place-items: center; }
+.management-large-image { display: grid; place-items: center; width: 100%; height: auto; aspect-ratio: 1; max-width: 320px; object-fit: contain; background: #fff; }
+.management-overview h2 { margin: 14px 0 24px; font-size: 24px; font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
+.management-metadata { margin-bottom: 24px; }
+.management-metadata > div { display: flex; gap: 12px; margin-bottom: 10px; }
+.management-metadata dt { min-width: 110px; color: #59655e; font-size: 14px; font-weight: 400; }
+.management-metadata dd { margin: 0; font-size: 14px; }
+.management-section-label { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.management-description { max-width: 65ch; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; line-height: 1.65; }
+.management-price { color: #a62d21 !important; font-weight: 700; white-space: nowrap; }
+.management-stock-note { display: block; margin-top: 4px; color: #805008; font-size: 13px; }
+.management-stock-note.is-empty { color: #a62d21; }
+.management-form { padding: 28px; border: 1px solid var(--management-line); background: #fff; }
+.management-form legend { margin-bottom: 16px; font-size: 20px; font-weight: 700; }
+.management-product-fields { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 32px; }
+.management-image-preview { padding-top: 38px; }
+.management-image-preview p { margin-bottom: 12px; color: #59655e; font-size: 14px; }
+.management-form-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--management-line); }
+.management-form-section h3 { font-size: 20px; font-weight: 700; }
+.management-form .form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; padding-top: 24px; border-top: 1px solid var(--management-line); }
+.management-form .form-text { color: #59655e; }
+
+@media (max-width: 991px) {
+  .management-product-fields { grid-template-columns: minmax(0, 1fr); }
+  .management-image-preview { padding-top: 0; }
+  .management-image-preview .management-large-image { max-width: 180px; }
+}
+@media (max-width: 767px) {
+  .catalog-workspace-content { padding-top: 16px; padding-bottom: 32px; }
+  .catalog-workspace .workspace-heading { align-items: start; }
+  .catalog-workspace .workspace-heading h1 { font-size: 24px; }
+  .management-overview { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px; }
+  .management-overview .management-large-image { max-width: 220px; }
+  .management-list-heading { flex-wrap: wrap; padding: 16px; }
+  .management-filters { padding: 16px; }
+  .management-filters > div:nth-child(2) { flex-basis: 100%; }
+  .management-form { padding: 20px 16px; }
+  .management-pagination { padding: 16px; flex-wrap: wrap; }
+  .management-load-error { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-workspace *, .catalog-workspace *::before, .catalog-workspace *::after { animation: none !important; transition: none !important; }
+}

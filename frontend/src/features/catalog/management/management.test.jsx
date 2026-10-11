@@ -1,8 +1,9 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ProductEditor } from './ProductEditor'
-import { CatalogManagementPage } from './CatalogManagementPage'
+import { CatalogWorkspace } from './CatalogWorkspace'
+import { ManagedProductListPage } from './ManagedProductListPage'
 import { skuPayload } from './formValues'
 import { useAuth } from '../../../auth/useAuth'
 import { getManagedProducts } from './api'
@@ -34,15 +35,15 @@ it('keeps edits visible and explains a server version conflict instead of overwr
 
 it('prevents a non-manager from loading management data', () => {
   useAuth.mockReturnValue({ user: { authenticated: true, role: 'STAFF' }, connection: { status: 'connected' } })
-  render(<MemoryRouter><CatalogManagementPage /></MemoryRouter>)
-  expect(screen.getByRole('heading', { name: 'Không có quyền quản lý danh mục' })).toBeInTheDocument()
+  render(<MemoryRouter><CatalogWorkspace /></MemoryRouter>)
+  expect(screen.getByRole('heading', { name: 'Không có quyền quản lý sản phẩm' })).toBeInTheDocument()
   expect(getManagedProducts).not.toHaveBeenCalled()
 })
 
 it('offers a retry when management data cannot load', async () => {
   useAuth.mockReturnValue({ user: { authenticated: true, role: 'MANAGER' }, connection: { status: 'connected' } })
   getManagedProducts.mockRejectedValue(new Error('Chưa thể tải danh mục.'))
-  render(<MemoryRouter><CatalogManagementPage /></MemoryRouter>)
+  render(<MemoryRouter><Routes><Route element={<CatalogWorkspace />}><Route path="/" element={<ManagedProductListPage />} /></Route></Routes></MemoryRouter>)
   expect(await screen.findByRole('alert')).toHaveTextContent('Chưa thể tải danh mục.')
   expect(screen.getByRole('button', { name: 'Thử tải lại' })).toBeInTheDocument()
 })

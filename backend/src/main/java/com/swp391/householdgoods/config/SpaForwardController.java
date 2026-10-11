@@ -16,6 +16,12 @@ public class SpaForwardController {
             "/products/{id}",
             "/staff/orders",
             "/manager/catalog",
+            "/manager/products",
+            "/manager/products/new",
+            "/manager/products/{productId}",
+            "/manager/products/{productId}/edit",
+            "/manager/products/{productId}/skus/new",
+            "/manager/products/{productId}/skus/{skuId}/edit",
             "/manager/suppliers",
             "/manager/purchase-orders/create"
     })

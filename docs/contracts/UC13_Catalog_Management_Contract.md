@@ -46,7 +46,28 @@ It does not reserve stock or promise availability at checkout.
 ## APIs
 
 Success envelope is {data: ...}; errors use existing ApiProblem with code/detail/traceId.
-The frontend management route is /manager/catalog, with a MANAGER link on Home.
+The frontend entry is `/manager/products`, with a MANAGER link in the shared header and on Home.
+The old `/manager/catalog` link redirects there. The read/list and write API contracts below
+are unchanged by the screen split.
+
+| Screen | Frontend route |
+| --- | --- |
+| List/search/filter | `/manager/products` |
+| Create product + initial SKUs | `/manager/products/new` |
+| Product/SKU details | `/manager/products/:productId` |
+| Edit product | `/manager/products/:productId/edit` |
+| Add manual SKU | `/manager/products/:productId/skus/new` |
+| Edit owned SKU | `/manager/products/:productId/skus/:skuId/edit` |
+
+Each form reads current details by URL before writing. Saving returns to detail and reads again;
+errors keep the draft. A 409 offers an explicit reload instead of retrying a stale write.
+All client routes are forwarded by Spring to the React entry point for direct navigation/refresh.
+The list API intentionally has no SKU prices or stock summary; those are shown on the detail page.
+
+This separation follows the user's 2026-10-12 transcription of oral lecturer feedback; it is
+screen refinement within UC-13, not a new UC or actor change. MANAGER authorization remains.
+HomeMart header/colour reuse and restrained styling are temporary for this slice. Formal RDS
+screen-flow updates remain deferred; private follow-up notes are in the ignored local folder.
 
 | Method/path under /api/v1/manager/catalog | Request | Result |
 | --- | --- | --- |

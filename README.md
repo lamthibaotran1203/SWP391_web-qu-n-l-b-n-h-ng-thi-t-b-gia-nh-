@@ -320,20 +320,33 @@ password-change proof and GitLab-hosted pipeline evidence remain pending.
 
 For a direct-link demo, open `/login`, sign in, then enter `/account/password` in the address bar.
 Use the same host/port throughout: `http://localhost:5173` for Vite development or
-`http://localhost:8080` for the packaged Spring application. The password, login and UC-13
-management pages use white backgrounds, square controls and no animation. Their styles are
-scoped in `frontend/src/styles/plain-admin.css`. Public product pages reuse the teammate's search/view
-logic; their shared colours are now neutral and product photos use contain sizing.
+`http://localhost:8080` for the packaged Spring application. The password and login pages use
+white backgrounds and simple controls, scoped in `frontend/src/styles/plain-admin.css`.
+UC-13 reuses the team's HomeMart header and accent colour, with restrained controls scoped in
+`frontend/src/features/catalog/management/management.css`. Public product pages retain the
+teammate's search/view implementation.
 
 ## UC-13 — Catalogue management
 
-MANAGER opens Home → **Quản lý danh mục** (`/manager/catalog`) to create a product with manually
-entered SKUs, edit product/SKU details, add a sale unit or stop sale using INACTIVE with confirmation.
-The plain Bootstrap UI includes unpublished items, server errors, version-conflict recovery and
-low-stock warnings recalculated on detail refresh. Backend actor maps to the RDS Admin catalogue actor.
-For the same direct-link demo, open `/manager/catalog` after signing in as MANAGER.
-Its list/filter/details support catalogue editing; public search/view routes remain `/products`
-and `/products/:id`, owned by the teammate and reused without implementing another public UC.
+MANAGER opens **Quản lý sản phẩm** (`/manager/products`). Each task has its own page:
+
+| Page | Client route |
+| --- | --- |
+| Search/filter the management list | `/manager/products` |
+| Create a product with initial manual SKUs | `/manager/products/new` |
+| Read product details, SKU prices and stock warnings | `/manager/products/:productId` |
+| Edit product metadata/status | `/manager/products/:productId/edit` |
+| Add one manual SKU | `/manager/products/:productId/skus/new` |
+| Edit one owned SKU/price/threshold/status | `/manager/products/:productId/skus/:skuId/edit` |
+
+The old `/manager/catalog` link redirects to the list. Direct links and refresh work in the
+packaged Spring application. No edit forms appear below the management table. Saving returns
+to freshly loaded details; failed saves retain entered values. A stale-version error offers
+**Làm mới dữ liệu**, which replaces the draft with current data before another save.
+Deactivation requires the existing confirmation checkbox. Stock warnings recalculate on detail
+reads/refresh. The actor remains MANAGER (RDS Admin mapping); lecturer feedback about separate
+screens does not grant STAFF access. This scoped presentation is provisional, not a team-wide
+design decision. Public `/products` and `/products/:id` remain owned by their UC implementer.
 
 Read [management APIs, rules and traceability](docs/contracts/UC13_Catalog_Management_Contract.md)
 before integrating. Writes use `/api/v1/manager/catalog/products`, master productId and owned skuId,
@@ -363,3 +376,11 @@ adds missing items without resetting earlier edits; opening inventory has matchi
 Photos need Internet access; management thumbnails show “Chưa có ảnh” if a URL fails.
 User-facing labels use “Quản lý sản phẩm”, “Đang bán”, “Ngừng bán”, “Chi tiết”, “Có thể bán”,
 “Sắp hết hàng” and “Hết hàng”. Password byte limits remain enforced but are not technical UI copy.
+
+
+UC-13 screen split verified locally on 2026-10-12: frontend lint/44 tests/build and
+PostgreSQL 17 V1–V7 migration, Hibernate validation, 76 backend tests and JAR packaging passed.
+Browser checks on that JAR with disposable PostgreSQL covered Manager login, old-link redirect,
+direct edit refresh, product save, price save, cancel SKU, separate create form and desktop/mobile
+layout (1280/390px, no whole-page overflow or captured console errors). The disposable app/database
+were removed. This does not claim hosted CI or new writes to shared Supabase.
