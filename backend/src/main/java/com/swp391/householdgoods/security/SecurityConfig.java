@@ -92,6 +92,7 @@ public class SecurityConfig {
                                 "/api/v1/products",
                                 "/api/v1/products/**")
                         .denyAll()
+                        .requestMatchers("/api/v1/account/profile").hasRole("CUSTOMER")
                         .requestMatchers("/api/v1/manager/**")
                         .hasRole("MANAGER")
                         .requestMatchers("/api/v1/purchasing/**")

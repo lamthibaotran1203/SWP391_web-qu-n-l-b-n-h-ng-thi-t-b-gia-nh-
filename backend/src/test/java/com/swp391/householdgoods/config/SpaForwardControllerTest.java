@@ -15,7 +15,7 @@ class SpaForwardControllerTest {
             "/manager/catalog", "/manager/products", "/manager/products/new",
             "/manager/products/7", "/manager/products/7/edit",
             "/manager/products/7/skus/new", "/manager/products/7/skus/9/edit",
-            "/account/password", "/products/7"
+            "/account/password", "/account/profile", "/products/7"
     })
     void forwardsDirectClientLinksToTheReactEntryPoint(String path) throws Exception {
         MockMvcBuilders.standaloneSetup(new SpaForwardController()).build()

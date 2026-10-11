@@ -11,6 +11,7 @@ import { ManagedProductListPage } from '../features/catalog/management/ManagedPr
 import { ManagedProductDetailPage } from '../features/catalog/management/ManagedProductDetailPage'
 import { ManagedProductCreatePage, ManagedProductEditPage } from '../features/catalog/management/ManagedProductFormPage'
 import { ManagedSkuFormPage } from '../features/catalog/management/ManagedSkuFormPage'
+import { PersonalProfilePage } from '../features/profile/PersonalProfilePage'
 import { HomePage } from '../pages/HomePage'
 import { ChangePasswordPage } from '../pages/ChangePasswordPage'
 import { LoginPage } from '../pages/LoginPage'
@@ -38,6 +39,7 @@ export function App() {
             <Route path=":productId/skus/:skuId/edit" element={<ManagedSkuFormPage />} />
           </Route>
           <Route path="/account/password" element={<ChangePasswordPage />} />
+          <Route path="/account/profile" element={<PersonalProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />

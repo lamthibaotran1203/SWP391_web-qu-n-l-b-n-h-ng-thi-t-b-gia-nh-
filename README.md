@@ -384,3 +384,31 @@ Browser checks on that JAR with disposable PostgreSQL covered Manager login, old
 direct edit refresh, product save, price save, cancel SKU, separate create form and desktop/mobile
 layout (1280/390px, no whole-page overflow or captured console errors). The disposable app/database
 were removed. This does not claim hosted CI or new writes to shared Supabase.
+
+## UC-04 — Personal profile (initial slice)
+
+CUSTOMER opens **Thông tin tài khoản** at `/account/profile` from the header or Home.
+The basic slice reads the current account's email, full name and phone. Email is read-only;
+name (2–100 characters after normalization) and optional phone (10 digits starting with 0)
+can be saved. Clearing the phone stores NULL. Cancel restores the last loaded/saved values.
+Field errors or save failures retain the draft. Successful saves update the displayed session name.
+
+`GET /api/v1/account/profile` returns `{data: {email, fullName, phone}}`.
+`PUT /api/v1/account/profile` accepts `{fullName, phone}` with the existing session and CSRF.
+The owner comes from the authenticated principal, never a client-supplied account ID/email.
+CUSTOMER authorization is enforced by Spring and rechecked in the service. The service locks
+the account row, saves only contact fields in one transaction and returns a safe projection.
+Credential, role/status, saved addresses and order delivery snapshots are unchanged. Existing
+Flyway tables suffice; there is no new migration. The prior name-only `/auth/me` helper stays
+compatible for other roles and is not expanded into customer-address access.
+
+This follows UC-04 in the canonical Backlog and live working RDS checked on 2026-10-12.
+**UC-04 remains partial:** address list/add/edit/remove/default selection and formal RDS/SDS
+evidence are deferred. No placeholder address CRUD or checkout implementation is included.
+Run `npm run frontend:check` and `npm run backend:verify:postgres` for validation; do not run
+test fixtures or failure triggers against shared Supabase.
+
+Initial UC-04 verification on 2026-10-12 passed frontend lint/52 tests/build and 89 backend
+tests with disposable PostgreSQL/JAR packaging. Browser on that JAR verified Customer login
+from a direct profile link, name/phone save, updated header, persistence after refresh, invalid
+phone feedback/cancel and desktop/mobile layout. No shared Supabase contact data was changed.

@@ -10,6 +10,7 @@ public class SpaForwardController {
             "/",
             "/login",
             "/account/password",
+            "/account/profile",
             "/register",
             "/verify-email",
             "/products",

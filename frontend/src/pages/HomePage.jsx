@@ -83,6 +83,8 @@ export function HomePage() {
                         </button>
                       </div>
                     </form>
+                  ) : user.role === 'CUSTOMER' ? (
+                    <Link className="btn btn-outline-light btn-sm align-self-start mt-2" to="/account/profile">Thông tin tài khoản</Link>
                   ) : (
                     <button
                       className="btn btn-outline-light btn-sm align-self-start mt-2"
