@@ -135,6 +135,18 @@ export function register(email, password, fullName) {
   })
 }
 
+export function resendVerification(email) {
+  return apiRequest('/api/v1/auth/resend-verification', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+    }),
+  })
+}
+
 export function verifyEmail(token) {
   const query = new URLSearchParams({ token })
 

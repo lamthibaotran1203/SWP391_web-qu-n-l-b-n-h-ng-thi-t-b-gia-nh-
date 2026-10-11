@@ -7,6 +7,7 @@ import com.swp391.householdgoods.identity.application.AuthenticatedAccount;
 import com.swp391.householdgoods.identity.application.RegistrationService;
 import com.swp391.householdgoods.identity.application.dto.RegisterRequest;
 import com.swp391.householdgoods.identity.application.dto.RegisterResponse;
+import com.swp391.householdgoods.identity.application.dto.ResendVerificationRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ public class AuthController {
             AccountQueryService accountQueryService,
             AccountProfileService accountProfileService,
             RegistrationService registrationService) {
+
         this.accountQueryService = accountQueryService;
         this.accountProfileService = accountProfileService;
         this.registrationService = registrationService;
@@ -38,30 +40,37 @@ public class AuthController {
 
     @GetMapping("/csrf")
     ApiEnvelope<CsrfResponse> csrf(CsrfToken csrfToken) {
-        return new ApiEnvelope<>(new CsrfResponse(
-                csrfToken.getHeaderName(),
-                csrfToken.getParameterName(),
-                csrfToken.getToken()));
+
+        return new ApiEnvelope<>(
+                new CsrfResponse(
+                        csrfToken.getHeaderName(),
+                        csrfToken.getParameterName(),
+                        csrfToken.getToken()));
     }
 
     @GetMapping("/me")
-    ApiEnvelope<CurrentUserResponse> me(Authentication authentication) {
+    ApiEnvelope<CurrentUserResponse> me(
+            Authentication authentication) {
+
         if (authentication == null
                 || !authentication.isAuthenticated()
                 || authentication instanceof AnonymousAuthenticationToken) {
 
-            return new ApiEnvelope<>(CurrentUserResponse.anonymous());
+            return new ApiEnvelope<>(
+                    CurrentUserResponse.anonymous());
         }
 
         AuthenticatedAccount account =
-                accountQueryService.findForAuthentication(
-                        authentication.getName());
+                accountQueryService
+                        .findForAuthentication(
+                                authentication.getName());
 
-        return new ApiEnvelope<>(new CurrentUserResponse(
-                true,
-                account.email(),
-                account.fullName(),
-                account.role().name()));
+        return new ApiEnvelope<>(
+                new CurrentUserResponse(
+                        true,
+                        account.email(),
+                        account.fullName(),
+                        account.role().name()));
     }
 
     @PatchMapping("/me")
@@ -79,17 +88,33 @@ public class AuthController {
 
     @PostMapping("/register")
     ApiEnvelope<RegisterResponse> register(
-            @Valid @RequestBody RegisterRequest request) {
+            @Valid
+            @RequestBody
+            RegisterRequest request) {
 
         return new ApiEnvelope<>(
-                registrationService.register(request));
+                registrationService
+                        .register(request));
+    }
+
+    @PostMapping("/resend-verification")
+    ApiEnvelope<RegisterResponse> resendVerification(
+            @Valid
+            @RequestBody
+            ResendVerificationRequest request) {
+
+        return new ApiEnvelope<>(
+                registrationService
+                        .resendVerification(request));
     }
 
     @GetMapping("/verify-email")
     ApiEnvelope<String> verifyEmail(
-            @RequestParam String token) {
+            @RequestParam
+            String token) {
 
-        registrationService.verifyEmail(token);
+        registrationService
+                .verifyEmail(token);
 
         return new ApiEnvelope<>(
                 "Xác minh email thành công.");

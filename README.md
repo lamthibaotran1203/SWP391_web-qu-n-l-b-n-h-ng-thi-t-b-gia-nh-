@@ -2,9 +2,10 @@
 
 ## Stack
 
-Current integration: UC-05 password change and UC-13 catalog management are integrated with
-`develop` 91c1d69 (registration, profile and order lookup). Local verification on 2026-10-06:
-18 frontend tests plus lint/build, 44 backend tests against isolated PostgreSQL, and Java21 packaging.
+Current integration: UC-05, separate UC-13 management pages and the initial UC-04 Customer
+profile slice are integrated with `develop` e333c0b (registration and public catalog updates).
+Local verification on 2026-10-12: 62 frontend tests plus lint/build, 90 backend tests against
+isolated PostgreSQL, and Java 21 packaging. UC-04 delivery addresses remain pending.
 Supabase runs PostgreSQL17 with Flyway migrations V1–V7. Hosted CI and full UC sign-off remain separate.
 
 ## Requirements documents
