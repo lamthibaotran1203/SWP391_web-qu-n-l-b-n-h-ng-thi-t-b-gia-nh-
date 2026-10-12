@@ -3,10 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { AuthContext } from '../auth/auth-context'
-import { getSalesOrderDetails, getSalesOrders } from '../api/http'
+import { confirmSalesOrder, getSalesOrderDetails, getSalesOrders } from '../api/http'
 import { StaffOrdersPage } from './StaffOrdersPage'
 
 vi.mock('../api/http', () => ({
+  confirmSalesOrder: vi.fn(),
   getSalesOrderDetails: vi.fn(),
   getSalesOrders: vi.fn(),
 }))
@@ -41,6 +42,18 @@ const orderDetails = {
   }],
 }
 
+const pendingOrder = {
+  ...order,
+  status: 'PENDING_PAYMENT',
+  paymentStatus: 'PENDING',
+}
+
+const pendingOrderDetails = {
+  ...orderDetails,
+  status: 'PENDING_PAYMENT',
+  paymentStatus: 'PENDING',
+}
+
 function renderPage(role = 'STAFF') {
   return render(
     <MemoryRouter initialEntries={['/staff/orders']}>
@@ -60,7 +73,7 @@ function renderPage(role = 'STAFF') {
 
 describe('StaffOrdersPage', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
+    vi.resetAllMocks()
     getSalesOrders.mockResolvedValue({
       content: [order],
       page: 0,
@@ -69,6 +82,10 @@ describe('StaffOrdersPage', () => {
       totalPages: 1,
     })
     getSalesOrderDetails.mockResolvedValue(orderDetails)
+    confirmSalesOrder.mockResolvedValue({
+      ...pendingOrderDetails,
+      status: 'CONFIRMED',
+    })
   })
 
   it('shows order search results and applies status filters', async () => {
@@ -109,6 +126,135 @@ describe('StaffOrdersPage', () => {
     expect(screen.getByText('Ấm siêu tốc')).toBeInTheDocument()
     expect(screen.getByText('12 Nguyễn Huệ, Quận 1')).toBeInTheDocument()
     expect(getSalesOrderDetails).toHaveBeenCalledWith(41)
+  })
+
+  it('confirms a pending order and updates both dialog and list without reloading', async () => {
+    const user = userEvent.setup()
+    getSalesOrders.mockResolvedValueOnce({
+      content: [pendingOrder],
+      page: 0,
+      size: 20,
+      totalElements: 1,
+      totalPages: 1,
+    })
+    getSalesOrderDetails.mockResolvedValueOnce(pendingOrderDetails)
+    renderPage()
+
+    await user.click(await screen.findByRole('button', {
+      name: 'Xem chi tiết đơn HG-2026-0041',
+    }))
+    await user.click(await screen.findByRole('button', { name: 'Xác nhận đơn hàng' }))
+    await user.click(screen.getByRole('button', { name: 'Xác nhận', exact: true }))
+
+    const dialog = await screen.findByRole('dialog', { name: 'HG-2026-0041' })
+    expect(within(dialog).getByText('Đã xác nhận')).toBeInTheDocument()
+    expect(within(dialog).getByText('Chờ thanh toán')).toBeInTheDocument()
+    expect(within(screen.getByRole('table')).getByText('Đã xác nhận')).toBeInTheDocument()
+    expect(confirmSalesOrder).toHaveBeenCalledTimes(1)
+    expect(getSalesOrders).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not show confirmation for an order outside PENDING_PAYMENT', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    await user.click(await screen.findByRole('button', {
+      name: 'Xem chi tiết đơn HG-2026-0041',
+    }))
+
+    expect(await screen.findByRole('dialog', { name: 'HG-2026-0041' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Xác nhận đơn hàng' })).not.toBeInTheDocument()
+  })
+
+  it('prevents duplicate confirmation requests while one is pending', async () => {
+    const user = userEvent.setup()
+    let resolveConfirmation
+    confirmSalesOrder.mockReturnValue(new Promise((resolve) => {
+      resolveConfirmation = resolve
+    }))
+    getSalesOrders.mockResolvedValueOnce({
+      content: [pendingOrder],
+      page: 0,
+      size: 20,
+      totalElements: 1,
+      totalPages: 1,
+    })
+    getSalesOrderDetails.mockResolvedValueOnce(pendingOrderDetails)
+    renderPage()
+
+    await user.click(await screen.findByRole('button', {
+      name: 'Xem chi tiết đơn HG-2026-0041',
+    }))
+    await user.click(await screen.findByRole('button', { name: 'Xác nhận đơn hàng' }))
+    const confirmButton = screen.getByRole('button', { name: 'Xác nhận', exact: true })
+    await user.dblClick(confirmButton)
+
+    expect(confirmSalesOrder).toHaveBeenCalledTimes(1)
+    expect(screen.getByRole('button', { name: 'Đang xác nhận…' })).toBeDisabled()
+
+    resolveConfirmation({ ...pendingOrderDetails, status: 'CONFIRMED' })
+    expect(await screen.findByText('Đã xác nhận')).toBeInTheDocument()
+  })
+
+  it('keeps the order unchanged after a failed request and allows retry', async () => {
+    const user = userEvent.setup()
+    confirmSalesOrder.mockRejectedValueOnce(new Error('Máy chủ đang bận.'))
+      .mockResolvedValueOnce({ ...pendingOrderDetails, status: 'CONFIRMED' })
+    getSalesOrders.mockResolvedValueOnce({
+      content: [pendingOrder],
+      page: 0,
+      size: 20,
+      totalElements: 1,
+      totalPages: 1,
+    })
+    getSalesOrderDetails.mockResolvedValueOnce(pendingOrderDetails)
+    renderPage()
+
+    await user.click(await screen.findByRole('button', {
+      name: 'Xem chi tiết đơn HG-2026-0041',
+    }))
+    await user.click(await screen.findByRole('button', { name: 'Xác nhận đơn hàng' }))
+    await user.click(screen.getByRole('button', { name: 'Xác nhận', exact: true }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Máy chủ đang bận.')
+    const dialog = await screen.findByRole('dialog', { name: 'HG-2026-0041' })
+    expect(within(dialog).getAllByText('Chờ thanh toán')).toHaveLength(2)
+
+    await user.click(screen.getByRole('button', { name: 'Xác nhận', exact: true }))
+
+    expect(await within(dialog).findByText('Đã xác nhận')).toBeInTheDocument()
+    expect(confirmSalesOrder).toHaveBeenCalledTimes(2)
+  })
+
+  it('shows confirmation errors and allows retry; conflicts can reload details', async () => {
+    const user = userEvent.setup()
+    const conflict = new Error('Trạng thái đơn đã thay đổi.')
+    conflict.status = 409
+    confirmSalesOrder.mockRejectedValueOnce(conflict)
+      .mockResolvedValueOnce({ ...pendingOrderDetails, status: 'CONFIRMED' })
+    getSalesOrders.mockResolvedValueOnce({
+      content: [pendingOrder],
+      page: 0,
+      size: 20,
+      totalElements: 1,
+      totalPages: 1,
+    })
+    getSalesOrderDetails.mockResolvedValueOnce(pendingOrderDetails)
+      .mockResolvedValueOnce({ ...pendingOrderDetails, status: 'PROCESSING' })
+    renderPage()
+
+    await user.click(await screen.findByRole('button', {
+      name: 'Xem chi tiết đơn HG-2026-0041',
+    }))
+    await user.click(await screen.findByRole('button', { name: 'Xác nhận đơn hàng' }))
+    await user.click(screen.getByRole('button', { name: 'Xác nhận', exact: true }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Trạng thái đơn đã thay đổi.')
+    expect(screen.getByRole('button', { name: 'Tải lại chi tiết đơn' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Tải lại chi tiết đơn' }))
+    const dialog = await screen.findByRole('dialog', { name: 'HG-2026-0041' })
+    expect(within(dialog).getByText('Đang xử lý')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Xác nhận đơn hàng' })).not.toBeInTheDocument()
   })
 
   it('blocks customer accounts from staff order search', async () => {

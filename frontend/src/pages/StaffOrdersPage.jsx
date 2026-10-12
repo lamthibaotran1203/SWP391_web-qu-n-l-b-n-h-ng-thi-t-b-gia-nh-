@@ -83,6 +83,18 @@ function StaffOrdersContent() {
     setReloadKey((key) => key + 1)
   }
 
+  function updateOrder(updatedOrder) {
+    setResult((current) => {
+      if (!current) return current
+      return {
+        ...current,
+        content: current.content.map((order) => (
+          order.id === updatedOrder.id ? updatedOrder : order
+        )),
+      }
+    })
+  }
+
   const totalPages = result?.totalPages || 0
   const orders = result?.content || []
 
@@ -186,6 +198,7 @@ function StaffOrdersContent() {
         <OrderDetailsDialog
           orderId={selectedOrderId}
           onClose={() => setSelectedOrderId(null)}
+          onOrderUpdated={updateOrder}
         />
       )}
     </main>

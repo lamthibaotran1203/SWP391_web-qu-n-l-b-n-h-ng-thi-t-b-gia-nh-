@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { getSalesOrderDetails } from '../../api/http'
+import { useEffect, useRef, useState } from 'react'
+import { confirmSalesOrder, getSalesOrderDetails } from '../../api/http'
 import {
   channelLabels,
   formatCurrency,
@@ -10,10 +10,15 @@ import {
   paymentStatusLabels,
 } from './order-formatters'
 
-export function OrderDetailsDialog({ orderId, onClose }) {
+export function OrderDetailsDialog({ orderId, onClose, onOrderUpdated }) {
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [confirming, setConfirming] = useState(false)
+  const [confirmPrompt, setConfirmPrompt] = useState(false)
+  const [confirmError, setConfirmError] = useState(null)
+  const confirmRequestInFlight = useRef(false)
+  const [detailsReloadKey, setDetailsReloadKey] = useState(0)
 
   useEffect(() => {
     let active = true
@@ -30,7 +35,36 @@ export function OrderDetailsDialog({ orderId, onClose }) {
     return () => {
       active = false
     }
-  }, [orderId])
+  }, [orderId, detailsReloadKey])
+
+  async function submitConfirmation() {
+    if (confirmRequestInFlight.current) return
+    confirmRequestInFlight.current = true
+    setConfirming(true)
+    setConfirmError(null)
+
+    try {
+      const updatedOrder = await confirmSalesOrder(orderId)
+      setOrder(updatedOrder)
+      setConfirmPrompt(false)
+      onOrderUpdated?.(updatedOrder)
+    } catch (requestError) {
+      setConfirmError({
+        message: requestError.message || 'Không thể xác nhận đơn hàng. Vui lòng thử lại.',
+        conflict: requestError.status === 409,
+      })
+    } finally {
+      confirmRequestInFlight.current = false
+      setConfirming(false)
+    }
+  }
+
+  function reloadDetails() {
+    setConfirmError(null)
+    setError('')
+    setLoading(true)
+    setDetailsReloadKey((key) => key + 1)
+  }
 
   return (
     <div className="order-dialog-backdrop" onClick={onClose}>
@@ -65,6 +99,16 @@ export function OrderDetailsDialog({ orderId, onClose }) {
         </header>
         {loading && <p className="order-dialog-loading" role="status"><span className="loading-spinner" />Đang tải chi tiết đơn hàng…</p>}
         {error && <div className="alert alert-danger order-dialog-error" role="alert">{error}</div>}
+        {confirmError && (
+          <div className="alert alert-danger order-confirm-error" role="alert">
+            <span>{confirmError.message}</span>
+            {confirmError.conflict && (
+              <button className="btn btn-sm btn-outline-danger" type="button" onClick={reloadDetails}>
+                Tải lại chi tiết đơn
+              </button>
+            )}
+          </div>
+        )}
         {order && (
           <div className="order-details-body">
             <div className="order-details-summary">
@@ -142,6 +186,44 @@ export function OrderDetailsDialog({ orderId, onClose }) {
               <p><span>Phí giao hàng</span><strong>{formatCurrency(order.shippingFee)}</strong></p>
               <p className="order-grand-total"><span>Tổng thanh toán</span><strong>{formatCurrency(order.totalAmount)}</strong></p>
             </section>
+            {order.status === 'PENDING_PAYMENT' && (
+              <section className="order-confirm-actions" aria-label="Xác nhận đơn hàng">
+                {confirmPrompt ? (
+                  <div className="order-confirm-prompt">
+                    <p>Bạn đã kiểm tra thông tin khách hàng và giao hàng, xác nhận đơn này?</p>
+                    <div>
+                      <button
+                        className="btn btn-success"
+                        type="button"
+                        onClick={submitConfirmation}
+                        disabled={confirming || loading}
+                      >
+                        {confirming ? 'Đang xác nhận…' : 'Xác nhận'}
+                      </button>
+                      <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        onClick={() => setConfirmPrompt(false)}
+                        disabled={confirming || loading}
+                      >
+                        Quay lại
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="btn btn-success"
+                    type="button"
+                    onClick={() => {
+                      setConfirmError(null)
+                      setConfirmPrompt(true)
+                    }}
+                  >
+                    Xác nhận đơn hàng
+                  </button>
+                )}
+              </section>
+            )}
           </div>
         )}
       </section>

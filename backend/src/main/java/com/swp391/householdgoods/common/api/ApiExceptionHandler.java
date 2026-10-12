@@ -4,6 +4,7 @@ import com.swp391.householdgoods.catalog.application.CatalogException;
 import com.swp391.householdgoods.common.web.TraceIdFilter;
 import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
 import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
+import com.swp391.householdgoods.orders.application.SalesOrderStatusConflictException;
 import com.swp391.householdgoods.purchasing.application.SupplierDuplicateException;
 import com.swp391.householdgoods.purchasing.application.SupplierNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -78,6 +79,18 @@ public class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND,
                 "ORDER_NOT_FOUND",
                 "Không tìm thấy đơn hàng.",
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(SalesOrderStatusConflictException.class)
+    ResponseEntity<ApiProblem> handleSalesOrderStatusConflict(
+            SalesOrderStatusConflictException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.CONFLICT,
+                "ORDER_STATUS_CONFLICT",
+                "Trạng thái đơn hàng đã thay đổi hoặc không thể xác nhận.",
                 Map.of(),
                 request);
     }

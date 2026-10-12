@@ -121,6 +121,12 @@ export function getSalesOrderDetails(id) {
   return apiRequest(`/api/v1/staff/orders/${encodeURIComponent(id)}`)
 }
 
+export function confirmSalesOrder(id) {
+  return apiRequest(`/api/v1/staff/orders/${encodeURIComponent(id)}/confirm`, {
+    method: 'POST',
+  })
+}
+
 export function register(email, password, fullName) {
   return apiRequest('/api/v1/auth/register', {
     method: 'POST',

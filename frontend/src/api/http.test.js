@@ -1,5 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiRequest, changeOwnPassword, getSalesOrders, refreshCsrfToken, updateCurrentUser } from './http'
+import {
+  apiRequest,
+  changeOwnPassword,
+  confirmSalesOrder,
+  getSalesOrders,
+  refreshCsrfToken,
+  updateCurrentUser,
+} from './http'
 
 function jsonResponse(body, status = 200) {
   return {
@@ -73,6 +80,26 @@ describe('API client CSRF flow', () => {
     expect(requestUrl.searchParams.get('page')).toBe('0')
     expect(requestUrl.searchParams.get('size')).toBe('20')
     expect(requestUrl.searchParams.has('status')).toBe(false)
+  })
+
+  it('confirms an order with a CSRF-protected POST and no request body', async () => {
+    fetch
+      .mockResolvedValueOnce(jsonResponse({
+        data: { headerName: 'X-XSRF-TOKEN', token: 'confirm-token' },
+      }))
+      .mockResolvedValueOnce(jsonResponse({
+        data: { id: 42, status: 'CONFIRMED', paymentStatus: 'PENDING' },
+      }))
+
+    await refreshCsrfToken()
+    const result = await confirmSalesOrder(42)
+
+    const [url, options] = fetch.mock.calls[1]
+    expect(url).toBe('/api/v1/staff/orders/42/confirm')
+    expect(options.method).toBe('POST')
+    expect(options.body).toBeUndefined()
+    expect(options.headers.get('X-XSRF-TOKEN')).toBe('confirm-token')
+    expect(result).toEqual({ id: 42, status: 'CONFIRMED', paymentStatus: 'PENDING' })
   })
 
   it('updates the current user display name with CSRF protection', async () => {

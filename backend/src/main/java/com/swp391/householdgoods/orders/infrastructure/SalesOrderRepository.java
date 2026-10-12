@@ -144,6 +144,24 @@ public class SalesOrderRepository {
                 items));
     }
 
+    public int confirmIfPending(long id) {
+        return jdbc.update(
+                """
+                update app.hm_order
+                set status = 'CONFIRMED', version = version + 1
+                where id = ? and status = 'PENDING_PAYMENT'
+                """,
+                id);
+    }
+
+    public Optional<String> findStatus(long id) {
+        List<String> statuses = jdbc.query(
+                "select status from app.hm_order where id = ?",
+                (row, rowNumber) -> row.getString("status"),
+                id);
+        return statuses.stream().findFirst();
+    }
+
     private Filter filter(SalesOrderSearch search) {
         StringBuilder sql = new StringBuilder(" where true");
         List<Object> parameters = new ArrayList<>();
