@@ -20,6 +20,7 @@ import java.util.HexFormat;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,6 +127,13 @@ public class RegistrationService {
 
     @Transactional
     public void verifyEmail(String rawToken) {
+        if (rawToken == null || rawToken.isBlank()) {
+            throw new EmailVerificationException(
+                    HttpStatus.BAD_REQUEST,
+                    "INVALID_TOKEN",
+                    "Liên kết xác minh không hợp lệ.");
+        }
+
         Instant now = clock.instant();
 
         EmailVerificationToken token =
@@ -134,17 +142,30 @@ public class RegistrationService {
                                 hashToken(rawToken))
                         .orElseThrow(
                                 () ->
-                                        new IllegalArgumentException(
-                                                "Token xác minh không hợp lệ."));
+                                        new EmailVerificationException(
+                                                HttpStatus.BAD_REQUEST,
+                                                "INVALID_TOKEN",
+                                                "Liên kết xác minh không hợp lệ."));
 
         if (token.isUsed()) {
-            throw new IllegalArgumentException(
-                    "Token xác minh đã được sử dụng.");
+            UserAccount account = token.getUser();
+            if (account != null && account.getStatus() == AccountStatus.ACTIVE) {
+                throw new EmailVerificationException(
+                        HttpStatus.BAD_REQUEST,
+                        "ALREADY_VERIFIED",
+                        "Email đã được xác minh.");
+            }
+            throw new EmailVerificationException(
+                    HttpStatus.BAD_REQUEST,
+                    "ALREADY_VERIFIED",
+                    "Email đã được xác minh.");
         }
 
         if (token.isExpired(now)) {
-            throw new IllegalArgumentException(
-                    "Token xác minh đã hết hạn.");
+            throw new EmailVerificationException(
+                    HttpStatus.BAD_REQUEST,
+                    "EXPIRED_TOKEN",
+                    "Liên kết xác minh đã hết hạn.");
         }
 
         UserAccount account = token.getUser();

@@ -153,11 +153,12 @@ export function resendVerification(email) {
   })
 }
 
-export function verifyEmail(token) {
+export function verifyEmail(token, options = {}) {
   const query = new URLSearchParams({ token })
 
   return apiRequest(
     `/api/v1/auth/verify-email?${query.toString()}`,
+    options,
   )
 }
 
