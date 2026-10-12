@@ -117,6 +117,6 @@ public class AuthController {
                 .verifyEmail(token);
 
         return new ApiEnvelope<>(
-                "Xác minh email thành công.");
+                "Xác minh email thành công! Bạn có thể đăng nhập.");
     }
 }

@@ -172,6 +172,18 @@ public class ApiExceptionHandler {
         return problem(exception.status(), exception.code(), exception.getMessage(), fields, request);
     }
 
+    @ExceptionHandler(com.swp391.householdgoods.identity.application.EmailVerificationException.class)
+    ResponseEntity<ApiProblem> handleEmailVerification(
+            com.swp391.householdgoods.identity.application.EmailVerificationException exception,
+            HttpServletRequest request) {
+        return problem(
+                exception.status(),
+                exception.code(),
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
     @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
     ResponseEntity<ApiProblem> handleUnreadableBody(HttpServletRequest request) {
         return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST_BODY",
