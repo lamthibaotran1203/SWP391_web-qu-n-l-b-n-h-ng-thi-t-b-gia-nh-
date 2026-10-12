@@ -24,6 +24,6 @@ export function ProductFields({ value, onChange, categories, brands }) {
       <select id="product-status" name="status" className="form-select" value={value.status} onChange={update}>
         <option value="INACTIVE">Ngừng bán</option><option value="ACTIVE">Đang bán</option>
       </select></div>
-    <p className="mb-0">Sản phẩm đang bán cần có danh mục, thương hiệu và ảnh.</p>
+    <p className="form-text mb-0">Chọn danh mục, thương hiệu và thêm ảnh trước khi chuyển sang Đang bán.</p>
   </fieldset>
 }

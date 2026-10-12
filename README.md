@@ -2,9 +2,10 @@
 
 ## Stack
 
-Current integration: UC-05 password change and UC-13 catalog management are integrated with
-`develop` 91c1d69 (registration, profile and order lookup). Local verification on 2026-10-06:
-18 frontend tests plus lint/build, 44 backend tests against isolated PostgreSQL, and Java21 packaging.
+Current integration: UC-05, separate UC-13 management pages and the initial UC-04 Customer
+profile slice are integrated with `develop` e333c0b (registration and public catalog updates).
+Local verification on 2026-10-12: 62 frontend tests plus lint/build, 90 backend tests against
+isolated PostgreSQL, and Java 21 packaging. UC-04 delivery addresses remain pending.
 Supabase runs PostgreSQL17 with Flyway migrations V1–V7. Hosted CI and full UC sign-off remain separate.
 
 ## Requirements documents
@@ -281,7 +282,7 @@ AnNP owns UC-05. The canonical Backlog row 6 records the actor (Authenticated Us
 user-confirmed policy/session decisions on 2026-10-06. The live RDS wording/BR references
 still need synchronization; this implementation does not claim the other owned UCs are done.
 
-Open Home → **Đổi mật khẩu**, or `/account/password`, while logged in. The plain Bootstrap
+Open the avatar menu → **Đổi mật khẩu**, or `/account/password`, while logged in. The Bootstrap
 form calls `POST /api/v1/auth/password` with JSON `currentPassword`, `newPassword`,
 `confirmation`, the server session cookie and CSRF header. No target account ID is accepted.
 CUSTOMER, STAFF and MANAGER can change only their own active account.
@@ -320,20 +321,35 @@ password-change proof and GitLab-hosted pipeline evidence remain pending.
 
 For a direct-link demo, open `/login`, sign in, then enter `/account/password` in the address bar.
 Use the same host/port throughout: `http://localhost:5173` for Vite development or
-`http://localhost:8080` for the packaged Spring application. The password, login and UC-13
-management pages use white backgrounds, square controls and no animation. Their styles are
-scoped in `frontend/src/styles/plain-admin.css`. Public product pages reuse the teammate's search/view
-logic; their shared colours are now neutral and product photos use contain sizing.
+`http://localhost:8080` for the packaged Spring application. Password and profile pages share
+the HomeMart header and simple white forms in `frontend/src/styles/account.css`. The password
+form includes an optional **Hiện mật khẩu** checkbox. The avatar menu supports keyboard focus,
+Escape, outside-click dismissal and logout. Login retains `frontend/src/styles/plain-admin.css`.
+UC-13 reuses the team's HomeMart header and accent colour, with restrained controls scoped in
+`frontend/src/features/catalog/management/management.css`. Public product pages retain the
+teammate's search/view implementation.
 
 ## UC-13 — Catalogue management
 
-MANAGER opens Home → **Quản lý danh mục** (`/manager/catalog`) to create a product with manually
-entered SKUs, edit product/SKU details, add a sale unit or stop sale using INACTIVE with confirmation.
-The plain Bootstrap UI includes unpublished items, server errors, version-conflict recovery and
-low-stock warnings recalculated on detail refresh. Backend actor maps to the RDS Admin catalogue actor.
-For the same direct-link demo, open `/manager/catalog` after signing in as MANAGER.
-Its list/filter/details support catalogue editing; public search/view routes remain `/products`
-and `/products/:id`, owned by the teammate and reused without implementing another public UC.
+MANAGER opens **Quản lý sản phẩm** (`/manager/products`). Each task has its own page:
+
+| Page | Client route |
+| --- | --- |
+| Search/filter the management list | `/manager/products` |
+| Create a product with initial manual SKUs | `/manager/products/new` |
+| Read product details, SKU prices and stock warnings | `/manager/products/:productId` |
+| Edit product metadata/status | `/manager/products/:productId/edit` |
+| Add one manual SKU | `/manager/products/:productId/skus/new` |
+| Edit one owned SKU/price/threshold/status | `/manager/products/:productId/skus/:skuId/edit` |
+
+The old `/manager/catalog` link redirects to the list. Direct links and refresh work in the
+packaged Spring application. No edit forms appear below the management table. Saving returns
+to freshly loaded details; failed saves retain entered values. A stale-version error offers
+**Làm mới dữ liệu**, which replaces the draft with current data before another save.
+Deactivation requires the existing confirmation checkbox. Stock warnings recalculate on detail
+reads/refresh. The actor remains MANAGER (RDS Admin mapping); lecturer feedback about separate
+screens does not grant STAFF access. This scoped presentation is provisional, not a team-wide
+design decision. Public `/products` and `/products/:id` remain owned by their UC implementer.
 
 Read [management APIs, rules and traceability](docs/contracts/UC13_Catalog_Management_Contract.md)
 before integrating. Writes use `/api/v1/manager/catalog/products`, master productId and owned skuId,
@@ -363,3 +379,39 @@ adds missing items without resetting earlier edits; opening inventory has matchi
 Photos need Internet access; management thumbnails show “Chưa có ảnh” if a URL fails.
 User-facing labels use “Quản lý sản phẩm”, “Đang bán”, “Ngừng bán”, “Chi tiết”, “Có thể bán”,
 “Sắp hết hàng” and “Hết hàng”. Password byte limits remain enforced but are not technical UI copy.
+
+
+UC-13 screen split verified locally on 2026-10-12: frontend lint/44 tests/build and
+PostgreSQL 17 V1–V7 migration, Hibernate validation, 76 backend tests and JAR packaging passed.
+Browser checks on that JAR with disposable PostgreSQL covered Manager login, old-link redirect,
+direct edit refresh, product save, price save, cancel SKU, separate create form and desktop/mobile
+layout (1280/390px, no whole-page overflow or captured console errors). The disposable app/database
+were removed. This does not claim hosted CI or new writes to shared Supabase.
+
+## UC-04 — Personal profile (initial slice)
+
+CUSTOMER opens the avatar menu → **Thông tin tài khoản** at `/account/profile`, or the link on Home.
+The basic slice reads the current account's email, full name and phone. Email is read-only;
+name (2–100 characters after normalization) and optional phone (10 digits starting with 0)
+can be saved. Clearing the phone stores NULL. Cancel restores the last loaded/saved values.
+Field errors or save failures retain the draft. Successful saves update the displayed session name.
+
+`GET /api/v1/account/profile` returns `{data: {email, fullName, phone}}`.
+`PUT /api/v1/account/profile` accepts `{fullName, phone}` with the existing session and CSRF.
+The owner comes from the authenticated principal, never a client-supplied account ID/email.
+CUSTOMER authorization is enforced by Spring and rechecked in the service. The service locks
+the account row, saves only contact fields in one transaction and returns a safe projection.
+Credential, role/status, saved addresses and order delivery snapshots are unchanged. Existing
+Flyway tables suffice; there is no new migration. The prior name-only `/auth/me` helper stays
+compatible for other roles and is not expanded into customer-address access.
+
+This follows UC-04 in the canonical Backlog and live working RDS checked on 2026-10-12.
+**UC-04 remains partial:** address list/add/edit/remove/default selection and formal RDS/SDS
+evidence are deferred. No placeholder address CRUD or checkout implementation is included.
+Run `npm run frontend:check` and `npm run backend:verify:postgres` for validation; do not run
+test fixtures or failure triggers against shared Supabase.
+
+Initial UC-04 verification on 2026-10-12 passed frontend lint/52 tests/build and 89 backend
+tests with disposable PostgreSQL/JAR packaging. Browser on that JAR verified Customer login
+from a direct profile link, name/phone save, updated header, persistence after refresh, invalid
+phone feedback/cancel and desktop/mobile layout. No shared Supabase contact data was changed.

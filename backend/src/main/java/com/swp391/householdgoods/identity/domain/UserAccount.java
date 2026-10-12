@@ -166,6 +166,13 @@ public class UserAccount {
         return true;
     }
 
+    public void updateContactDetails(String fullName, String phone, Instant now) {
+        if (this.fullName.equals(fullName) && java.util.Objects.equals(this.phone, phone)) return;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.updatedAt = now;
+    }
+
     public Instant getEmailVerifiedAt() {
         return emailVerifiedAt;
     }

@@ -1,0 +1,15 @@
+.account-menu { position: relative; }
+.account-menu > summary { display: flex; min-height: 42px; padding: 4px; border-radius: 4px; cursor: pointer; list-style: none; }
+.account-menu > summary::-webkit-details-marker { display: none; }
+.account-menu .app-user-chip > span:last-child { max-width: 160px; }
+.account-menu strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-menu-panel { position: absolute; top: calc(100% + 8px); right: 0; z-index: 1030; width: 224px; padding: 6px 0; border: 1px solid #cbd4cf; border-radius: 4px; color: #25322c; background: #fff; }
+.account-menu-panel :is(a, button) { display: block; width: 100%; min-height: 42px; padding: 10px 16px; border: 0; border-radius: 0; color: inherit; background: transparent; font: inherit; font-size: 14px; text-align: left; text-decoration: none; }
+.account-menu-panel :is(a, button):hover { color: var(--hm-primary-dark); background: #edf3f0; }
+.account-menu-panel button { border-top: 1px solid #e0e5e2; }
+.account-menu-panel p { margin: 8px 16px; font-size: 14px; }
+.account-menu :is(summary, a, button):focus-visible { outline: 2px solid #07543f; outline-offset: 2px; }
+@media (max-width: 800px) {
+  .account-menu > summary { display: flex; }
+  .account-menu .app-user-chip > span:last-child { display: none; }
+}

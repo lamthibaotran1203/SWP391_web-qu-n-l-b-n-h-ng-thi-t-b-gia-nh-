@@ -7,6 +7,7 @@ import {
   updateCurrentUser as requestUpdateCurrentUser,
 } from '../api/http'
 import { AuthContext } from './auth-context'
+import { updatePersonalProfile } from '../features/profile/api'
 
 const anonymousUser = {
   authenticated: false,
@@ -87,9 +88,15 @@ export function AuthProvider({ children }) {
     return currentUser
   }, [])
 
+  const saveProfile = useCallback(async (fields) => {
+    const profile = await updatePersonalProfile(fields)
+    setUser((current) => ({ ...current, fullName: profile.fullName }))
+    return profile
+  }, [])
+
   const value = useMemo(
-    () => ({ user, connection, login, logout, reload, updateFullName }),
-    [connection, login, logout, reload, updateFullName, user],
+    () => ({ user, connection, login, logout, reload, updateFullName, saveProfile }),
+    [connection, login, logout, reload, updateFullName, saveProfile, user],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

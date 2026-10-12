@@ -11,3 +11,6 @@ server:
     session:
       cookie:
         secure: false
+
+app:
+  base-url: http://localhost:5173

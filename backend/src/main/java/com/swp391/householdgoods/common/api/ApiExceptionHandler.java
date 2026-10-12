@@ -163,6 +163,15 @@ public class ApiExceptionHandler {
         return problem(exception.status(), exception.code(), exception.getMessage(), fields, request);
     }
 
+    @ExceptionHandler(com.swp391.householdgoods.identity.application.ProfileException.class)
+    ResponseEntity<ApiProblem> handleProfile(
+            com.swp391.householdgoods.identity.application.ProfileException exception,
+            HttpServletRequest request) {
+        Map<String, String> fields = exception.field() == null ? Map.of()
+                : Map.of(exception.field(), exception.getMessage());
+        return problem(exception.status(), exception.code(), exception.getMessage(), fields, request);
+    }
+
     @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
     ResponseEntity<ApiProblem> handleUnreadableBody(HttpServletRequest request) {
         return problem(HttpStatus.BAD_REQUEST, "INVALID_REQUEST_BODY",

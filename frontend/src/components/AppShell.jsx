@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AuthContext } from '../auth/auth-context'
-import { getRoleLabel } from '../auth/role-labels'
+import { AccountMenu } from './AccountMenu'
 
 function Brand() {
   return (
@@ -28,18 +28,13 @@ export function AppHeader({ variant = 'light' }) {
         <nav className="app-navigation" aria-label="Điều hướng chính">
           <NavLink to="/" end>Trang chủ</NavLink>
           <NavLink to="/products">Sản phẩm</NavLink>
+          {user.role === 'MANAGER' && <NavLink to="/manager/products">Quản lý sản phẩm</NavLink>}
           {isEmployee && <NavLink to="/staff/orders">Đơn hàng</NavLink>}
           {user.role === 'MANAGER' && <NavLink to="/manager/suppliers">Nhà cung cấp</NavLink>}
         </nav>
         <div className="app-header-actions">
           {user.authenticated ? (
-            <>
-              <span className="app-user-chip">
-                <span className="app-user-avatar" aria-hidden="true">{user.fullName?.charAt(0)?.toUpperCase() || 'U'}</span>
-                <span><strong>{user.fullName}</strong><small>{getRoleLabel(user.role)}</small></span>
-              </span>
-              <button className="btn btn-outline-secondary btn-sm" type="button" onClick={logout}>Đăng xuất</button>
-            </>
+            <AccountMenu user={user} logout={logout} />
           ) : (
             <Link className="btn btn-primary btn-sm" to="/login">Đăng nhập</Link>
           )}
