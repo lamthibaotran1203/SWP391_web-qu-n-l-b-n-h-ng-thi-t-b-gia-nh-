@@ -38,13 +38,13 @@ class SchemaFoundationIntegrationTest {
     void adminRoleReplacesManagerRoleInTheDatabaseConstraint() {
         long adminCount = jdbc.queryForObject(
                 "select count(*) from app.user_account where role='ADMIN'", Long.class);
-        jdbc.update("insert into app.user_account(email,full_name,role,status,created_at,updated_at) "
-                + "values (?,'Quản trị viên kiểm thử','ADMIN','ACTIVE',current_timestamp,current_timestamp)",
+        jdbc.update("insert into app.user_account(email,password_hash,full_name,role,status,email_verified_at,created_at,updated_at) "
+                + "values (?,'{noop}test','Quản trị viên kiểm thử','ADMIN','ACTIVE',current_timestamp,current_timestamp,current_timestamp)",
                 "admin-" + java.util.UUID.randomUUID() + "@example.invalid");
         assertThat(jdbc.queryForObject(
                 "select count(*) from app.user_account where role='ADMIN'", Long.class)).isEqualTo(adminCount + 1);
-        rejects(() -> jdbc.update("insert into app.user_account(email,full_name,role,status,created_at,updated_at) "
-                + "values (?,'Quản lý cũ','MANAGER','ACTIVE',current_timestamp,current_timestamp)",
+        rejects(() -> jdbc.update("insert into app.user_account(email,password_hash,full_name,role,status,email_verified_at,created_at,updated_at) "
+                + "values (?,'{noop}test','Quản lý cũ','MANAGER','ACTIVE',current_timestamp,current_timestamp,current_timestamp)",
                 "manager-" + java.util.UUID.randomUUID() + "@example.invalid"));
     }
 

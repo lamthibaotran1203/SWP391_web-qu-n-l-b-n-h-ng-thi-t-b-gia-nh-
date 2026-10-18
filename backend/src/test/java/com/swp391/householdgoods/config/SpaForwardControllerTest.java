@@ -16,7 +16,7 @@ class SpaForwardControllerTest {
             "/admin/catalog", "/admin/products", "/admin/products/new",
             "/admin/products/7", "/admin/products/7/edit",
             "/admin/products/7/skus/new", "/admin/products/7/skus/9/edit",
-            "/admin/suppliers", "/admin/purchase-orders/create",
+            "/admin/brands", "/admin/suppliers", "/admin/purchase-orders/create",
             "/account/password", "/account/profile", "/products/7"
     })
     void forwardsDirectClientLinksToTheReactEntryPoint(String path) throws Exception {

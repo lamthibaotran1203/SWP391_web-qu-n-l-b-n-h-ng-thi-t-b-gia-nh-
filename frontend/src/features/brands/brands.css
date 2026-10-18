@@ -1,0 +1,224 @@
+/* Brand Feature Styles */
+.brands-page {
+  padding: 2.75rem 0 4rem;
+  min-height: calc(100vh - 80px);
+}
+
+.brands-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hm-line, #e2e8f0);
+}
+
+.brands-title h1 {
+  font-size: clamp(1.8rem, 4vw, 2.55rem);
+  font-weight: 850;
+  color: var(--hm-ink, #1e293b);
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.brands-title p {
+  color: var(--hm-muted, #64748b);
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+}
+
+.brands-filter-card {
+  background: #ffffff;
+  border: 1px solid var(--hm-line, #e2e8f0);
+  border-radius: var(--hm-radius-lg, 12px);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--hm-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+.brands-table-container {
+  background: #ffffff;
+  border: 1px solid var(--hm-line, #e2e8f0);
+  border-radius: var(--hm-radius-lg, 12px);
+  overflow: hidden;
+  box-shadow: var(--hm-shadow-sm, 0 1px 4px rgba(0, 0, 0, 0.06));
+}
+
+.brands-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.brands-table th {
+  background: var(--hm-surface-soft, #f8fafc);
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--hm-line, #e2e8f0);
+}
+
+.brands-table td {
+  padding: 0.875rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #edf2ef;
+}
+
+.brands-table tbody tr:hover {
+  background: #f9fcfa;
+}
+
+.brand-logo-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 2px;
+}
+
+.brand-logo-placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--hm-surface-soft, #f1f5f9);
+  color: var(--hm-muted, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+.brand-badge-active {
+  color: #087454;
+  background: #e7f7f0;
+}
+
+.brand-badge-inactive {
+  color: #a53838;
+  background: #faeaea;
+}
+
+/* Modal styling */
+.brand-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(11 31 24 / 62%);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.brand-modal-dialog {
+  background: #ffffff;
+  border-radius: var(--hm-radius-lg, 12px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 580px;
+  max-height: calc(100dvh - 2rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 30%);
+}
+
+.brand-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--hm-line, #e2e8f0);
+  background: var(--hm-surface-soft, #f8fafc);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.brand-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--hm-ink, #1e293b);
+  margin: 0;
+}
+
+/* Form can shrink inside the modal */
+.brand-modal-dialog>form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Scroll only the content area */
+.brand-modal-body {
+  padding: 1.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Form body uses available space */
+.brand-modal-dialog>form>.brand-modal-body {
+  flex: 1 1 auto;
+}
+
+/* Footer remains visible at the bottom */
+.brand-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--hm-line, #e2e8f0);
+  background: var(--hm-surface-soft, #f8fafc);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.brand-modal-footer .btn {
+  min-width: 110px;
+}
+
+@media (max-width: 576px) {
+  .brand-modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .brand-modal-dialog {
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .brand-modal-header,
+  .brand-modal-body,
+  .brand-modal-footer {
+    padding: 1rem;
+  }
+
+  .brand-modal-footer .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}

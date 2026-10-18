@@ -6,6 +6,7 @@ import './operations-layout.css'
 
 const adminItems = [
   { to: '/admin/products', icon: 'products', label: 'Sản phẩm & SKU' },
+  { to: '/admin/brands', icon: 'brands', label: 'Thương hiệu' },
   { to: '/staff/orders', icon: 'orders', label: 'Đơn hàng bán' },
   { to: '/admin/suppliers', icon: 'suppliers', label: 'Nhà cung cấp' },
   { to: '/admin/purchase-orders/create', icon: 'purchase', label: 'Lập đơn mua hàng' },
@@ -19,6 +20,7 @@ function MenuIcon({ name }) {
   const paths = {
     orders: <><path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" /></>,
     products: <><path d="m4 8 8-4 8 4-8 4z" /><path d="m4 8 8 4 8-4v8l-8 4-8-4z" /></>,
+    brands: <><path d="M4 5h10l6 6-9 9-7-7z" /><circle cx="9" cy="10" r="1" /></>,
     suppliers: <><path d="M3 20h18M5 20V9h6v11M13 20V4h6v16" /><path d="M7 12h2M15 8h2M15 12h2M15 16h2" /></>,
     purchase: <><path d="M6 3h12v18H6z" /><path d="M9 7h6M9 11h6M9 15h3" /></>,
     settings: <><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z" /></>,
