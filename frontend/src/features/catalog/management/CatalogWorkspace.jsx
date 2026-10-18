@@ -27,7 +27,7 @@ export function CatalogPageHeading({ title, children, detail = false }) {
   return <>
     <nav className="management-breadcrumb" aria-label="Đường dẫn">
       <Link to="/">Trang chủ</Link><span aria-hidden="true">/</span>
-      {detail ? <><Link to="/manager/products">Quản lý sản phẩm</Link><span aria-hidden="true">/</span><span aria-current="page">{title}</span></>
+      {detail ? <><Link to="/staff/products">Quản lý sản phẩm</Link><span aria-hidden="true">/</span><span aria-current="page">{title}</span></>
         : <span aria-current="page">Quản lý sản phẩm</span>}
     </nav>
     <WorkspaceHeader title={title}>{children}</WorkspaceHeader>

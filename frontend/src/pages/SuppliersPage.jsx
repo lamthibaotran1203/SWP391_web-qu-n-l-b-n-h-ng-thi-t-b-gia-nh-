@@ -211,7 +211,7 @@ export function SuppliersPage() {
         </div>
         <div className="d-flex gap-2">
           <Link
-            to="/manager/purchase-orders/create"
+              to="/staff/purchase-orders/create"
             className="btn btn-success d-flex align-items-center gap-2"
           >
             <span>📋</span> Lập đơn mua hàng (PO)
