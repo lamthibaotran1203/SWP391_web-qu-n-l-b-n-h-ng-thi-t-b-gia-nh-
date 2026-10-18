@@ -24,7 +24,7 @@ Desktop.ini
 backend/target/
 
 # Node/Vite/test output
-frontend/node_modules/
+node_modules/
 frontend/dist/
 frontend/.vite/
 coverage/

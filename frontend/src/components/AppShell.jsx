@@ -26,6 +26,8 @@ export function AppHeader({ variant = 'light' }) {
         <nav className="app-navigation" aria-label="Điều hướng chính">
           <NavLink to="/" end>Trang chủ</NavLink>
           <NavLink to="/products">Sản phẩm</NavLink>
+          <NavLink to="/categories">Danh mục</NavLink>
+          {user.authenticated && user.role === 'CUSTOMER' && <NavLink to="/cart">Giỏ hàng</NavLink>}
         </nav>
         <div className="app-header-actions">
           {user.authenticated ? (

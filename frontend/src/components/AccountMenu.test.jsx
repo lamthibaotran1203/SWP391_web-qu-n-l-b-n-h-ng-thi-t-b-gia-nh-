@@ -26,16 +26,23 @@ it('keeps password available to employees without exposing the Customer profile 
   expect(within(menu).queryByText('Thông tin tài khoản')).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Đổi mật khẩu' })).toHaveAttribute('href', '/account/password')
 })
-it('keeps the public navigation limited to Home and Products for employees', () => {
+it('keeps employee navigation public without exposing cart or management links', () => {
   show('ADMIN')
   const navigation = within(screen.getByRole('navigation', { name: 'Điều hướng chính' }))
 
-  expect(navigation.getAllByRole('link')).toHaveLength(2)
+  expect(navigation.getAllByRole('link')).toHaveLength(3)
   expect(navigation.getByRole('link', { name: 'Trang chủ' })).toHaveAttribute('href', '/')
   expect(navigation.getByRole('link', { name: 'Sản phẩm' })).toHaveAttribute('href', '/products')
+  expect(navigation.getByRole('link', { name: 'Danh mục' })).toHaveAttribute('href', '/categories')
+  expect(navigation.queryByText('Giỏ hàng')).not.toBeInTheDocument()
   expect(navigation.queryByText('Quản lý sản phẩm')).not.toBeInTheDocument()
   expect(navigation.queryByText('Đơn hàng')).not.toBeInTheDocument()
   expect(navigation.queryByText('Nhà cung cấp')).not.toBeInTheDocument()
+})
+it('shows the cart link for authenticated customers', () => {
+  show('CUSTOMER')
+  const navigation = within(screen.getByRole('navigation', { name: 'Điều hướng chính' }))
+  expect(navigation.getByRole('link', { name: 'Giỏ hàng' })).toHaveAttribute('href', '/cart')
 })
 it('closes on Escape with focus restored and on an outside pointer press', () => {
   const menu = show()

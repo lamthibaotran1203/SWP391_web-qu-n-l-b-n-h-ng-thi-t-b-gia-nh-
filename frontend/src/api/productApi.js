@@ -1,15 +1,18 @@
 import { apiRequest } from './http'
 
-export function getProducts({ search = '', brand = '', category = '', minPrice = '', maxPrice = '', sort = 'newest', page = 0, size = 12 } = {}, options = {}) {
+export function getProducts({ search = '', brandId = '', categoryId = '', minPrice = '', maxPrice = '', availability = 'any', sort = 'newest', page = 0, size = 12 } = {}, options = {}) {
   const params = new URLSearchParams({ page, size })
   if (search.trim()) params.set('search', search.trim())
-  if (brand.trim()) params.set('brand', brand.trim())
-  if (category.trim()) params.set('category', category.trim())
+  if (String(brandId).trim()) params.set('brandId', String(brandId).trim())
+  if (String(categoryId).trim()) params.set('categoryId', String(categoryId).trim())
+  params.set('availability', availability)
   if (String(minPrice).trim()) params.set('minPrice', String(minPrice).trim())
   if (String(maxPrice).trim()) params.set('maxPrice', String(maxPrice).trim())
   if (sort) params.set('sort', sort)
-  return apiRequest(`/api/v1/catalog/skus?${params.toString()}`, options).then((result) => ({
-    content: result.items.map(toProduct),
+  return apiRequest(`/api/v1/catalog/products?${params.toString()}`, options).then((result) => ({
+    content: result.items.map((product) => ({ ...product, id: product.productId,
+      brand: product.brandName, category: product.categoryName, price: product.minPrice,
+      maxPrice: product.maxPrice, stockQuantity: product.availableQuantity })),
     number: result.page,
     size: result.size,
     totalElements: result.totalElements,

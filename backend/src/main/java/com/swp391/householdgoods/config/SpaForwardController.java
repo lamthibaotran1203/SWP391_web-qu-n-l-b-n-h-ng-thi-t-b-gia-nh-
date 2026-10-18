@@ -14,6 +14,8 @@ public class SpaForwardController {
             "/register",
             "/verify-email",
             "/products",
+            "/categories",
+            "/cart",
             "/products/{id}",
             "/staff",
             "/staff/orders",

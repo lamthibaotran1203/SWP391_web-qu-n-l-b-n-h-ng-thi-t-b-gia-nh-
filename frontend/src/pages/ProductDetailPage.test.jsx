@@ -12,10 +12,18 @@ const detail = (skus = [sku(2)]) => ({ productId: 100, name: 'Nồi inox', descr
 function show({ onAddToCart, user = { authenticated: true, role: 'CUSTOMER' }, path = '/products/100' } = {}) {
   return render(<AuthContext.Provider value={{ user }}><MemoryRouter initialEntries={[path]}><Routes>
     <Route path="/products/:id" element={<ProductDetailPage onAddToCart={onAddToCart} />} />
+    <Route path="/login" element={<p>Đăng nhập lại để mua hàng</p>} />
   </Routes></MemoryRouter></AuthContext.Provider>)
 }
 beforeEach(() => { vi.resetAllMocks(); getProductDetail.mockResolvedValue(detail()) })
 afterEach(cleanup)
+
+it('requires authentication again when the cart session expires', async () => {
+  show({ onAddToCart: vi.fn().mockRejectedValue({ status: 401 }) })
+  await screen.findByRole('heading', { name: 'Nồi inox' })
+  await userEvent.click(screen.getByRole('button', { name: 'Thêm vào giỏ hàng' }))
+  expect(await screen.findByText('Đăng nhập lại để mua hàng')).toBeInTheDocument()
+})
 
 it('loads public product metadata and automatically selects its only SKU', async () => {
   show()

@@ -1,110 +1,116 @@
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { getProducts } from '../api/productApi'
-import { getCatalogBrands, getCatalogCategories } from '../features/catalog/api'
+import { getCatalogBrands, getPublicCategories } from '../features/catalog/api'
 import { ProductListPage } from './ProductListPage'
 
-vi.mock('../api/productApi', () => ({ getProducts: vi.fn(), getProductById: vi.fn() }))
-vi.mock('../features/catalog/api', () => ({
-  formatVnd: (value) => `${value} ₫`,
-  getCatalogBrands: vi.fn(),
-  getCatalogCategories: vi.fn(),
-}))
-const page = (name) => ({ content: [{ id: 42, productId: 100, name, sku: 'SKU', price: '200000', stockQuantity: 5 }], number: 0, totalPages: 1, totalElements: 1 })
+vi.mock('../api/productApi', () => ({ getProducts: vi.fn() }))
+vi.mock('../features/catalog/api', () => ({ formatVnd: (value) => `${value} ₫`, getCatalogBrands: vi.fn(), getPublicCategories: vi.fn() }))
+const page = (name) => ({ content: [{ id: 100, productId: 100, name, price: '200000', maxPrice: '300000', stockQuantity: 5, skuCount: 2, brand: 'SUNHOUSE', category: 'Nhà bếp' }], number: 0, totalPages: 1, totalElements: 1 })
+function show(path = '/products') { render(<MemoryRouter initialEntries={[path]}><ProductListPage /></MemoryRouter>) }
 beforeEach(() => {
-  getProducts.mockReset()
-  getCatalogBrands.mockReset()
-  getCatalogCategories.mockReset()
+  vi.resetAllMocks()
   getProducts.mockResolvedValue(page('Nồi inox'))
-  getCatalogBrands.mockResolvedValue([])
-  getCatalogCategories.mockResolvedValue([])
+  getCatalogBrands.mockResolvedValue([{ id: 1, name: 'SUNHOUSE' }])
+  getPublicCategories.mockResolvedValue([{ id: 2, name: 'Nhà bếp' }])
 })
 afterEach(cleanup)
 
-it('debounces suggestions without replacing results before search is submitted', async () => {
-  getProducts
-    .mockResolvedValueOnce(page('Nồi inox'))
-    .mockResolvedValueOnce(page('Ấm điện gợi ý'))
-    .mockResolvedValueOnce(page('Kết quả tìm kiếm'))
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
+it('shows a product price range, VAT note and direct UC09 link', async () => {
+  show()
+  expect(await screen.findByRole('link', { name: /Nồi inox/ })).toHaveAttribute('href', '/products/100')
+  expect(screen.getByText('200000 ₫ – 300000 ₫')).toBeInTheDocument()
+  expect(screen.getByText(/Giá bán đã bao gồm VAT/)).toBeInTheDocument()
+})
+it('debounces suggestions without changing the main listing until submit', async () => {
+  getProducts.mockResolvedValueOnce(page('Nồi inox')).mockResolvedValueOnce(page('Ấm điện gợi ý')).mockResolvedValueOnce(page('Kết quả tìm kiếm'))
+  const user = userEvent.setup(); show()
   await screen.findByText('Nồi inox')
-  expect(screen.getByRole('link', { name: /Nồi inox/ })).toHaveAttribute('href', '/products/100?sku=42')
   await user.type(screen.getByRole('textbox', { name: 'Tìm sản phẩm' }), 'ấm điện')
   expect(getProducts).toHaveBeenCalledTimes(1)
-  expect(await screen.findByText('Ấm điện gợi ý', {}, { timeout: 1500 })).toBeInTheDocument()
+  expect(await screen.findByText('Ấm điện gợi ý')).toBeInTheDocument()
   expect(screen.getByText('Nồi inox')).toBeInTheDocument()
-  expect(getProducts.mock.calls[1][0]).toMatchObject({ search: 'ấm điện', page: 0, size: 5 })
+  expect(getProducts.mock.calls[1][0]).toMatchObject({ search: 'ấm điện', size: 5 })
   await user.click(screen.getByRole('button', { name: 'Tìm kiếm' }))
   expect(await screen.findByText('Kết quả tìm kiếm')).toBeInTheDocument()
-  expect(getProducts.mock.calls[2][0].search).toBe('ấm điện')
   expect(screen.queryByLabelText('Gợi ý sản phẩm')).not.toBeInTheDocument()
 })
-
-it('applies filters, sorting, pagination and clear from the UI', async () => {
-  getCatalogBrands.mockResolvedValue([{ id: 1, name: 'SUNHOUSE' }])
-  getCatalogCategories.mockResolvedValue([{ id: 2, name: 'Nhà bếp' }])
-  getProducts.mockResolvedValue({ ...page('Nồi inox'), totalPages: 2, totalElements: 13 })
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
+it('applies category/brand/availability immediately by ID and retains them for sorting and paging', async () => {
+  getProducts.mockImplementation(async (criteria) => ({ ...page('Nồi inox'), number: criteria.page, totalPages: 3, totalElements: 30 }))
+  const user = userEvent.setup(); show()
   await screen.findByText('Nồi inox')
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Lọc thương hiệu' }), 'SUNHOUSE')
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Lọc danh mục' }), 'Nhà bếp')
-  await user.type(screen.getByRole('spinbutton', { name: 'Giá từ' }), '100000')
-  await user.type(screen.getByRole('spinbutton', { name: 'Giá đến' }), '500000')
-  await user.click(screen.getByRole('button', { name: 'Tìm kiếm' }))
-  await waitFor(() => expect(getProducts).toHaveBeenCalledTimes(2))
-  expect(getProducts.mock.calls[1][0]).toMatchObject({ brand: 'SUNHOUSE', category: 'Nhà bếp', minPrice: '100000', maxPrice: '500000', page: 0 })
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Sắp xếp' }), 'price_desc')
-  await waitFor(() => expect(getProducts).toHaveBeenCalledTimes(3))
-  expect(getProducts.mock.calls[2][0].sort).toBe('price_desc')
-  await user.click(screen.getByRole('button', { name: 'Sau' }))
-  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].page).toBe(1))
-  await user.click(screen.getByRole('button', { name: 'Xóa' }))
-  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0]).toMatchObject({ search: '', brand: '', category: '', minPrice: '', maxPrice: '', sort: 'newest', page: 0 }))
+  await screen.findByRole('option', { name: 'SUNHOUSE' })
+  await user.selectOptions(screen.getByLabelText('Lọc thương hiệu'), '1')
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].brandId).toBe('1'))
+  await screen.findByRole('option', { name: 'Nhà bếp' })
+  await user.selectOptions(screen.getByLabelText('Lọc danh mục'), '2')
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].categoryId).toBe('2'))
+  await user.selectOptions(screen.getByLabelText('Tình trạng còn hàng'), 'in_stock')
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].availability).toBe('in_stock'))
+  await user.selectOptions(screen.getByLabelText('Sắp xếp'), 'price_desc')
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].sort).toBe('price_desc'))
+  await user.click(await screen.findByRole('button', { name: 'Sau' }))
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0]).toMatchObject({ brandId: '1', categoryId: '2', availability: 'in_stock', sort: 'price_desc', page: 1 }))
+  await user.click(await screen.findByRole('button', { name: 'Xóa' }))
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0]).toMatchObject({ search: '', brandId: '', categoryId: '', availability: 'any', sort: 'newest', page: 0 }))
 })
-
-it('shows no results with a short clear action', async () => {
+it('uses the server page for display and subsequent navigation after clamping', async () => {
+  getProducts.mockResolvedValue({ ...page('Nồi inox'), number: 1, totalPages: 2 })
+  const user = userEvent.setup(); show('/products?search=nồi&page=9')
+  expect(await screen.findByText('Trang 2 / 2')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Sau' })).toBeDisabled()
+  await user.click(screen.getByRole('button', { name: 'Trước' }))
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0]).toMatchObject({ search: 'nồi', page: 0 }))
+})
+it('keeps the next price field focused when the previous price filter is applied', async () => {
+  const user = userEvent.setup(); show()
+  await screen.findByText('Nồi inox')
+  await user.type(screen.getByLabelText('Giá từ'), '100000')
+  await user.click(screen.getByLabelText('Giá đến'))
+  await waitFor(() => expect(getProducts.mock.calls.at(-1)[0].minPrice).toBe('100000'))
+  expect(screen.getByLabelText('Giá đến')).toHaveFocus()
+  await user.type(screen.getByLabelText('Giá đến'), '300000')
+  expect(screen.getByLabelText('Giá đến')).toHaveValue(300000)
+})
+it('distinguishes an empty catalogue from no search matches and retains criteria', async () => {
   getProducts.mockResolvedValue({ content: [], number: 0, totalPages: 0, totalElements: 0 })
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
-  expect(await screen.findByRole('heading', { name: 'Không tìm thấy sản phẩm' })).toBeInTheDocument()
-  await user.click(screen.getByRole('button', { name: 'Xóa' }))
-  expect(screen.getByRole('textbox', { name: 'Tìm sản phẩm' })).toHaveValue('')
+  show()
+  expect(await screen.findByText('Chưa có sản phẩm công khai')).toBeInTheDocument()
+  cleanup(); show('/products?search=khôngcó&categoryId=2')
+  expect(await screen.findByText('Không tìm thấy sản phẩm')).toBeInTheDocument()
+  expect(screen.getByLabelText('Tìm sản phẩm')).toHaveValue('khôngcó')
+  expect(screen.getByLabelText('Lọc danh mục')).toHaveValue('2')
 })
-
-it('shows only retrieval error and retries without false no-results content', async () => {
-  getProducts.mockRejectedValueOnce(new Error('Mất kết nối')).mockResolvedValueOnce(page('Đã tải lại'))
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
-  expect(await screen.findByRole('alert')).toHaveTextContent('Mất kết nối')
+it('reports price validation errors and allows corrections', async () => {
+  getProducts.mockRejectedValueOnce(new Error('Giá từ không được lớn hơn giá đến.')).mockResolvedValue(page('Nồi inox'))
+  show('/products?minPrice=500000&maxPrice=100000')
+  expect(await screen.findByRole('alert')).toHaveTextContent('Giá từ không được lớn hơn giá đến.')
   expect(screen.queryByText('Không tìm thấy sản phẩm')).not.toBeInTheDocument()
+  fireEvent.change(screen.getByLabelText('Giá từ'), { target: { value: '50000' } })
+  fireEvent.blur(screen.getByLabelText('Giá từ'))
+  await screen.findByText('Nồi inox')
+  expect(getProducts.mock.calls.at(-1)[0]).toMatchObject({ minPrice: '50000', maxPrice: '100000' })
+})
+it('retries listing and reference failures', async () => {
+  getProducts.mockRejectedValueOnce(new Error('Mất kết nối')).mockResolvedValue(page('Đã tải lại'))
+  getCatalogBrands.mockRejectedValueOnce(new Error('Không tải được bộ lọc')).mockResolvedValue([{ id: 1, name: 'SUNHOUSE' }])
+  const user = userEvent.setup(); show()
+  await screen.findByText('Mất kết nối')
   await user.click(screen.getByRole('button', { name: 'Thử lại' }))
   expect(await screen.findByText('Đã tải lại')).toBeInTheDocument()
-})
-
-it('reports reference loading failure and reloads brand/category filters', async () => {
-  getCatalogBrands.mockRejectedValueOnce(new Error('Không tải được bộ lọc')).mockResolvedValueOnce([{ id: 1, name: 'SUNHOUSE' }])
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
-  expect(await screen.findByRole('alert')).toHaveTextContent('Không tải được bộ lọc')
   await user.click(screen.getByRole('button', { name: 'Tải lại bộ lọc' }))
   expect(await screen.findByRole('option', { name: 'SUNHOUSE' })).toBeInTheDocument()
-  expect(screen.queryByRole('button', { name: 'Tải lại bộ lọc' })).not.toBeInTheDocument()
 })
-
-it('ignores obsolete responses after a new search and aborts the old request', async () => {
+it('aborts and ignores outdated listing results', async () => {
   let resolveOld
-  getProducts.mockReturnValueOnce(new Promise((resolve) => { resolveOld = resolve }))
-  getProducts.mockResolvedValueOnce(page('Ấm mới'))
-  const user = userEvent.setup()
-  render(<MemoryRouter><ProductListPage /></MemoryRouter>)
-  await user.type(screen.getByRole('textbox', { name: 'Tìm sản phẩm' }), 'ấm')
+  getProducts.mockReturnValueOnce(new Promise((resolve) => { resolveOld = resolve })).mockResolvedValue(page('Ấm mới'))
+  const user = userEvent.setup(); show()
+  await user.type(screen.getByLabelText('Tìm sản phẩm'), 'ấm')
   await user.click(screen.getByRole('button', { name: 'Tìm kiếm' }))
   await screen.findByText('Ấm mới')
   expect(getProducts.mock.calls[0][1].signal.aborted).toBe(true)
-  await act(async () => { resolveOld(page('Kết quả cũ')) })
-  await waitFor(() => expect(screen.queryByText('Kết quả cũ')).not.toBeInTheDocument())
+  await act(async () => { resolveOld(page('Cũ')) })
+  expect(screen.queryByText('Cũ')).not.toBeInTheDocument()
 })
