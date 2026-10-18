@@ -118,10 +118,7 @@
 /* Modal styling */
 .brand-modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgb(11 31 24 / 62%);
   backdrop-filter: blur(4px);
   z-index: 1050;
@@ -129,15 +126,18 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  overflow: hidden;
 }
 
 .brand-modal-dialog {
   background: #ffffff;
   border-radius: var(--hm-radius-lg, 12px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   width: 100%;
   max-width: 580px;
-  max-height: 90vh;
+  max-height: calc(100dvh - 2rem);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -151,6 +151,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 .brand-modal-header h2 {
@@ -160,16 +162,63 @@
   margin: 0;
 }
 
-.brand-modal-body {
-  padding: 1.5rem;
-  overflow-y: auto;
+/* Form can shrink inside the modal */
+.brand-modal-dialog>form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
+/* Scroll only the content area */
+.brand-modal-body {
+  padding: 1.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Form body uses available space */
+.brand-modal-dialog>form>.brand-modal-body {
+  flex: 1 1 auto;
+}
+
+/* Footer remains visible at the bottom */
 .brand-modal-footer {
   padding: 1rem 1.5rem;
   border-top: 1px solid var(--hm-line, #e2e8f0);
   background: var(--hm-surface-soft, #f8fafc);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.brand-modal-footer .btn {
+  min-width: 110px;
+}
+
+@media (max-width: 576px) {
+  .brand-modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .brand-modal-dialog {
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .brand-modal-header,
+  .brand-modal-body,
+  .brand-modal-footer {
+    padding: 1rem;
+  }
+
+  .brand-modal-footer .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 }

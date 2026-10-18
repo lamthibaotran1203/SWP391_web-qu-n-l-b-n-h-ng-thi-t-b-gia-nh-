@@ -8,6 +8,7 @@ import {
   createBrand,
   updateBrand,
   deactivateBrand,
+  reactivateBrand,
 } from '../features/brands/api'
 import '../features/brands/brands.css'
 
@@ -20,6 +21,18 @@ export function BrandsPage() {
   const [error, setError] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
+
+  // Tu dong an thong bao thanh cong sau 5 giay
+  useEffect(() => {
+    if (!successMessage) return
+
+    const timer = setTimeout(() => {
+      setSuccessMessage(null)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [successMessage])
+
   // Filters & Pagination (zero-based for Spring Data)
   const [searchTerm, setSearchTerm] = useState('')
   const [keyword, setKeyword] = useState('')
@@ -31,7 +44,7 @@ export function BrandsPage() {
 
   // Modals state
   const [showModal, setShowModal] = useState(false)
-  const [modalMode, setModalMode] = useState('create') // 'create' | 'edit' | 'view' | 'deactivate'
+  const [modalMode, setModalMode] = useState('create') // 'create' | 'edit' | 'view' | 'deactivate' | 'reactivate'
   const [selectedBrand, setSelectedBrand] = useState(null)
 
   // Form state
@@ -163,6 +176,13 @@ export function BrandsPage() {
     setShowModal(true)
   }
 
+  function openReactivateModal(brand) {
+    setModalMode('reactivate')
+    setSelectedBrand(brand)
+    setFormErrors({})
+    setShowModal(true)
+  }
+
   function closeModal() {
     setShowModal(false)
     setSelectedBrand(null)
@@ -250,6 +270,26 @@ export function BrandsPage() {
       } else {
         setFormErrors({ general: err.message || 'Không thể vô hiệu hóa thương hiệu.' })
       }
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleConfirmReactivate() {
+    if (!selectedBrand || submitting) return
+
+    setSubmitting(true)
+    setFormErrors({})
+    setError(null)
+    setSuccessMessage(null)
+
+    try {
+      await reactivateBrand(selectedBrand.id)
+      setSuccessMessage(`Đã khôi phục thương hiệu "${selectedBrand.name}" thành công!`)
+      closeModal()
+      setRefreshCounter((c) => c + 1)
+    } catch (err) {
+      setFormErrors({ general: err.message || 'Không thể khôi phục thương hiệu. Vui lòng thử lại.' })
     } finally {
       setSubmitting(false)
     }
@@ -458,7 +498,16 @@ export function BrandsPage() {
                           >
                             Sửa
                           </button>
-                          {!brand.isDeleted && (
+                          {brand.isDeleted ? (
+                            <button
+                              type="button"
+                              className="btn btn-outline-success"
+                              onClick={() => openReactivateModal(brand)}
+                              title="Khôi phục thương hiệu"
+                            >
+                              Khôi phục
+                            </button>
+                          ) : (
                             <button
                               type="button"
                               className="btn btn-outline-danger"
@@ -526,6 +575,7 @@ export function BrandsPage() {
                 {modalMode === 'edit' && 'Cập nhật thương hiệu'}
                 {modalMode === 'view' && 'Chi tiết thương hiệu'}
                 {modalMode === 'deactivate' && 'Xác nhận vô hiệu hóa'}
+                {modalMode === 'reactivate' && 'Xác nhận khôi phục'}
               </h2>
               <button
                 type="button"
@@ -616,6 +666,23 @@ export function BrandsPage() {
                     <li>Sẽ không thể chọn thương hiệu này khi tạo sản phẩm mới.</li>
                     <li>Nếu vẫn còn sản phẩm đang hoạt động thuộc thương hiệu này, hệ thống sẽ ngăn chặn thao tác.</li>
                   </ul>
+                </div>
+              </div>
+            )}
+
+            {modalMode === 'reactivate' && selectedBrand && (
+              <div className="brand-modal-body">
+                {formErrors.general && (
+                  <div className="alert alert-danger" role="alert">
+                    {formErrors.general}
+                  </div>
+                )}
+                <p className="mb-3">
+                  Bạn có chắc chắn muốn khôi phục thương hiệu{' '}
+                  <strong className="text-dark">"{selectedBrand.name}"</strong> không?
+                </p>
+                <div className="alert alert-info small mb-0">
+                  Thương hiệu sẽ chuyển sang trạng thái Hoạt động và có thể được sử dụng trở lại.
                 </div>
               </div>
             )}
@@ -746,6 +813,17 @@ export function BrandsPage() {
                   disabled={submitting}
                 >
                   {submitting ? 'Đang xử lý...' : 'Xác nhận vô hiệu hóa'}
+                </button>
+              )}
+
+              {modalMode === 'reactivate' && (
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={handleConfirmReactivate}
+                  disabled={submitting}
+                >
+                  {submitting ? 'Đang khôi phục...' : 'Xác nhận khôi phục'}
                 </button>
               )}
             </div>

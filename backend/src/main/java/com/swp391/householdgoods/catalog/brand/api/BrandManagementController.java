@@ -1,3 +1,4 @@
+
 package com.swp391.householdgoods.catalog.brand.api;
 
 import com.swp391.householdgoods.catalog.brand.application.BrandService;
@@ -38,57 +39,144 @@ public class BrandManagementController {
         this.brandService = brandService;
     }
 
+    // ==========================================
+    // VIEW BRAND LIST
+    // ==========================================
     @GetMapping
     public ApiEnvelope<Page<BrandResponse>> list(
-            @RequestParam(required = false) @Size(max = 120, message = "Từ khóa không quá 120 ký tự") String keyword,
-            @RequestParam(required = false) String status,
-            @RequestParam(defaultValue = "0") @Min(value = 0, message = "Số trang không được nhỏ hơn 0") int page,
-            @RequestParam(defaultValue = "10") @Min(value = 1, message = "Kích thước trang tối thiểu là 1") @Max(value = 100, message = "Kích thước trang tối đa là 100") int size
+            @RequestParam(required = false)
+            @Size(max = 120, message = "Từ khóa không quá 120 ký tự")
+            String keyword,
+
+            @RequestParam(required = false)
+            String status,
+
+            @RequestParam(defaultValue = "0")
+            @Min(value = 0, message = "Số trang không được nhỏ hơn 0")
+            int page,
+
+            @RequestParam(defaultValue = "10")
+            @Min(value = 1, message = "Kích thước trang tối thiểu là 1")
+            @Max(value = 100, message = "Kích thước trang tối đa là 100")
+            int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ApiEnvelope<>(brandService.searchBrands(keyword, status, pageable));
+
+        return new ApiEnvelope<>(
+                brandService.searchBrands(keyword, status, pageable)
+        );
     }
 
+    // ==========================================
+    // VIEW BRAND DETAILS
+    // ==========================================
     @GetMapping("/{id}")
-    public ApiEnvelope<BrandResponse> getById(@PathVariable @Min(value = 1, message = "ID không hợp lệ") Long id) {
-        return new ApiEnvelope<>(brandService.getBrandById(id));
+    public ApiEnvelope<BrandResponse> getById(
+            @PathVariable
+            @Min(value = 1, message = "ID không hợp lệ")
+            Long id
+    ) {
+        return new ApiEnvelope<>(
+                brandService.getBrandById(id)
+        );
     }
 
+    // ==========================================
+    // CREATE BRAND
+    // ==========================================
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiEnvelope<BrandResponse> create(
             @Valid @RequestBody CreateBrandRequest request,
             Principal principal
     ) {
-        String actor = principal != null ? principal.getName() : "MANAGER";
-        return new ApiEnvelope<>(brandService.createBrand(request, actor));
+        String actor = principal != null
+                ? principal.getName()
+                : "MANAGER";
+
+        return new ApiEnvelope<>(
+                brandService.createBrand(request, actor)
+        );
     }
 
+    // ==========================================
+    // UPDATE BRAND
+    // ==========================================
     @PutMapping("/{id}")
     public ApiEnvelope<BrandResponse> update(
-            @PathVariable @Min(value = 1, message = "ID không hợp lệ") Long id,
+            @PathVariable
+            @Min(value = 1, message = "ID không hợp lệ")
+            Long id,
+
             @Valid @RequestBody UpdateBrandRequest request,
             Principal principal
     ) {
-        String actor = principal != null ? principal.getName() : "MANAGER";
-        return new ApiEnvelope<>(brandService.updateBrand(id, request, actor));
+        String actor = principal != null
+                ? principal.getName()
+                : "MANAGER";
+
+        return new ApiEnvelope<>(
+                brandService.updateBrand(id, request, actor)
+        );
     }
 
+    // ==========================================
+    // DEACTIVATE BRAND
+    // ==========================================
     @DeleteMapping("/{id}")
     public ApiEnvelope<BrandResponse> deactivate(
-            @PathVariable @Min(value = 1, message = "ID không hợp lệ") Long id,
+            @PathVariable
+            @Min(value = 1, message = "ID không hợp lệ")
+            Long id,
+
             Principal principal
     ) {
-        String actor = principal != null ? principal.getName() : "MANAGER";
-        return new ApiEnvelope<>(brandService.deactivateBrand(id, actor));
+        String actor = principal != null
+                ? principal.getName()
+                : "MANAGER";
+
+        return new ApiEnvelope<>(
+                brandService.deactivateBrand(id, actor)
+        );
     }
 
+    // ==========================================
+    // PATCH BRAND STATUS (EXISTING API)
+    // ==========================================
     @PatchMapping("/{id}/status")
     public ApiEnvelope<BrandResponse> patchStatus(
-            @PathVariable @Min(value = 1, message = "ID không hợp lệ") Long id,
+            @PathVariable
+            @Min(value = 1, message = "ID không hợp lệ")
+            Long id,
+
             Principal principal
     ) {
-        String actor = principal != null ? principal.getName() : "MANAGER";
-        return new ApiEnvelope<>(brandService.deactivateBrand(id, actor));
+        String actor = principal != null
+                ? principal.getName()
+                : "MANAGER";
+
+        return new ApiEnvelope<>(
+                brandService.deactivateBrand(id, actor)
+        );
+    }
+
+    // ==========================================
+    // REACTIVATE BRAND (NEW API)
+    // ==========================================
+    @PatchMapping("/{id}/reactivate")
+    public ApiEnvelope<BrandResponse> reactivate(
+            @PathVariable
+            @Min(value = 1, message = "ID không hợp lệ")
+            Long id,
+
+            Principal principal
+    ) {
+        String actor = principal != null
+                ? principal.getName()
+                : "MANAGER";
+
+        return new ApiEnvelope<>(
+                brandService.reactivateBrand(id, actor)
+        );
     }
 }
