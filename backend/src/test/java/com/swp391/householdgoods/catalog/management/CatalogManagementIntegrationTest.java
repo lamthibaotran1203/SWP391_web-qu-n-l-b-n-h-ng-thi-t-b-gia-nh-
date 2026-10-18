@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class CatalogManagementIntegrationTest {
-    private static final String API = "/api/v1/manager/catalog/products";
+    private static final String API = "/api/v1/admin/catalog/products";
     @Autowired JdbcTemplate jdbc;
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper json;
@@ -51,7 +51,7 @@ class CatalogManagementIntegrationTest {
         prefix = "UC13-" + UUID.randomUUID();
         email = prefix + "@example.invalid";
         accountId = jdbc.queryForObject("insert into app.user_account(email,password_hash,full_name,role,status,"
-                + "email_verified_at,created_at,updated_at) values (?,?,'Quản lý kiểm thử','MANAGER','ACTIVE',now(),now(),now())"
+                + "email_verified_at,created_at,updated_at) values (?,?,'Quản lý kiểm thử','ADMIN','ACTIVE',now(),now(),now())"
                 + " returning user_id", Long.class, email, encoder.encode("local test password"));
         categoryId = jdbc.queryForObject("insert into app.hm_category(code,name,created_at) values (?,? ,now()) returning id",
                 Long.class, prefix, prefix);
@@ -138,7 +138,7 @@ class CatalogManagementIntegrationTest {
     }
 
     @ParameterizedTest @ValueSource(strings = {"CUSTOMER", "STAFF"})
-    void nonManagersCannotReadOrWriteManagementOrLegacyWrites(String role) throws Exception {
+    void nonAdminsCannotReadOrWriteManagementOrLegacyWrites(String role) throws Exception {
         jdbc.update("update app.user_account set role=? where user_id=?", role, accountId);
         var session = login();
         mvc.perform(get(API).session(session)).andExpect(status().isForbidden());
@@ -264,7 +264,7 @@ class CatalogManagementIntegrationTest {
                 .isInstanceOfSatisfying(CatalogException.class, e -> assertThat(e.code()).isEqualTo("CATEGORY_INVALID"));
     }
 
-    @Test void demotedManagerSessionCannotKeepItsOldManagementPermission() throws Exception {
+    @Test void demotedAdminSessionCannotKeepItsOldManagementPermission() throws Exception {
         var session = login();
         jdbc.update("update app.user_account set role='STAFF' where user_id=?", accountId);
         mvc.perform(get(API).session(session)).andExpect(status().isUnauthorized());

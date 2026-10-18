@@ -58,7 +58,7 @@ class PasswordChangeIntegrationTest {
     }
     @AfterEach void removeAccount() { jdbc.update("delete from app.user_account where user_id=?",id); }
 
-    @ParameterizedTest @ValueSource(strings={"CUSTOMER","STAFF","MANAGER"})
+    @ParameterizedTest @ValueSource(strings={"CUSTOMER","STAFF","ADMIN"})
     void everyAuthenticatedRoleChangesOnlyOwnCredentialAndOldPasswordStopsWorking(String role) throws Exception {
         jdbc.update("update app.user_account set role=? where user_id=?",role,id);
         var session = login(OLD);

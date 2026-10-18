@@ -42,17 +42,11 @@
 }
 
 .orders-content {
-  padding-top: clamp(2rem, 5vw, 3.5rem);
-  padding-bottom: 4rem;
+  padding-top: 2.25rem;
+  padding-bottom: 3rem;
 }
 
-.orders-title-row {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.75rem;
-}
+.orders-title-row { margin-bottom: 1.5rem; }
 
 .orders-eyebrow {
   margin: 0 0 0.5rem;
@@ -64,10 +58,11 @@
 
 .orders-title-row h1 {
   margin: 0;
-  color: #172f27;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  letter-spacing: -0.035em;
+  color: #172033;
+  font-family: inherit;
+  font-size: 1.75rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
 }
 
 .orders-subtitle {
@@ -75,34 +70,13 @@
   color: #69766f;
 }
 
-.orders-total {
-  display: grid;
-  min-width: 8rem;
-  gap: 0.1rem;
-  padding: 0.8rem 1rem;
-  border: 1px solid #e0e5de;
-  border-radius: 0.8rem;
-  background: #fff;
-  text-align: right;
-}
-
-.orders-total strong {
-  color: #174a3d;
-  font-size: 1.3rem;
-}
-
-.orders-total span {
-  color: #738078;
-  font-size: 0.75rem;
-}
-
 .orders-filter-card,
 .orders-table-card {
   overflow: hidden;
   border: 1px solid #e1e5df;
-  border-radius: 0.9rem;
+  border-radius: 0.65rem;
   background: #fff;
-  box-shadow: 0 0.4rem 1.5rem rgb(31 53 43 / 4%);
+  box-shadow: 0 0.2rem 0.8rem rgb(31 53 43 / 3%);
 }
 
 .orders-filter-card {

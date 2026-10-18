@@ -80,7 +80,7 @@ describe('SuppliersPage (UC-27 Manage Suppliers)', () => {
 
     expect(await screen.findByText('SUP-SUNHOUSE')).toBeInTheDocument()
 
-    const addButton = screen.getByRole('button', { name: /\+ Thêm nhà cung cấp/i })
+    const addButton = screen.getByRole('button', { name: 'Thêm nhà cung cấp' })
     await user.click(addButton)
 
     expect(await screen.findByText('Đăng ký nhà cung cấp mới')).toBeInTheDocument()

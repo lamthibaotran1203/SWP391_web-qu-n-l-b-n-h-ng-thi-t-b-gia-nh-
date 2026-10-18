@@ -55,7 +55,7 @@ describe('CreatePurchaseOrderPage (UC-28 Create Purchase Order)', () => {
       </MemoryRouter>,
     )
 
-    expect(await screen.findByText('Lập đơn mua hàng (Purchase Order)')).toBeInTheDocument()
+    expect(await screen.findByText('Lập đơn mua hàng')).toBeInTheDocument()
     expect(screen.getByText(/Tập đoàn Sunhouse/i)).toBeInTheDocument()
     expect(screen.getByText(/0101234567/i)).toBeInTheDocument()
     expect(screen.getByText('SKU-NOI-COM - Nồi cơm điện tử')).toBeInTheDocument()
@@ -72,7 +72,7 @@ describe('CreatePurchaseOrderPage (UC-28 Create Purchase Order)', () => {
       </MemoryRouter>,
     )
 
-    expect(await screen.findByText('Lập đơn mua hàng (Purchase Order)')).toBeInTheDocument()
+    expect(await screen.findByText('Lập đơn mua hàng')).toBeInTheDocument()
 
     const addLineBtn = screen.getByRole('button', { name: '+ Thêm dòng sản phẩm' })
     await user.click(addLineBtn)
@@ -101,7 +101,7 @@ describe('CreatePurchaseOrderPage (UC-28 Create Purchase Order)', () => {
       </MemoryRouter>,
     )
 
-    expect(await screen.findByText('Lập đơn mua hàng (Purchase Order)')).toBeInTheDocument()
+    expect(await screen.findByText('Lập đơn mua hàng')).toBeInTheDocument()
 
     const submitBtn = screen.getByRole('button', { name: 'Xác nhận tạo đơn PO' })
     await user.click(submitBtn)

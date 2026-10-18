@@ -115,7 +115,7 @@ On 2026-10-05: 11 PostgreSQL backend tests, 2 frontend tests and lint/build pass
 and validated on Supabase; original catalogue aggregate digest matched after column rename.
 A local V1–V3 -> V4 -> V5 upgrade also preserved price/stock/code; rerun executed zero.
 A live Spring/JDBC API smoke against Supabase validates visibility, price/stock, image and
-400/404 errors. No Manager was created. Mail health is excluded only in this catalogue preview because SMTP verification is outside
+400/404 errors. No Admin was created. Mail health is excluded only in this catalogue preview because SMTP verification is outside
 this task; database health is checked. Temporary preview uses localhost:8085; it is not a
 team deployment. Stop it with `docker stop homemart-catalog-preview` and remove it with
 `docker rm homemart-catalog-preview` when no longer needed.

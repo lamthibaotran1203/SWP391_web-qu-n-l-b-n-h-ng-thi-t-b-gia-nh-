@@ -72,7 +72,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/me",
                                 "/api/v1/auth/verify-email")
                         .permitAll()
-                        .requestMatchers("/api/v1/products/**").hasRole("MANAGER")
+                        .requestMatchers("/api/v1/products/**").hasRole("ADMIN")
                         .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/api/v1/auth/register",
@@ -94,12 +94,12 @@ public class SecurityConfig {
                                 "/api/v1/products/**")
                         .denyAll()
                         .requestMatchers("/api/v1/account/profile").hasRole("CUSTOMER")
-                        .requestMatchers("/api/v1/manager/**")
-                        .hasRole("MANAGER")
+                        .requestMatchers("/api/v1/admin/**")
+                        .hasRole("ADMIN")
                         .requestMatchers("/api/v1/purchasing/**")
-                        .hasRole("MANAGER")
+                        .hasRole("ADMIN")
                         .requestMatchers("/api/v1/staff/**")
-                        .hasAnyRole("STAFF", "MANAGER")
+                        .hasAnyRole("STAFF", "ADMIN")
                         .requestMatchers("/api/**")
                         .authenticated()
                         .anyRequest()

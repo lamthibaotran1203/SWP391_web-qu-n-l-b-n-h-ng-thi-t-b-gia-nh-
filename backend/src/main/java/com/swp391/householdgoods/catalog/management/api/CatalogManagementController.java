@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.function.Supplier;
 
 @RestController
-@RequestMapping("/api/v1/manager/catalog/products")
+@RequestMapping("/api/v1/admin/catalog/products")
 public class CatalogManagementController {
     private final CatalogManagementService service;
 

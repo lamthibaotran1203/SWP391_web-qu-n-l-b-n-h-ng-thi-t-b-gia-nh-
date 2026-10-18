@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
 import { getSalesOrders } from '../api/http'
-import { AppHeader } from '../components/AppShell'
 import { OrderDetailsDialog } from './orders/OrderDetailsDialog'
 import { SalesOrdersTable } from './orders/SalesOrdersTable'
 import { orderStatusLabels, paymentStatusLabels } from './orders/order-formatters'
@@ -100,19 +99,11 @@ function StaffOrdersContent() {
 
   return (
     <main className="orders-page">
-      <AppHeader />
-
       <div className="container orders-content">
         <div className="orders-title-row">
           <div>
             <h1>Tra cứu đơn hàng</h1>
-            <p className="orders-subtitle">
-              Tìm và xem thông tin đơn hàng.
-            </p>
-          </div>
-          <div className="orders-total" aria-live="polite">
-            <strong>{result?.totalElements?.toLocaleString('vi-VN') ?? '—'}</strong>
-            <span>đơn hàng</span>
+            <p className="orders-subtitle">Tìm kiếm và xử lý đơn hàng tại cửa hàng.</p>
           </div>
         </div>
 
@@ -228,7 +219,7 @@ export function StaffOrdersPage() {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
 
-  if (!['STAFF', 'MANAGER'].includes(user.role)) {
+  if (!['STAFF', 'ADMIN'].includes(user.role)) {
     return (
       <main className="orders-gate">
         <div className="alert alert-warning">

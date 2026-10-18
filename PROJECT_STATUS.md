@@ -64,7 +64,7 @@ Updated 2026-10-07. Read this before using planning documents.
   `develop`, including UC-05, UC-08, UC-09, UC-13 and the Orders read model.
 - Next: complete the combined frontend and disposable PostgreSQL verification, then submit
   `develop-thien` for review into `develop`.
-- Open: payment provider selection, Admin/MANAGER wording, BR collisions, iteration ownership, Manager bootstrap for
+- Open: payment provider selection, Admin/ADMIN wording, BR collisions, iteration ownership, Admin bootstrap for
   authenticated browser proof and RDS synchronization.
 
 ## Current task update (2026-10-06)
@@ -73,7 +73,7 @@ Updated 2026-10-07. Read this before using planning documents.
   inventory or ledger mutation. New SKUs start with available stock zero.
 - All `/api/v1/products/{id}` IDs are SKU IDs. Update/delete require productVersion and
   skuVersion and reject stale edits with 409; duplicate codes also return 409.
-- Added MANAGER authorization for product create/update/delete at URL and method-security levels.
+- Added ADMIN authorization for product create/update/delete at URL and method-security levels.
 - Removed timer/microtask workarounds; requests have cancellation and stale-response guards.
   Search remains submit-only, so typing sends no requests. Cart is disabled with an explicit
   unavailable message pending its owner's API; the temporary local cart was removed.
@@ -130,7 +130,7 @@ Pop-Location
 
 - Merged `origin/develop` through `92eb44c` into the UC-13 branch in an isolated worktree.
   Existing storefront, account and Orders UI changes from `develop` were retained.
-- UC-13 remains the canonical catalog write path at `/api/v1/manager/catalog/products`.
+- UC-13 remains the canonical catalog write path at `/api/v1/admin/catalog/products`.
   Legacy `/api/v1/products` writes remain retired with HTTP 410; public reads retain the
   product/SKU version fields added on `develop`.
 - Conflict resolution removed duplicated Orders styles from `main.css`; Orders continues to
@@ -145,7 +145,7 @@ Pop-Location
 - The HomeMart shell and visual system remain active. Product cards now navigate with canonical
   `productId` plus the selected `skuId`; product detail retains UC-09 multi-SKU behavior.
 - SPA forwarding covers UC-05, UC-13, UC-27 and UC-28 routes together with existing public and
-  Orders routes. Legacy catalog writes remain retired in favor of the manager catalog API.
+  Orders routes. Legacy catalog writes remain retired in favor of the admin catalog API.
 - Combined verification passed: frontend lint, all 37 React/client tests and production build;
   disposable PostgreSQL verification ran all 68 backend tests with zero failures and packaged
   the Spring Boot JAR.
@@ -162,7 +162,7 @@ npm run backend:verify:postgres
 The affected backend unit suite can be run without Docker:
 
 ```text
-.\backend\mvnw.cmd -f backend\pom.xml -Dtest=AccountProfileServiceTest,BootstrapManagerServiceTest,SalesOrderQueryServiceTest,PurchaseOrderServiceTest,SupplierServiceTest,SpaForwardControllerTest test
+.\backend\mvnw.cmd -f backend\pom.xml -Dtest=AccountProfileServiceTest,BootstrapAdminServiceTest,SalesOrderQueryServiceTest,PurchaseOrderServiceTest,SupplierServiceTest,SpaForwardControllerTest test
 ```
 
 The Orders service unit test also runs without Docker:

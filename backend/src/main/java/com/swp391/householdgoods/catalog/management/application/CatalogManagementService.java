@@ -107,7 +107,7 @@ public class CatalogManagementService {
         try {
             skus.insert(id, fields, actor, clock.instant());
         } catch (DuplicateKeyException conflict) {
-            // The database unique constraint remains authoritative when two managers race to use an identifier.
+            // The database unique constraint remains authoritative when two admins race to use an identifier.
             throw duplicate(conflict);
         }
     }

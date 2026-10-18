@@ -29,8 +29,13 @@ export function LoginPage() {
     setSubmitting(true)
 
     try {
-      await login(form.email, form.password)
-      navigate(location.state?.from || '/')
+      const currentUser = await login(form.email, form.password)
+      const defaultPath = currentUser.role === 'ADMIN'
+        ? '/admin/products'
+        : currentUser.role === 'STAFF'
+          ? '/staff/orders'
+          : '/'
+      navigate(location.state?.from || defaultPath)
     } catch (requestError) {
       setError(
         requestError.message

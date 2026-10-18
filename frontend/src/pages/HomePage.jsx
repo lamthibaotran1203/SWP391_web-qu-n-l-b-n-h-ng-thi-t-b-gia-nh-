@@ -1,30 +1,10 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
-import { getRoleLabel } from '../auth/role-labels'
 import { AppFooter, AppHeader } from '../components/AppShell'
 import { ConnectionStatus } from '../components/ConnectionStatus'
 
 export function HomePage() {
-  const { user, connection, logout, reload, updateFullName } = useAuth()
-  const [editingName, setEditingName] = useState(false)
-  const [fullName, setFullName] = useState('')
-  const [profileError, setProfileError] = useState('')
-  const [savingName, setSavingName] = useState(false)
-
-  async function saveName(event) {
-    event.preventDefault()
-    setProfileError('')
-    setSavingName(true)
-    try {
-      await updateFullName(fullName)
-      setEditingName(false)
-    } catch (error) {
-      setProfileError(error.message || 'Không thể cập nhật tên hiển thị.')
-    } finally {
-      setSavingName(false)
-    }
-  }
+  const { user, connection, reload } = useAuth()
 
   return (
     <main className="home-page">
@@ -45,87 +25,16 @@ export function HomePage() {
               <span>✓ Hỗ trợ minh bạch</span>
             </div>
 
-            {user.authenticated ? (
-              <div className="session-panel">
-                <div>
-                  <span className="label">Phiên đăng nhập</span>
-                  <strong>{user.fullName}</strong>
-                  <span>{user.email} · {getRoleLabel(user.role)}</span>
-                  {editingName ? (
-                    <form className="profile-name-form" onSubmit={saveName}>
-                      <label className="visually-hidden" htmlFor="profile-full-name">
-                        Tên hiển thị mới
-                      </label>
-                      <input
-                        autoFocus
-                        className="form-control form-control-sm"
-                        id="profile-full-name"
-                        maxLength={100}
-                        value={fullName}
-                        onChange={(event) => setFullName(event.target.value)}
-                        required
-                      />
-                      {profileError && <span className="profile-name-error" role="alert">{profileError}</span>}
-                      <div className="profile-name-actions">
-                        <button className="btn btn-warning btn-sm" type="submit" disabled={savingName}>
-                          {savingName ? 'Đang lưu…' : 'Lưu tên'}
-                        </button>
-                        <button
-                          className="btn btn-outline-light btn-sm"
-                          type="button"
-                          disabled={savingName}
-                          onClick={() => {
-                            setEditingName(false)
-                            setProfileError('')
-                          }}
-                        >
-                          Hủy
-                        </button>
-                      </div>
-                    </form>
-                  ) : user.role === 'CUSTOMER' ? (
-                    <Link className="btn btn-outline-light btn-sm align-self-start mt-2" to="/account/profile">Thông tin tài khoản</Link>
-                  ) : (
-                    <button
-                      className="btn btn-outline-light btn-sm align-self-start mt-2"
-                      type="button"
-                      onClick={() => {
-                        setFullName(user.fullName)
-                        setProfileError('')
-                        setEditingName(true)
-                      }}
-                    >
-                      Đổi tên hiển thị
-                    </button>
-                  )}
-                  {['STAFF', 'MANAGER'].includes(user.role) && (
-                    <Link className="btn btn-warning btn-sm mt-2" to="/staff/orders">
-                      Tra cứu đơn hàng
-                    </Link>
-                  )}
-                  {user.role === 'MANAGER' && (
-                    <>
-                      <Link className="btn btn-primary btn-sm mt-2 ms-2" to="/staff/suppliers">
-                        Quản lý nhà cung cấp
-                      </Link>
-                      <Link className="btn btn-success btn-sm mt-2 ms-2" to="/staff/purchase-orders/create">
-                        Lập đơn PO
-                      </Link>
-                    </>
-                  )}
-                </div>
-                {user.role === 'MANAGER' && <Link className="btn btn-outline-light" to="/staff/products">Quản lý sản phẩm</Link>}
-                <Link className="btn btn-outline-light" to="/account/password">Đổi mật khẩu</Link>
-                <button className="btn btn-outline-light" type="button" onClick={logout}>
-                  Đăng xuất
-                </button>
-              </div>
-            ) : (
-              <div className="hero-actions">
-                <Link className="btn btn-warning btn-lg" to="/products">Khám phá sản phẩm</Link>
-                <Link className="btn btn-outline-light btn-lg" to="/login">Đăng nhập hệ thống</Link>
-              </div>
-            )}
+            <div className="hero-actions">
+              <Link className="btn btn-warning btn-lg" to="/products">Khám phá sản phẩm</Link>
+              {user.authenticated && ['STAFF', 'ADMIN'].includes(user.role) ? (
+                <Link className="btn btn-outline-light btn-lg" to={user.role === 'ADMIN' ? '/admin/products' : '/staff/orders'}>
+                  Mở khu vực làm việc
+                </Link>
+              ) : !user.authenticated ? (
+                <Link className="btn btn-outline-light btn-lg" to="/login">Đăng nhập</Link>
+              ) : null}
+            </div>
           </div>
 
           <aside className="status-panel" aria-label="Trạng thái hệ thống">

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AppHeader } from '../components/AppShell'
 import {
   getActiveSuppliers,
   getAvailableSkus,
@@ -183,7 +182,7 @@ export function CreatePurchaseOrderPage() {
 
   if (loadingInitial) {
     return (
-      <main className="workspace-page"><AppHeader /><div className="container py-5 text-center">
+      <main className="workspace-page"><div className="container py-5 text-center">
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Đang tải...</span>
         </div>
@@ -194,12 +193,12 @@ export function CreatePurchaseOrderPage() {
 
   if (initialError) {
     return (
-      <main className="workspace-page"><AppHeader /><div className="container py-5">
+      <main className="workspace-page"><div className="container py-5">
         <div className="alert alert-danger" role="alert">
           <h4 className="alert-heading">Không thể khởi tạo đơn hàng</h4>
           <p>{initialError}</p>
           <hr />
-                <Link to="/staff/suppliers" className="btn btn-outline-danger btn-sm">
+                <Link to="/admin/suppliers" className="btn btn-outline-danger btn-sm">
             Quay lại quản lý nhà cung cấp
           </Link>
         </div>
@@ -209,18 +208,17 @@ export function CreatePurchaseOrderPage() {
 
   return (
     <main className="workspace-page">
-      <AppHeader />
       <div className="container purchasing-page">
       {/* Header */}
       <div className="purchasing-header">
         <div className="purchasing-title">
           <div className="mb-2">
-                <Link to="/staff/suppliers" className="text-decoration-none small text-muted">
+                <Link to="/admin/suppliers" className="text-decoration-none small text-muted">
               &larr; Quay lại danh sách nhà cung cấp
             </Link>
           </div>
-          <h1>Lập đơn mua hàng (Purchase Order)</h1>
-          <p>Tạo đơn đặt hàng PO gửi tới nhà cung cấp để chuẩn bị nhập kho (UC-28)</p>
+          <h1>Lập đơn mua hàng</h1>
+          <p>Tạo đơn đặt hàng gửi tới nhà cung cấp.</p>
         </div>
       </div>
 
@@ -259,7 +257,7 @@ export function CreatePurchaseOrderPage() {
             >
               Tạo thêm đơn PO khác
             </button>
-              <Link to="/staff/suppliers" className="btn btn-outline-secondary">
+              <Link to="/admin/suppliers" className="btn btn-outline-secondary">
               Về trang Quản lý nhà cung cấp
             </Link>
           </div>
@@ -486,7 +484,7 @@ export function CreatePurchaseOrderPage() {
                     Lưu nháp (Draft)
                   </button>
 
-            <Link to="/staff/suppliers" className="btn btn-link text-muted text-decoration-none text-center">
+            <Link to="/admin/suppliers" className="btn btn-link text-muted text-decoration-none text-center">
                     Hủy bỏ
                   </Link>
                 </div>

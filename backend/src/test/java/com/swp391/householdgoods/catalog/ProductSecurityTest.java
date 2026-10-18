@@ -54,9 +54,9 @@ class ProductSecurityTest {
         }
     }
 
-    @Test void managerStillNeedsCsrfAndLegacyWritesAreRetired() throws Exception {
-        mvc.perform(delete("/api/v1/products/123").with(user("manager").roles("MANAGER"))).andExpect(status().isForbidden());
+    @Test void adminStillNeedsCsrfAndLegacyWritesAreRetired() throws Exception {
+        mvc.perform(delete("/api/v1/products/123").with(user("admin").roles("ADMIN"))).andExpect(status().isForbidden());
         mvc.perform(delete("/api/v1/products/123").param("productVersion","0").param("skuVersion","0")
-                .with(user("manager").roles("MANAGER")).with(csrf())).andExpect(status().isGone());
+                .with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isGone());
     }
 }

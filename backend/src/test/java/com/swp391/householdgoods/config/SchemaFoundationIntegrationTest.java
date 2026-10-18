@@ -28,10 +28,24 @@ class SchemaFoundationIntegrationTest {
     @Test
     void existingIdentityIsTheOnlyAccountSourceAndAppliedMigrationsValidate() {
         assertThat(jdbc.queryForObject("select count(*) from app.flyway_schema_history "
-                + "where version in ('1','2','3','4','5','6','7') and success", Integer.class)).isEqualTo(7);
+                + "where version in ('1','2','3','4','5','6','7','9') and success", Integer.class)).isEqualTo(8);
         assertThat(jdbc.queryForObject("select count(*) from information_schema.tables "
                 + "where table_schema='app' and table_name in ('hm_user','hm_role','hm_userrole','hm_product')",
                 Integer.class)).isZero();
+    }
+
+    @Test
+    void adminRoleReplacesManagerRoleInTheDatabaseConstraint() {
+        long adminCount = jdbc.queryForObject(
+                "select count(*) from app.user_account where role='ADMIN'", Long.class);
+        jdbc.update("insert into app.user_account(email,full_name,role,status,created_at,updated_at) "
+                + "values (?,'Quản trị viên kiểm thử','ADMIN','ACTIVE',current_timestamp,current_timestamp)",
+                "admin-" + java.util.UUID.randomUUID() + "@example.invalid");
+        assertThat(jdbc.queryForObject(
+                "select count(*) from app.user_account where role='ADMIN'", Long.class)).isEqualTo(adminCount + 1);
+        rejects(() -> jdbc.update("insert into app.user_account(email,full_name,role,status,created_at,updated_at) "
+                + "values (?,'Quản lý cũ','MANAGER','ACTIVE',current_timestamp,current_timestamp)",
+                "manager-" + java.util.UUID.randomUUID() + "@example.invalid"));
     }
 
     @Test

@@ -1,6 +1,6 @@
 import { Link, Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../../auth/useAuth'
-import { AppHeader, WorkspaceHeader } from '../../../components/AppShell'
+import { WorkspaceHeader } from '../../../components/AppShell'
 import './management.css'
 
 export function CatalogWorkspace() {
@@ -13,23 +13,17 @@ export function CatalogWorkspace() {
     <button className="btn btn-outline-dark" onClick={reload}>Kết nối lại</button>
   </div>
   if (!user.authenticated) return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />
-  if (user.role !== 'MANAGER') return <div className="container py-4">
+  if (user.role !== 'ADMIN') return <div className="container py-4">
     <h1>Không có quyền quản lý sản phẩm</h1><Link to="/">Về trang chủ</Link>
   </div>
 
   return <div className="catalog-workspace">
-    <AppHeader />
     <main className="container catalog-workspace-content"><Outlet /></main>
   </div>
 }
 
-export function CatalogPageHeading({ title, children, detail = false }) {
+export function CatalogPageHeading({ title, children }) {
   return <>
-    <nav className="management-breadcrumb" aria-label="Đường dẫn">
-      <Link to="/">Trang chủ</Link><span aria-hidden="true">/</span>
-      {detail ? <><Link to="/staff/products">Quản lý sản phẩm</Link><span aria-hidden="true">/</span><span aria-current="page">{title}</span></>
-        : <span aria-current="page">Quản lý sản phẩm</span>}
-    </nav>
     <WorkspaceHeader title={title}>{children}</WorkspaceHeader>
   </>
 }

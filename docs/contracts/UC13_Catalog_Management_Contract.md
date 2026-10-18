@@ -7,7 +7,7 @@ deferred; personal review/learning files remain ignored under docs/database/.
 
 ## Scope and data
 
-RDS Admin catalogue actor maps to the existing MANAGER role; no new account role is introduced.
+RDS Admin catalogue actor maps to the existing ADMIN role; no new account role is introduced.
 CUSTOMER/STAFF cannot read or write management APIs. Same-origin session + CSRF protect writes.
 Product fields live in app.product; sale-unit fields and whole-VND prices in app.hm_sku.
 Category and brand management belong to their UC owners. This feature reads their existing entries.
@@ -21,7 +21,7 @@ SKU activation validates those parent publication fields even when the parent is
 public visibility still requires both product and SKU ACTIVE. Deactivating a product does not
 silently rewrite each SKU's status. Republishing restores visibility of its still-ACTIVE SKUs.
 
-An inactive product edit may retain its existing soft-deleted classification reference so a Manager
+An inactive product edit may retain its existing soft-deleted classification reference so a Admin
 can stop sale. Newly assigning a deleted reference and activating with one are rejected. Other owners
 must preserve their reference-deletion integration contracts; public queries hide deleted references.
 
@@ -46,18 +46,18 @@ It does not reserve stock or promise availability at checkout.
 ## APIs
 
 Success envelope is {data: ...}; errors use existing ApiProblem with code/detail/traceId.
-The frontend entry is `/manager/products`, with a MANAGER link in the shared header and on Home.
-The old `/manager/catalog` link redirects there. The read/list and write API contracts below
+The frontend entry is `/admin/products`, with a ADMIN link in the shared header and on Home.
+The old `/admin/catalog` link redirects there. The read/list and write API contracts below
 are unchanged by the screen split.
 
 | Screen | Frontend route |
 | --- | --- |
-| List/search/filter | `/manager/products` |
-| Create product + initial SKUs | `/manager/products/new` |
-| Product/SKU details | `/manager/products/:productId` |
-| Edit product | `/manager/products/:productId/edit` |
-| Add manual SKU | `/manager/products/:productId/skus/new` |
-| Edit owned SKU | `/manager/products/:productId/skus/:skuId/edit` |
+| List/search/filter | `/admin/products` |
+| Create product + initial SKUs | `/admin/products/new` |
+| Product/SKU details | `/admin/products/:productId` |
+| Edit product | `/admin/products/:productId/edit` |
+| Add manual SKU | `/admin/products/:productId/skus/new` |
+| Edit owned SKU | `/admin/products/:productId/skus/:skuId/edit` |
 
 Each form reads current details by URL before writing. Saving returns to detail and reads again;
 errors keep the draft. A 409 offers an explicit reload instead of retrying a stale write.
@@ -65,11 +65,11 @@ All client routes are forwarded by Spring to the React entry point for direct na
 The list API intentionally has no SKU prices or stock summary; those are shown on the detail page.
 
 This separation follows the user's 2026-10-12 transcription of oral lecturer feedback; it is
-screen refinement within UC-13, not a new UC or actor change. MANAGER authorization remains.
+screen refinement within UC-13, not a new UC or actor change. ADMIN authorization remains.
 HomeMart header/colour reuse and restrained styling are temporary for this slice. Formal RDS
 screen-flow updates remain deferred; private follow-up notes are in the ignored local folder.
 
-| Method/path under /api/v1/manager/catalog | Request | Result |
+| Method/path under /api/v1/admin/catalog | Request | Result |
 | --- | --- | --- |
 | GET /products?search=&status=&page=0&size=20 | Optional name search/status ACTIVE/INACTIVE; page >=0, size 1–100 | ManagementPage: items,page,size,totalElements. One item per product, skus=[]; includes unpublished products. |
 | GET /products/{productId} | None | ManagedProduct including all undeleted active/inactive SKUs. |
@@ -86,7 +86,7 @@ The service validates direct calls as well as HTTP DTO validation.
 
 ManagedProduct: productId, product fields, productVersion, skus.
 ManagedSku: skuId,productId,sku fields,skuVersion,availableQuantity,lowStock.
-Reads exclude is_deleted rows; inactive items remain reviewable by Managers.
+Reads exclude is_deleted rows; inactive items remain reviewable by Admins.
 
 ## Transactions and conflicts
 
@@ -98,13 +98,13 @@ Reads exclude is_deleted rows; inactive items remain reviewable by Managers.
   409 SKU_CODE_DUPLICATE or SKU_BARCODE_DUPLICATE without leaving an extra master/partial SKU list.
 - Invalid fields/references/publication input return 400; missing records/wrong parent return 404; session 401, permission/CSRF 403.
   Persistence unavailability returns a safe 503 CATALOG_SAVE_UNAVAILABLE; previous state is retained.
-- Already-invalid sessions are revoked before management checks, including after a role change; a demoted Manager cannot retain cached Manager permissions.
+- Already-invalid sessions are revoked before management checks, including after a role change; a demoted Admin cannot retain cached Admin permissions.
 
 ## Existing API integration
 
 Public GET /api/v1/catalog/** and the teammate GET /api/v1/products compatibility routes remain.
 On /api/v1/products/{id}, that compatibility ID denotes a sale-unit skuId, not a management productId.
-Old POST/PUT/DELETE /api/v1/products routes are retired: non-Managers are denied; Managers receive
+Old POST/PUT/DELETE /api/v1/products routes are retired: non-Admins are denied; Admins receive
 410 CATALOG_WRITE_MOVED and must use the management contract. The old ProductService/JPA legacy
 write model/mapper were removed because their only callers belonged to that retired path.
 Do not restore writes to legacy_* or let a public compatibility ID become a master product write ID.
@@ -119,7 +119,7 @@ npm run backend:verify:postgres
 ```
 
 CatalogManagementIntegrationTest proves normal multi-SKU create, inactive management reads,
-publication/reference/price/threshold/attribute guards, duplicate rollback, all non-manager roles,
+publication/reference/price/threshold/attribute guards, duplicate rollback, all non-admin roles,
 CSRF/anonymous/retired paths, stale versions, concurrent updates/duplicate creates, simulated database
 failure, own-parent SKU guards, deactivation retaining deleted references, demotion revocation,
 unchanged inventory/archives/order snapshots. Frontend tests cover money precision, duplicate manual
@@ -132,7 +132,7 @@ BR-08/37 whole final retail VND; BR-09 publication; BR-14 approved dynamic warni
 Hosted CI, team merge/deployment and formal RDS/SDS synchronization are not claimed by local verification.
 ## UI wording and demo evidence, 2026-10-06
 
-The Manager page labels the product master “Sản phẩm” and manually entered sale units
+The Admin page labels the product master “Sản phẩm” and manually entered sale units
 “Phân loại” (API/schema symbols remain SKU). “Có thể bán” displays availableQuantity,
 not physical stock: physical minus reserved. Zero displays “Hết hàng”; a positive quantity
 with lowStock=true displays “Sắp hết hàng”. Threshold editing still uses minStockThreshold.

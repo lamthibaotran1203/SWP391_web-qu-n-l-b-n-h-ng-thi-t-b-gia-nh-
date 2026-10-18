@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 
 import { AuthProvider } from '../auth/AuthProvider'
+import { OperationsLayout, RequireRole } from '../components/OperationsLayout'
 import { CatalogWorkspace } from '../features/catalog/management/CatalogWorkspace'
 import { ManagedProductListPage } from '../features/catalog/management/ManagedProductListPage'
 import { ManagedProductDetailPage } from '../features/catalog/management/ManagedProductDetailPage'
@@ -29,15 +30,6 @@ export function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/manager/catalog" element={<Navigate to="/staff/products" replace />} />
-          <Route path="/staff/products" element={<CatalogWorkspace />}>
-            <Route index element={<ManagedProductListPage />} />
-            <Route path="new" element={<ManagedProductCreatePage />} />
-            <Route path=":productId" element={<ManagedProductDetailPage />} />
-            <Route path=":productId/edit" element={<ManagedProductEditPage />} />
-            <Route path=":productId/skus/new" element={<ManagedSkuFormPage />} />
-            <Route path=":productId/skus/:skuId/edit" element={<ManagedSkuFormPage />} />
-          </Route>
           <Route path="/account/password" element={<ChangePasswordPage />} />
           <Route path="/account/profile" element={<PersonalProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -45,9 +37,24 @@ export function App() {
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/staff/orders" element={<StaffOrdersPage />} />
-          <Route path="/staff/suppliers" element={<SuppliersPage />} />
-          <Route path="/staff/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
+          <Route element={<OperationsLayout />}>
+            <Route path="/staff" element={<Navigate to="/staff/orders" replace />} />
+            <Route path="/staff/orders" element={<StaffOrdersPage />} />
+            <Route element={<RequireRole roles={['ADMIN']} />}>
+              <Route path="/admin" element={<Navigate to="/admin/products" replace />} />
+              <Route path="/admin/catalog" element={<Navigate to="/admin/products" replace />} />
+              <Route path="/admin/products" element={<CatalogWorkspace />}>
+                <Route index element={<ManagedProductListPage />} />
+                <Route path="new" element={<ManagedProductCreatePage />} />
+                <Route path=":productId" element={<ManagedProductDetailPage />} />
+                <Route path=":productId/edit" element={<ManagedProductEditPage />} />
+                <Route path=":productId/skus/new" element={<ManagedSkuFormPage />} />
+                <Route path=":productId/skus/:skuId/edit" element={<ManagedSkuFormPage />} />
+              </Route>
+              <Route path="/admin/suppliers" element={<SuppliersPage />} />
+              <Route path="/admin/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
+            </Route>
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

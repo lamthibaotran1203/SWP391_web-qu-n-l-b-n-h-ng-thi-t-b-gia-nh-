@@ -13,7 +13,7 @@ import java.time.Instant;
 
 /**
  * Thực thể đại diện cho tài khoản người dùng trong hệ thống
- * (Customer, Staff, Manager).
+ * (Customer, Staff, Admin).
  */
 @Entity
 @Table(name = "user_account", schema = "app")
@@ -79,7 +79,7 @@ public class UserAccount {
         this.updatedAt = createdAt;
     }
 
-    public static UserAccount bootstrapManager(
+    public static UserAccount bootstrapAdmin(
             String email,
             String passwordHash,
             String fullName,
@@ -89,7 +89,7 @@ public class UserAccount {
                 email,
                 passwordHash,
                 fullName,
-                AccountRole.MANAGER,
+                AccountRole.ADMIN,
                 AccountStatus.ACTIVE,
                 now,
                 now);
