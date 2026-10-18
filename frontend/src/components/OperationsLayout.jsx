@@ -6,6 +6,7 @@ import './operations-layout.css'
 
 const adminItems = [
   { to: '/admin/products', icon: 'products', label: 'Sản phẩm & SKU' },
+  { to: '/admin/categories', icon: 'categories', label: 'Danh mục sản phẩm' },
   { to: '/admin/brands', icon: 'brands', label: 'Thương hiệu' },
   { to: '/staff/orders', icon: 'orders', label: 'Đơn hàng bán' },
   { to: '/admin/suppliers', icon: 'suppliers', label: 'Nhà cung cấp' },
@@ -20,6 +21,7 @@ function MenuIcon({ name }) {
   const paths = {
     orders: <><path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" /></>,
     products: <><path d="m4 8 8-4 8 4-8 4z" /><path d="m4 8 8 4 8-4v8l-8 4-8-4z" /></>,
+    categories: <><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z" /></>,
     brands: <><path d="M4 5h10l6 6-9 9-7-7z" /><circle cx="9" cy="10" r="1" /></>,
     suppliers: <><path d="M3 20h18M5 20V9h6v11M13 20V4h6v16" /><path d="M7 12h2M15 8h2M15 12h2M15 16h2" /></>,
     purchase: <><path d="M6 3h12v18H6z" /><path d="M9 7h6M9 11h6M9 15h3" /></>,

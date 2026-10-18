@@ -23,6 +23,7 @@ import { ProductListPage } from '../pages/ProductListPage'
 import { StaffOrdersPage } from '../pages/StaffOrdersPage'
 import { SuppliersPage } from '../pages/SuppliersPage'
 import { BrandsPage } from '../pages/BrandsPage'
+import { CategoriesPage } from '../pages/CategoriesPage'
 import { CreatePurchaseOrderPage } from '../pages/CreatePurchaseOrderPage'
 
 export function App() {
@@ -52,6 +53,7 @@ export function App() {
                 <Route path=":productId/skus/new" element={<ManagedSkuFormPage />} />
                 <Route path=":productId/skus/:skuId/edit" element={<ManagedSkuFormPage />} />
               </Route>
+              <Route path="/admin/categories" element={<CategoriesPage />} />
               <Route path="/admin/brands" element={<BrandsPage />} />
               <Route path="/admin/suppliers" element={<SuppliersPage />} />
               <Route path="/admin/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
