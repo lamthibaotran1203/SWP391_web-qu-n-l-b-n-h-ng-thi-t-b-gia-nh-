@@ -28,7 +28,7 @@ class SchemaFoundationIntegrationTest {
     @Test
     void existingIdentityIsTheOnlyAccountSourceAndAppliedMigrationsValidate() {
         assertThat(jdbc.queryForObject("select count(*) from app.flyway_schema_history "
-                + "where version in ('1','2','3','4','5','6','7','9') and success", Integer.class)).isEqualTo(8);
+                + "where version in ('1','2','3','4','5','6','7','8','9','10') and success", Integer.class)).isEqualTo(10);
         assertThat(jdbc.queryForObject("select count(*) from information_schema.tables "
                 + "where table_schema='app' and table_name in ('hm_user','hm_role','hm_userrole','hm_product')",
                 Integer.class)).isZero();
@@ -46,6 +46,26 @@ class SchemaFoundationIntegrationTest {
         rejects(() -> jdbc.update("insert into app.user_account(email,password_hash,full_name,role,status,email_verified_at,created_at,updated_at) "
                 + "values (?,'{noop}test','Quản lý cũ','MANAGER','ACTIVE',current_timestamp,current_timestamp,current_timestamp)",
                 "manager-" + java.util.UUID.randomUUID() + "@example.invalid"));
+    }
+
+    @Test
+    void categoryCodesAndNamesAreCaseInsensitiveUniqueAndSelfParentIsRejected() {
+        String suffix = java.util.UUID.randomUUID().toString().substring(0, 8);
+        String code = "UC11-" + suffix;
+        String name = "Danh mục UC11 " + suffix;
+        long category = jdbc.queryForObject(
+                "insert into app.hm_category(code,name,created_at) values (?,?,current_timestamp) returning id",
+                Long.class, code, name);
+
+        rejects(() -> jdbc.update(
+                "insert into app.hm_category(code,name,created_at) values (?,?,current_timestamp)",
+                "  " + code.toLowerCase() + "  ", "Tên khác " + suffix));
+        rejects(() -> jdbc.update(
+                "insert into app.hm_category(code,name,created_at) values (?,?,current_timestamp)",
+                "OTHER-" + suffix, "  " + name.toUpperCase() + "  "));
+        rejects(() -> jdbc.update("update app.hm_category set parent_id=id where id=?", category));
+        rejects(() -> jdbc.update(
+                "insert into app.hm_category(code,name,created_at) values ('   ','Tên hợp lệ',current_timestamp)"));
     }
 
     @Test

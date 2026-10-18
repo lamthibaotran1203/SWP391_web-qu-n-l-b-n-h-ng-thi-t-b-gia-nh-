@@ -9,6 +9,7 @@ import com.swp391.householdgoods.catalog.brand.application.BrandDeactivatedExcep
 import com.swp391.householdgoods.catalog.brand.application.BrandDuplicateException;
 import com.swp391.householdgoods.catalog.brand.application.BrandHasActiveProductsException;
 import com.swp391.householdgoods.catalog.brand.application.BrandNotFoundException;
+import com.swp391.householdgoods.catalog.category.application.CategoryManagementException;
 import com.swp391.householdgoods.purchasing.application.SupplierDuplicateException;
 import com.swp391.householdgoods.purchasing.application.SupplierNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -190,6 +191,18 @@ public class ApiExceptionHandler {
         return problem(
                 HttpStatus.BAD_REQUEST,
                 "BRAND_DEACTIVATED",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(CategoryManagementException.class)
+    ResponseEntity<ApiProblem> handleCategoryManagement(
+            CategoryManagementException exception,
+            HttpServletRequest request) {
+        return problem(
+                exception.status(),
+                exception.code(),
                 exception.getMessage(),
                 Map.of(),
                 request);
