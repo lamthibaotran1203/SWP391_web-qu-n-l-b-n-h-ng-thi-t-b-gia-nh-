@@ -5,6 +5,10 @@ import com.swp391.householdgoods.common.web.TraceIdFilter;
 import com.swp391.householdgoods.orders.application.InvalidSalesOrderSearchException;
 import com.swp391.householdgoods.orders.application.SalesOrderNotFoundException;
 import com.swp391.householdgoods.orders.application.SalesOrderStatusConflictException;
+import com.swp391.householdgoods.catalog.brand.application.BrandDeactivatedException;
+import com.swp391.householdgoods.catalog.brand.application.BrandDuplicateException;
+import com.swp391.householdgoods.catalog.brand.application.BrandHasActiveProductsException;
+import com.swp391.householdgoods.catalog.brand.application.BrandNotFoundException;
 import com.swp391.householdgoods.purchasing.application.SupplierDuplicateException;
 import com.swp391.householdgoods.purchasing.application.SupplierNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -138,6 +142,54 @@ public class ApiExceptionHandler {
         return problem(
                 HttpStatus.CONFLICT,
                 "SUPPLIER_DUPLICATE",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(BrandNotFoundException.class)
+    ResponseEntity<ApiProblem> handleBrandNotFound(
+            BrandNotFoundException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.NOT_FOUND,
+                "BRAND_NOT_FOUND",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(BrandDuplicateException.class)
+    ResponseEntity<ApiProblem> handleBrandDuplicate(
+            BrandDuplicateException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.CONFLICT,
+                "BRAND_DUPLICATE",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(BrandHasActiveProductsException.class)
+    ResponseEntity<ApiProblem> handleBrandHasActiveProducts(
+            BrandHasActiveProductsException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.CONFLICT,
+                "BRAND_HAS_ACTIVE_PRODUCTS",
+                exception.getMessage(),
+                Map.of(),
+                request);
+    }
+
+    @ExceptionHandler(BrandDeactivatedException.class)
+    ResponseEntity<ApiProblem> handleBrandDeactivated(
+            BrandDeactivatedException exception,
+            HttpServletRequest request) {
+        return problem(
+                HttpStatus.BAD_REQUEST,
+                "BRAND_DEACTIVATED",
                 exception.getMessage(),
                 Map.of(),
                 request);

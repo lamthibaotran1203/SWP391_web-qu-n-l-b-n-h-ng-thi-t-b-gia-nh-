@@ -21,6 +21,7 @@ import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { ProductListPage } from '../pages/ProductListPage'
 import { StaffOrdersPage } from '../pages/StaffOrdersPage'
 import { SuppliersPage } from '../pages/SuppliersPage'
+import { BrandsPage } from '../pages/BrandsPage'
 import { CreatePurchaseOrderPage } from '../pages/CreatePurchaseOrderPage'
 
 export function App() {
@@ -46,7 +47,10 @@ export function App() {
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/staff/orders" element={<StaffOrdersPage />} />
+          <Route path="/manager/suppliers" element={<SuppliersPage />} />
           <Route path="/staff/suppliers" element={<SuppliersPage />} />
+          <Route path="/manager/brands" element={<BrandsPage />} />
+          <Route path="/manager/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
           <Route path="/staff/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

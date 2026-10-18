@@ -29,6 +29,7 @@ export function AppHeader({ variant = 'light' }) {
           <NavLink to="/" end>Trang chủ</NavLink>
           <NavLink to="/products">Sản phẩm</NavLink>
           {user.role === 'MANAGER' && <NavLink to="/staff/products">Quản lý sản phẩm</NavLink>}
+          {user.role === 'MANAGER' && <NavLink to="/manager/brands">Thương hiệu</NavLink>}
           {isEmployee && <NavLink to="/staff/orders">Đơn hàng</NavLink>}
           {user.role === 'MANAGER' && <NavLink to="/staff/suppliers">Nhà cung cấp</NavLink>}
         </nav>
