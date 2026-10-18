@@ -10,6 +10,7 @@ export function SkuFields({ value, onChange, prefix = 'sku' }) {
   }
   return <fieldset className="row g-3">
     <legend className="h5">Thông tin phân loại</legend>
+    <p className="text-secondary small">Giá bán là giá cuối cùng đã bao gồm VAT. Nhập số nguyên VND; hệ thống không cộng thuế thêm.</p>
     {fields.map(([name, label, type, maxLength]) => <div className="col-md-6" key={name}>
       <label htmlFor={`${prefix}-${name}`} className="form-label">{label}</label>
       <input id={`${prefix}-${name}`} name={name} className="form-control" value={value[name]} onChange={update}

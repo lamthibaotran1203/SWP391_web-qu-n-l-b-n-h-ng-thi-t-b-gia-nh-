@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { getProductDetail } from '../api/productApi'
 import { AppFooter, AppHeader } from '../components/AppShell'
 import { formatVnd } from '../features/catalog/api'
 import { useAuth } from '../auth/useAuth'
 
-// UC-10 supplies this callback when its real cart service is integrated.
-// It receives IDs/quantity only; prices and stock must be rechecked by UC-10.
+// Cart API receives IDs/quantity only and checks current prices and availability.
 export function ProductDetailPage({ onAddToCart }) {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
@@ -43,6 +42,7 @@ export function ProductDetailPage({ onAddToCart }) {
 
 function ProductDetailContent({ product, initialSku, onAddToCart }) {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const eligibleInitial = product.skus.find((sku) => String(sku.skuId) === initialSku)
   const [selectedId, setSelectedId] = useState(eligibleInitial?.skuId ?? (product.skus.length === 1 ? product.skus[0].skuId : ''))
   const [quantity, setQuantity] = useState('1')
@@ -72,7 +72,12 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
     setMessage('')
     try {
       await onAddToCart({ skuId: selected.skuId, quantity: amount })
+      setMessage('Đã thêm sản phẩm vào giỏ hàng.')
     } catch (error) {
+      if (error.status === 401) {
+        navigate('/login', { state: { from: `/products/${product.productId}?sku=${selected.skuId}` } })
+        return
+      }
       setMessage(error.message || 'Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.')
     } finally { setSubmitting(false) }
   }
@@ -128,7 +133,7 @@ function ProductDetailContent({ product, initialSku, onAddToCart }) {
           {!user.authenticated ? <p className="purchase-help"><Link to="/login" state={{ from: `/products/${product.productId}${selected ? `?sku=${selected.skuId}` : ''}` }}>Đăng nhập</Link> bằng tài khoản khách hàng để mua hàng.</p>
             : !customer ? <p className="purchase-help">Chức năng mua hàng dành cho tài khoản khách hàng.</p>
               : !onAddToCart && <p className="purchase-help">Giỏ hàng hiện chưa sẵn sàng. Vui lòng quay lại sau.</p>}
-          {message && <div className="alert alert-danger mt-3" role="alert">{message}</div>}
+          {message && <div className={`alert ${message === 'Đã thêm sản phẩm vào giỏ hàng.' ? 'alert-success' : 'alert-danger'} mt-3`} role="alert">{message} {message === 'Đã thêm sản phẩm vào giỏ hàng.' && <Link to="/cart">Xem giỏ hàng</Link>}</div>}
         </form>
       </div>
     </section>

@@ -5,8 +5,10 @@ import com.swp391.householdgoods.catalog.api.CatalogProductDetail;
 import com.swp391.householdgoods.catalog.api.CatalogSku;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -27,7 +29,7 @@ public class CatalogRepository {
             where p.status='ACTIVE' and not p.is_deleted
               and s.status='ACTIVE' and not s.is_deleted
               and not c.is_deleted and not b.is_deleted
-            """;
+            """ + " and c.id in " + PublicCategoryRepository.IDS;
     private static final String SELECT = """
             select s.id sku_id,p.product_id,p.name product_name,s.sku_code,s.sku_name,
               coalesce(nullif(btrim(s.image_url),''),p.image_url) image_url,
@@ -72,16 +74,26 @@ public class CatalogRepository {
         CatalogSku first = eligibleSkus.getFirst();
         return jdbc.queryForObject("select description,image_url from app.product where product_id=?",
                 (row, number) -> {
-                    var images = new java.util.LinkedHashSet<String>();
-                    String cover = row.getString("image_url");
-                    if (cover != null && !cover.isBlank()) images.add(cover.trim());
-                    for (CatalogSku sku : eligibleSkus) {
-                        if (sku.imageUrl() != null && !sku.imageUrl().isBlank()) images.add(sku.imageUrl().trim());
-                    }
+                    List<String> images = collectProductImages(row.getString("image_url"), eligibleSkus);
                     return new CatalogProductDetail(id, first.productName(), row.getString("description"),
                             first.categoryId(), first.categoryName(), first.brandId(), first.brandName(),
-                            List.copyOf(images), eligibleSkus);
+                            images, eligibleSkus);
                 }, id);
+    }
+
+    private List<String> collectProductImages(String cover, List<CatalogSku> skus) {
+        // Giữ ảnh bìa đứng trước, bỏ ảnh trống và không hiển thị ảnh trùng nhau.
+        Set<String> images = new LinkedHashSet<>();
+        if (cover != null && !cover.isBlank()) {
+            images.add(cover.trim());
+        }
+        for (CatalogSku sku : skus) {
+            String imageUrl = sku.imageUrl();
+            if (imageUrl != null && !imageUrl.isBlank()) {
+                images.add(imageUrl.trim());
+            }
+        }
+        return List.copyOf(images);
     }
 
     public List<CatalogReference> categories() {

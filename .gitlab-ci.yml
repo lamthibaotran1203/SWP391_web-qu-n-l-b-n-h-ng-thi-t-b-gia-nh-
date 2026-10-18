@@ -95,9 +95,11 @@ smoke-application:
       alias: postgres
   variables:
     SESSION_COOKIE_SECURE: "false"
-    BOOTSTRAP_MANAGER_EMAIL: manager.ci@example.invalid
-    BOOTSTRAP_MANAGER_PASSWORD: CiAuthTest123
-    BOOTSTRAP_MANAGER_FULL_NAME: Quản lý CI
+    APP_BASE_URL: http://localhost:8080
+    MANAGEMENT_HEALTH_MAIL_ENABLED: "false"
+    BOOTSTRAP_ADMIN_EMAIL: admin.ci@example.invalid
+    BOOTSTRAP_ADMIN_PASSWORD: CiAuthTest123
+    BOOTSTRAP_ADMIN_FULL_NAME: Quản trị CI
   before_script:
     - apt-get update -qq && apt-get install -y -qq curl
   script:
@@ -105,11 +107,12 @@ smoke-application:
     - APP_PID=$!
     - trap 'kill "$APP_PID" 2>/dev/null || true' EXIT
     - for attempt in $(seq 1 30); do curl -fsS http://localhost:8080/actuator/health && break; sleep 1; done
+    - curl -fsS http://localhost:8080/actuator/health
     - curl -fsS http://localhost:8080/ | grep 'Gia Dụng Việt'
     - CSRF_JSON=$(curl -fsS -c cookies.txt http://localhost:8080/api/v1/auth/csrf)
     - CSRF_TOKEN=$(printf '%s' "$CSRF_JSON" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
     - test -n "$CSRF_TOKEN"
-    - curl -fsS -b cookies.txt -c cookies.txt -H "X-XSRF-TOKEN:$CSRF_TOKEN" --data-urlencode "email=$BOOTSTRAP_MANAGER_EMAIL" --data-urlencode "password=$BOOTSTRAP_MANAGER_PASSWORD" http://localhost:8080/api/v1/auth/login | grep 'MANAGER'
+    - curl -fsS -b cookies.txt -c cookies.txt -H "X-XSRF-TOKEN:$CSRF_TOKEN" --data-urlencode "email=$BOOTSTRAP_ADMIN_EMAIL" --data-urlencode "password=$BOOTSTRAP_ADMIN_PASSWORD" http://localhost:8080/api/v1/auth/login | grep 'ADMIN'
     - curl -fsS -b cookies.txt http://localhost:8080/api/v1/auth/me | grep '"authenticated":true'
   after_script:
     - test "$CI_JOB_STATUS" = success || cat application.log

@@ -53,7 +53,8 @@ public class CatalogQueryService {
     }
 
     public CatalogSku sku(long id) {
-        return require(repository.bySku(id)).getFirst();
+        List<CatalogSku> skus = require(repository.bySku(id));
+        return skus.getFirst();
     }
 
     public List<CatalogSku> product(long id) {
@@ -61,8 +62,9 @@ public class CatalogQueryService {
     }
 
     public CatalogProductDetail productDetail(long id) {
-        // Same repeatable-read snapshot: public guards, eligible SKUs and metadata.
-        return repository.productDetail(id, require(repository.byProduct(id)));
+        // Chỉ đọc mô tả và ảnh sau khi xác nhận sản phẩm có SKU được bán công khai.
+        List<CatalogSku> eligibleSkus = require(repository.byProduct(id));
+        return repository.productDetail(id, eligibleSkus);
     }
 
     public List<CatalogReference> categories() {
@@ -82,7 +84,9 @@ public class CatalogQueryService {
     }
 
     private String normalize(String value, int maxLength) {
-        if (value == null || value.isBlank()) return null;
+        if (value == null || value.isBlank()) {
+            return null;
+        }
         String normalized = value.trim().replaceAll("\\s+", " ");
         if (normalized.length() > maxLength) {
             throw new CatalogException(HttpStatus.BAD_REQUEST, "CATALOG_FILTER_INVALID",
