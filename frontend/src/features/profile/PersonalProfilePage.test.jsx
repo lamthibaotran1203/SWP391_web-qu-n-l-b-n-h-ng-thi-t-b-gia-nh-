@@ -32,7 +32,7 @@ it('redirects guests without requesting profile data', () => {
   expect(getPersonalProfile).not.toHaveBeenCalled()
 })
 it('keeps the Customer profile page inaccessible to other roles', () => {
-  useAuth.mockReturnValue({ user: { authenticated: true, role: 'MANAGER' }, connection: { status: 'connected' } })
+  useAuth.mockReturnValue({ user: { authenticated: true, role: 'ADMIN' }, connection: { status: 'connected' } })
   show()
   expect(screen.getByRole('heading', { name: 'Trang hồ sơ dành cho khách hàng' })).toBeInTheDocument()
   expect(getPersonalProfile).not.toHaveBeenCalled()

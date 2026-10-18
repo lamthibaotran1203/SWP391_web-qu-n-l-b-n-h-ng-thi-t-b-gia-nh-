@@ -1,7 +1,7 @@
 const roleLabels = {
   CUSTOMER: 'Khách hàng',
   STAFF: 'Nhân viên',
-  MANAGER: 'Quản lý',
+  ADMIN: 'Quản trị viên',
 }
 
 export function getRoleLabel(role) {

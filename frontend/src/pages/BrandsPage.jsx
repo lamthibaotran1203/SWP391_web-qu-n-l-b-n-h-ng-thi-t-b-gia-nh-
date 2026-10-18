@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, Navigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
-import { AppHeader } from '../components/AppShell'
 import {
   getBrands,
   getBrandById,
@@ -106,11 +105,11 @@ export function BrandsPage() {
   if (!user.authenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />
   }
-  if (user.role !== 'MANAGER') {
+  if (user.role !== 'ADMIN') {
     return (
       <div className="container py-4">
         <h1>Không có quyền quản lý thương hiệu</h1>
-        <p>Chỉ Quản lý (MANAGER) mới có quyền truy cập trang này.</p>
+        <p>Chỉ Quản trị viên (ADMIN) mới có quyền truy cập trang này.</p>
         <Link to="/" className="btn btn-primary">Về trang chủ</Link>
       </div>
     )
@@ -297,16 +296,7 @@ export function BrandsPage() {
 
   return (
     <main className="workspace-page">
-      <AppHeader />
       <div className="container brands-page">
-        {/* Breadcrumb */}
-        <nav aria-label="breadcrumb" className="mb-3">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item"><Link to="/">Trang chủ</Link></li>
-            <li className="breadcrumb-item active" aria-current="page">Quản lý thương hiệu</li>
-          </ol>
-        </nav>
-
         {/* Header */}
         <div className="brands-header">
           <div className="brands-title">
@@ -319,7 +309,7 @@ export function BrandsPage() {
               className="btn btn-primary d-flex align-items-center gap-2"
               onClick={openCreateModal}
             >
-              <span className="fs-5">+</span> Thêm thương hiệu
+              Thêm thương hiệu
             </button>
           </div>
         </div>

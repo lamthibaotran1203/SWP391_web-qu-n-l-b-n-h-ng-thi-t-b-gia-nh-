@@ -95,8 +95,6 @@ describe('StaffOrdersPage', () => {
     expect(await screen.findByRole('button', { name: 'Xem chi tiết đơn HG-2026-0041' }))
       .toBeInTheDocument()
     expect(screen.getByText('Nguyễn Minh Anh')).toBeInTheDocument()
-    expect(screen.getAllByText('Nhân viên')).toHaveLength(2)
-
     await user.selectOptions(screen.getByLabelText('Kênh bán'), 'COUNTER')
     await user.selectOptions(screen.getByLabelText('Trạng thái đơn'), 'PROCESSING')
     await user.click(screen.getByRole('button', { name: 'Tìm đơn hàng' }))

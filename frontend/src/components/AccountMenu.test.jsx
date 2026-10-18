@@ -21,10 +21,21 @@ it('places Customer profile and password links inside the avatar disclosure, out
   expect(menu).not.toHaveAttribute('open')
 })
 it('keeps password available to employees without exposing the Customer profile link', () => {
-  const menu = show('MANAGER')
+  const menu = show('ADMIN')
   fireEvent.click(screen.getByLabelText('Tài khoản của bạn'))
   expect(within(menu).queryByText('Thông tin tài khoản')).not.toBeInTheDocument()
   expect(screen.getByRole('link', { name: 'Đổi mật khẩu' })).toHaveAttribute('href', '/account/password')
+})
+it('keeps the public navigation limited to Home and Products for employees', () => {
+  show('ADMIN')
+  const navigation = within(screen.getByRole('navigation', { name: 'Điều hướng chính' }))
+
+  expect(navigation.getAllByRole('link')).toHaveLength(2)
+  expect(navigation.getByRole('link', { name: 'Trang chủ' })).toHaveAttribute('href', '/')
+  expect(navigation.getByRole('link', { name: 'Sản phẩm' })).toHaveAttribute('href', '/products')
+  expect(navigation.queryByText('Quản lý sản phẩm')).not.toBeInTheDocument()
+  expect(navigation.queryByText('Đơn hàng')).not.toBeInTheDocument()
+  expect(navigation.queryByText('Nhà cung cấp')).not.toBeInTheDocument()
 })
 it('closes on Escape with focus restored and on an outside pointer press', () => {
   const menu = show()

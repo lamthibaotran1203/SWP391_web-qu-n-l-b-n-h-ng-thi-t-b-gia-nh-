@@ -10,7 +10,7 @@ export function ManagedProductDetailPage() {
   const { state } = useLocation()
   const { product, error, loading, reload } = useManagedProduct(productId)
   const references = useCatalogReferences()
-  const path = `/staff/products/${productId}`
+  const path = `/admin/products/${productId}`
 
   return <>
     <CatalogPageHeading title="Chi tiết sản phẩm" detail>
@@ -57,7 +57,7 @@ export function ManagedProductDetailPage() {
         </table></div>
         {!product.skus.length && <p className="management-empty">Sản phẩm chưa có phân loại.</p>}
       </section>
-      <div className="management-bottom-actions"><Link to="/staff/products">Về danh sách sản phẩm</Link>
+      <div className="management-bottom-actions"><Link to="/admin/products">Về danh sách sản phẩm</Link>
         <button className="btn btn-outline-secondary btn-sm" onClick={reload}>Làm mới thông tin</button></div>
     </>}
   </>

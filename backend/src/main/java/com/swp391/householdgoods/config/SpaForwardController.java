@@ -15,16 +15,19 @@ public class SpaForwardController {
             "/verify-email",
             "/products",
             "/products/{id}",
+            "/staff",
             "/staff/orders",
-            "/manager/catalog",
-            "/staff/products",
-            "/staff/products/new",
-            "/staff/products/{productId}",
-            "/staff/products/{productId}/edit",
-            "/staff/products/{productId}/skus/new",
-            "/staff/products/{productId}/skus/{skuId}/edit",
-            "/staff/suppliers",
-            "/staff/purchase-orders/create"
+            "/admin",
+            "/admin/catalog",
+            "/admin/products",
+            "/admin/products/new",
+            "/admin/products/{productId}",
+            "/admin/products/{productId}/edit",
+            "/admin/products/{productId}/skus/new",
+            "/admin/products/{productId}/skus/{skuId}/edit",
+            "/admin/brands",
+            "/admin/suppliers",
+            "/admin/purchase-orders/create"
     })
     String forwardKnownClientRoutes() {
         return "forward:/index.html";

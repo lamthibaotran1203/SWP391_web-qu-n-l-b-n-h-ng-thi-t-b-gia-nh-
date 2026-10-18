@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AppHeader } from '../components/AppShell'
 import {
   getSuppliers,
   createSupplier,
@@ -201,27 +200,26 @@ export function SuppliersPage() {
 
   return (
     <main className="workspace-page">
-      <AppHeader />
       <div className="container purchasing-page">
       {/* Header */}
       <div className="purchasing-header">
         <div className="purchasing-title">
           <h1>Quản lý nhà cung cấp</h1>
-          <p>Đăng ký, tra cứu và duy trì thông tin nhà cung cấp thiết bị gia dụng</p>
+          <p>Tra cứu và cập nhật thông tin nhà cung cấp.</p>
         </div>
         <div className="d-flex gap-2">
           <Link
-              to="/staff/purchase-orders/create"
+              to="/admin/purchase-orders/create"
             className="btn btn-success d-flex align-items-center gap-2"
           >
-            <span>📋</span> Lập đơn mua hàng (PO)
+            Lập đơn mua hàng
           </Link>
           <button
             type="button"
             className="btn btn-primary d-flex align-items-center gap-2"
             onClick={openCreateModal}
           >
-            <span className="fs-5">+</span> Thêm nhà cung cấp
+            Thêm nhà cung cấp
           </button>
         </div>
       </div>

@@ -48,7 +48,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Import({SecurityConfig.class, SecurityResponseHandlers.class, ApiProblemWriter.class, ApiExceptionHandler.class})
 class BrandManagementIntegrationTest {
 
-    private static final String API = "/api/v1/manager/brands";
+    private static final String API = "/api/v1/admin/brands";
 
     @Autowired
     private MockMvc mvc;
@@ -81,7 +81,7 @@ class BrandManagementIntegrationTest {
         );
     }
 
-    // 1. MANAGER can create a brand
+    // 1. ADMIN can create a brand
     @Test
     void managerCanCreateBrand() throws Exception {
         CreateBrandRequest request = new CreateBrandRequest("Sunhouse", "Vietnam", "Gia dung", null);
@@ -90,7 +90,7 @@ class BrandManagementIntegrationTest {
         when(brandService.createBrand(any(CreateBrandRequest.class), eq("manager"))).thenReturn(response);
 
         mvc.perform(post(API)
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
@@ -106,7 +106,7 @@ class BrandManagementIntegrationTest {
         CreateBrandRequest blankRequest = new CreateBrandRequest("   ", "Vietnam", null, null);
 
         mvc.perform(post(API)
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(blankRequest)))
@@ -124,7 +124,7 @@ class BrandManagementIntegrationTest {
                 .thenThrow(new BrandDuplicateException("Tên thương hiệu đã tồn tại: sunhouse"));
 
         mvc.perform(post(API)
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
@@ -133,7 +133,7 @@ class BrandManagementIntegrationTest {
                 .andExpect(jsonPath("$.detail").value("Tên thương hiệu đã tồn tại: sunhouse"));
     }
 
-    // 5. MANAGER can list all brands
+    // 5. ADMIN can list all brands
     // 6. Search by name and country
     // 7. Filter active/inactive
     // 8. Pagination works
@@ -151,7 +151,7 @@ class BrandManagementIntegrationTest {
                         .param("status", "ACTIVE")
                         .param("page", "0")
                         .param("size", "10")
-                        .with(user("manager").roles("MANAGER")))
+                        .with(user("manager").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.content.length()").value(1))
                 .andExpect(jsonPath("$.data.content[0].name").value("Sunhouse"))
@@ -162,7 +162,7 @@ class BrandManagementIntegrationTest {
     void invalidPaginationSizeIsRejected() throws Exception {
         mvc.perform(get(API)
                         .param("size", "150")
-                        .with(user("manager").roles("MANAGER")))
+                        .with(user("manager").roles("ADMIN")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"));
     }
@@ -173,11 +173,11 @@ class BrandManagementIntegrationTest {
         when(brandService.getBrandById(1L)).thenReturn(sampleBrand(1L, "Sunhouse", false));
         when(brandService.getBrandById(99L)).thenThrow(new BrandNotFoundException("Không tìm thấy thương hiệu với ID: 99"));
 
-        mvc.perform(get(API + "/1").with(user("manager").roles("MANAGER")))
+        mvc.perform(get(API + "/1").with(user("manager").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.name").value("Sunhouse"));
 
-        mvc.perform(get(API + "/99").with(user("manager").roles("MANAGER")))
+        mvc.perform(get(API + "/99").with(user("manager").roles("ADMIN")))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("BRAND_NOT_FOUND"));
     }
@@ -192,7 +192,7 @@ class BrandManagementIntegrationTest {
                 .thenReturn(updated);
 
         mvc.perform(put(API + "/1")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
@@ -209,7 +209,7 @@ class BrandManagementIntegrationTest {
                 .thenThrow(new BrandDuplicateException("Tên thương hiệu đã tồn tại: Philips"));
 
         mvc.perform(put(API + "/1")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
@@ -226,7 +226,7 @@ class BrandManagementIntegrationTest {
                 .thenThrow(new BrandDeactivatedException("Không thể cập nhật thương hiệu đã bị vô hiệu hóa."));
 
         mvc.perform(put(API + "/1")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
@@ -243,14 +243,14 @@ class BrandManagementIntegrationTest {
         when(brandService.deactivateBrand(1L, "manager")).thenReturn(deactivated);
 
         mvc.perform(delete(API + "/1")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.isDeleted").value(true))
                 .andExpect(jsonPath("$.data.status").value("INACTIVE"));
 
         mvc.perform(patch(API + "/1/status")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.isDeleted").value(true));
@@ -263,7 +263,7 @@ class BrandManagementIntegrationTest {
                 .thenThrow(new BrandHasActiveProductsException("Không thể vô hiệu hóa thương hiệu vì vẫn còn 5 sản phẩm đang hoạt động."));
 
         mvc.perform(delete(API + "/1")
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .with(csrf()))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.code").value("BRAND_HAS_ACTIVE_PRODUCTS"))
@@ -305,7 +305,7 @@ class BrandManagementIntegrationTest {
         CreateBrandRequest request = new CreateBrandRequest("Test", null, null, null);
 
         mvc.perform(post(API)
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("manager").roles("ADMIN"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.writeValueAsString(request)))
                 .andExpect(status().isForbidden());

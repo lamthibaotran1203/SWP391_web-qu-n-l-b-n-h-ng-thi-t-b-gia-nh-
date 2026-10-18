@@ -78,7 +78,8 @@ app:
     from-email: ${MAIL_FROM_EMAIL:}
     from-name: ${MAIL_FROM_NAME:Gia Dụng Việt}
 
-  bootstrap-manager:
-    email: ${BOOTSTRAP_MANAGER_EMAIL:}
-    password: ${BOOTSTRAP_MANAGER_PASSWORD:}
-    full-name: ${BOOTSTRAP_MANAGER_FULL_NAME:}
+  bootstrap-admin:
+    email: ${BOOTSTRAP_ADMIN_EMAIL:}
+    password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+    full-name: ${BOOTSTRAP_ADMIN_FULL_NAME:}
+    update-existing: ${BOOTSTRAP_ADMIN_UPDATE_EXISTING:false}

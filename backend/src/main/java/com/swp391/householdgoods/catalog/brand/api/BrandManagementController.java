@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/manager/brands")
+@RequestMapping("/api/v1/admin/brands")
 @Validated
 public class BrandManagementController {
 
@@ -92,7 +92,7 @@ public class BrandManagementController {
     ) {
         String actor = principal != null
                 ? principal.getName()
-                : "MANAGER";
+                : "ADMIN";
 
         return new ApiEnvelope<>(
                 brandService.createBrand(request, actor)
@@ -113,7 +113,7 @@ public class BrandManagementController {
     ) {
         String actor = principal != null
                 ? principal.getName()
-                : "MANAGER";
+                : "ADMIN";
 
         return new ApiEnvelope<>(
                 brandService.updateBrand(id, request, actor)
@@ -133,7 +133,7 @@ public class BrandManagementController {
     ) {
         String actor = principal != null
                 ? principal.getName()
-                : "MANAGER";
+                : "ADMIN";
 
         return new ApiEnvelope<>(
                 brandService.deactivateBrand(id, actor)
@@ -153,7 +153,7 @@ public class BrandManagementController {
     ) {
         String actor = principal != null
                 ? principal.getName()
-                : "MANAGER";
+                : "ADMIN";
 
         return new ApiEnvelope<>(
                 brandService.deactivateBrand(id, actor)
@@ -173,7 +173,7 @@ public class BrandManagementController {
     ) {
         String actor = principal != null
                 ? principal.getName()
-                : "MANAGER";
+                : "ADMIN";
 
         return new ApiEnvelope<>(
                 brandService.reactivateBrand(id, actor)

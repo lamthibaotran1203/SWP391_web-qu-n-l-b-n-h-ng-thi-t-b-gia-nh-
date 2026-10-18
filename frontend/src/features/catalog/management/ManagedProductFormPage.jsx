@@ -10,7 +10,7 @@ export function ManagedProductCreatePage() {
 
   async function save(fields, skus) {
     const product = await createManagedProduct(fields, skus)
-      navigate(`/staff/products/${product.productId}`, { replace: true, state: { notice: 'Đã thêm sản phẩm.' } })
+      navigate(`/admin/products/${product.productId}`, { replace: true, state: { notice: 'Đã thêm sản phẩm.' } })
   }
 
   return <>
@@ -18,9 +18,9 @@ export function ManagedProductCreatePage() {
     {references.error && <CatalogLoadError error={references.error} onRetry={references.reload} />}
     {references.loading && <p role="status">Đang tải danh mục và thương hiệu…</p>}
     {!references.loading && !references.error && <div className="management-form">
-    <ProductEditor {...references} onSave={save} onCancel={() => navigate('/staff/products')} />
+    <ProductEditor {...references} onSave={save} onCancel={() => navigate('/admin/products')} />
     </div>}
-      {(references.error || references.loading) && <Link to="/staff/products">Về danh sách sản phẩm</Link>}
+      {(references.error || references.loading) && <Link to="/admin/products">Về danh sách sản phẩm</Link>}
   </>
 }
 
@@ -29,7 +29,7 @@ export function ManagedProductEditPage() {
   const navigate = useNavigate()
   const { product, error, loading, reload } = useManagedProduct(productId)
   const references = useCatalogReferences()
-  const path = `/staff/products/${productId}`
+  const path = `/admin/products/${productId}`
 
   async function save(fields) {
     await editManagedProduct(product.productId, product.productVersion, fields)

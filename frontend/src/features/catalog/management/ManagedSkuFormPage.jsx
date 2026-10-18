@@ -10,7 +10,7 @@ export function ManagedSkuFormPage() {
   const { product, error, loading, reload } = useManagedProduct(productId)
   const sku = product?.skus.find((item) => String(item.skuId) === skuId)
   const missingSku = product && skuId && !sku
-  const path = `/staff/products/${productId}`
+  const path = `/admin/products/${productId}`
 
   async function save(fields) {
     if (skuId) await editManagedSku(product.productId, sku.skuId, product.productVersion, sku.skuVersion, fields)

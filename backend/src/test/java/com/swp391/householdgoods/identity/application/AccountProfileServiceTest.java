@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class AccountProfileServiceTest {
 
-    private static final String EMAIL = "manager@example.invalid";
+    private static final String EMAIL = "admin@example.invalid";
     private static final Instant NOW = Instant.parse("2026-10-06T07:00:00Z");
 
     @Mock
@@ -34,14 +34,14 @@ class AccountProfileServiceTest {
 
     @Test
     void updatesOnlyTheDisplayNameForTheAuthenticatedAccount() {
-        UserAccount account = UserAccount.bootstrapManager(
+        UserAccount account = UserAccount.bootstrapAdmin(
                 EMAIL,
                 "existing-password-hash",
                 "Old Name",
                 NOW.minusSeconds(3600));
         when(repository.findByEmailIgnoreCase(EMAIL)).thenReturn(Optional.of(account));
 
-        AuthenticatedAccount result = service.updateFullName("  MANAGER@example.invalid ", "  Bảo   Trân ");
+        AuthenticatedAccount result = service.updateFullName("  ADMIN@example.invalid ", "  Bảo   Trân ");
 
         assertThat(result.email()).isEqualTo(EMAIL);
         assertThat(result.fullName()).isEqualTo("Bảo Trân");

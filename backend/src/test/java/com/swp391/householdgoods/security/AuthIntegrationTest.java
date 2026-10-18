@@ -29,9 +29,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest(properties = {
-        "app.bootstrap-manager.email=manager.auth-test@example.invalid",
-        "app.bootstrap-manager.password=AuthTest123",
-        "app.bootstrap-manager.full-name=Quản lý kiểm thử"
+        "app.bootstrap-admin.email=admin.auth-test@example.invalid",
+        "app.bootstrap-admin.password=AuthTest123",
+        "app.bootstrap-admin.full-name=Quản lý kiểm thử"
 })
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -39,7 +39,7 @@ import org.springframework.test.web.servlet.MvcResult;
 class AuthIntegrationTest {
 
     private static final String TEST_EMAIL =
-            "manager.auth-test@example.invalid";
+            "admin.auth-test@example.invalid";
 
     private static final String TEST_PASSWORD =
             "AuthTest123";
@@ -66,17 +66,17 @@ class AuthIntegrationTest {
     void loginSessionCsrfLogoutFlowUsesPostgresqlAccount()
             throws Exception {
 
-        UserAccount persistedManager =
+        UserAccount persistedAdmin =
                 repository.findByEmailIgnoreCase(TEST_EMAIL)
                         .orElseThrow();
 
-        assertThat(persistedManager.getRole())
-                .isEqualTo(AccountRole.MANAGER);
+        assertThat(persistedAdmin.getRole())
+                .isEqualTo(AccountRole.ADMIN);
 
-        assertThat(persistedManager.getStatus())
+        assertThat(persistedAdmin.getStatus())
                 .isEqualTo(AccountStatus.ACTIVE);
 
-        assertThat(persistedManager.getPasswordHash())
+        assertThat(persistedAdmin.getPasswordHash())
                 .startsWith("$2")
                 .doesNotContain(TEST_PASSWORD);
 
@@ -121,7 +121,7 @@ class AuthIntegrationTest {
                                         .value(true))
                         .andExpect(
                                 jsonPath("$.data.role")
-                                        .value("MANAGER"))
+                                        .value("ADMIN"))
                         .andReturn();
 
         MockHttpSession authenticatedSession =

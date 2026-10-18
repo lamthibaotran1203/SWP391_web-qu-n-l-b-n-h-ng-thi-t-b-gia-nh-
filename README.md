@@ -137,20 +137,20 @@ Mở [http://localhost:5173](http://localhost:5173).
 
 Không commit file `.env`. Khi deploy bằng HTTPS, đổi `SESSION_COOKIE_SECURE` thành `true`.
 
-## Manager đầu tiên
+## Admin đầu tiên
 
-Nếu database chưa có tài khoản Manager, thêm vào `.env` trước khi chạy backend:
+Nếu database chưa có tài khoản Admin, thêm vào `.env` trước khi chạy backend:
 
 ```dotenv
-BOOTSTRAP_MANAGER_EMAIL=manager@example.com
-BOOTSTRAP_MANAGER_PASSWORD=<password>
-BOOTSTRAP_MANAGER_FULL_NAME=Quản lý cửa hàng
-BOOTSTRAP_MANAGER_UPDATE_EXISTING=false
+BOOTSTRAP_ADMIN_EMAIL=admin@example.com
+BOOTSTRAP_ADMIN_PASSWORD=<password>
+BOOTSTRAP_ADMIN_FULL_NAME=Quản trị viên cửa hàng
+BOOTSTRAP_ADMIN_UPDATE_EXISTING=false
 ```
 
 Tài khoản chỉ được tạo khi chưa tồn tại. Chạy lại backend không đổi password cũ. Nếu cần đồng
-bộ tên hiển thị của Manager đã tồn tại với `BOOTSTRAP_MANAGER_FULL_NAME`, chỉ bật
-`BOOTSTRAP_MANAGER_UPDATE_EXISTING=true` khi chủ động muốn cập nhật. Mặc định là `false`; tùy
+bộ tên hiển thị của Admin đã tồn tại với `BOOTSTRAP_ADMIN_FULL_NAME`, chỉ bật
+`BOOTSTRAP_ADMIN_UPDATE_EXISTING=true` khi chủ động muốn cập nhật. Mặc định là `false`; tùy
 chọn này chỉ cập nhật tên, không thay đổi mật khẩu hoặc thông tin đăng nhập khác.
 
 Người dùng đã đăng nhập cũng có thể đổi tên hiển thị trực tiếp trên trang chủ bằng nút
@@ -183,7 +183,7 @@ npm run db:down           # tắt PostgreSQL local
 
 ## Tra cứu đơn hàng (UC-18)
 
-Tài khoản `STAFF` và `MANAGER` có thể mở mục **Tra cứu đơn hàng** trên trang chủ hoặc vào
+Tài khoản `STAFF` và `ADMIN` có thể mở mục **Tra cứu đơn hàng** trên trang chủ hoặc vào
 `/staff/orders`. Màn hình hỗ trợ tìm theo mã đơn/thông tin khách hàng, lọc theo kênh, trạng
 thái đơn, trạng thái thanh toán và ngày đặt; chọn mã đơn để xem thông tin khách hàng, sản phẩm
 và tổng tiền. API chỉ cho phép nhân viên/quản lý truy cập:
@@ -285,7 +285,7 @@ still need synchronization; this implementation does not claim the other owned U
 Open the avatar menu → **Đổi mật khẩu**, or `/account/password`, while logged in. The Bootstrap
 form calls `POST /api/v1/auth/password` with JSON `currentPassword`, `newPassword`,
 `confirmation`, the server session cookie and CSRF header. No target account ID is accepted.
-CUSTOMER, STAFF and MANAGER can change only their own active account.
+CUSTOMER, STAFF and ADMIN can change only their own active account.
 
 The service verifies current password, requires matching confirmation and a different new
 password, then stores a salted BCrypt hash atomically. Policy: 8–64 Unicode code points AND
@@ -331,38 +331,38 @@ teammate's search/view implementation.
 
 ## UC-13 — Catalogue management
 
-MANAGER opens **Quản lý sản phẩm** (`/manager/products`). Each task has its own page:
+ADMIN opens **Quản lý sản phẩm** (`/admin/products`). Each task has its own page:
 
 | Page | Client route |
 | --- | --- |
-| Search/filter the management list | `/manager/products` |
-| Create a product with initial manual SKUs | `/manager/products/new` |
-| Read product details, SKU prices and stock warnings | `/manager/products/:productId` |
-| Edit product metadata/status | `/manager/products/:productId/edit` |
-| Add one manual SKU | `/manager/products/:productId/skus/new` |
-| Edit one owned SKU/price/threshold/status | `/manager/products/:productId/skus/:skuId/edit` |
+| Search/filter the management list | `/admin/products` |
+| Create a product with initial manual SKUs | `/admin/products/new` |
+| Read product details, SKU prices and stock warnings | `/admin/products/:productId` |
+| Edit product metadata/status | `/admin/products/:productId/edit` |
+| Add one manual SKU | `/admin/products/:productId/skus/new` |
+| Edit one owned SKU/price/threshold/status | `/admin/products/:productId/skus/:skuId/edit` |
 
-The old `/manager/catalog` link redirects to the list. Direct links and refresh work in the
+The old `/admin/catalog` link redirects to the list. Direct links and refresh work in the
 packaged Spring application. No edit forms appear below the management table. Saving returns
 to freshly loaded details; failed saves retain entered values. A stale-version error offers
 **Làm mới dữ liệu**, which replaces the draft with current data before another save.
 Deactivation requires the existing confirmation checkbox. Stock warnings recalculate on detail
-reads/refresh. The actor remains MANAGER (RDS Admin mapping); lecturer feedback about separate
+reads/refresh. The actor remains ADMIN (RDS Admin mapping); lecturer feedback about separate
 screens does not grant STAFF access. This scoped presentation is provisional, not a team-wide
 design decision. Public `/products` and `/products/:id` remain owned by their UC implementer.
 
 Read [management APIs, rules and traceability](docs/contracts/UC13_Catalog_Management_Contract.md)
-before integrating. Writes use `/api/v1/manager/catalog/products`, master productId and owned skuId,
+before integrating. Writes use `/api/v1/admin/catalog/products`, master productId and owned skuId,
 plus returned productVersion/skuVersion. Product+initial SKUs save atomically; code/barcode conflicts
 or database failure leave no partial creation. Existing app.product/hm_sku tables suffice; no new
 migration. This UC never changes inventory, order snapshots or legacy_* archives.
 
-Old `/api/v1/products` POST/PUT/DELETE used archive fields and are retired: Manager receives410
+Old `/api/v1/products` POST/PUT/DELETE used archive fields and are retired: Admin receives410
 CATALOG_WRITE_MOVED; Customer/Staff denied. Public GET routes stay compatible. Barcode is a required
 unique internal label, not a manufacturer EAN requirement. Prices are whole VND; no VAT engine added.
 
 `npm run frontend:check` and `npm run backend:verify:postgres` passed with 13 frontend/34 backend tests.
-Real browser verified Manager login, creation of two SKUs, low-stock display and duplicate barcode.
+Real browser verified Admin login, creation of two SKUs, low-stock display and duplicate barcode.
 Packaged HTTP smoke on local disposable PostgreSQL verified price edits, addSKU, stale409,
 deactivation preserving references/public404 and retired410. The old native confirmation stalled
 the app browser; the inline checkbox now passed browser verification too: save without confirmation
@@ -383,7 +383,7 @@ User-facing labels use “Quản lý sản phẩm”, “Đang bán”, “Ngừ
 
 UC-13 screen split verified locally on 2026-10-12: frontend lint/44 tests/build and
 PostgreSQL 17 V1–V7 migration, Hibernate validation, 76 backend tests and JAR packaging passed.
-Browser checks on that JAR with disposable PostgreSQL covered Manager login, old-link redirect,
+Browser checks on that JAR with disposable PostgreSQL covered Admin login, old-link redirect,
 direct edit refresh, product save, price save, cancel SKU, separate create form and desktop/mobile
 layout (1280/390px, no whole-page overflow or captured console errors). The disposable app/database
 were removed. This does not claim hosted CI or new writes to shared Supabase.

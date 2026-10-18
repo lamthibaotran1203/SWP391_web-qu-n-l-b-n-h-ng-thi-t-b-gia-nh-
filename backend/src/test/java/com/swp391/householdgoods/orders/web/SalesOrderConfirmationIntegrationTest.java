@@ -66,11 +66,11 @@ class SalesOrderConfirmationIntegrationTest {
     }
 
     @Test
-    void managerCanConfirm() throws Exception {
+    void adminCanConfirm() throws Exception {
         long orderId = createOrder("PENDING_PAYMENT", "PAID");
 
         mockMvc.perform(post("/api/v1/staff/orders/{id}/confirm", orderId)
-                        .with(user("manager").roles("MANAGER"))
+                        .with(user("admin").roles("ADMIN"))
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.status").value("CONFIRMED"))

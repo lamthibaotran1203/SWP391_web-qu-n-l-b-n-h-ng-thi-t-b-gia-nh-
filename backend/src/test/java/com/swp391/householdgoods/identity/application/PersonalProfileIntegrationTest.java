@@ -63,7 +63,7 @@ class PersonalProfileIntegrationTest {
     @Test void savesNormalizedContactsOnlyAndRetainsTheSession() throws Exception {
         var session = login();
         write(session, Map.of("fullName", "  Nguyễn   An ", "phone", " 0912345678 ",
-                "email", otherEmail, "userId", id + 1, "role", "MANAGER", "passwordHash", "fake"))
+                "email", otherEmail, "userId", id + 1, "role", "ADMIN", "passwordHash", "fake"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.data.fullName").value("Nguyễn An"))
                 .andExpect(jsonPath("$.data.phone").value("0912345678"));
         mvc.perform(get(API).session(session)).andExpect(jsonPath("$.data.phone").value("0912345678"));
@@ -94,7 +94,7 @@ class PersonalProfileIntegrationTest {
         assertUnchanged();
     }
 
-    @ParameterizedTest @ValueSource(strings = {"STAFF", "MANAGER"})
+    @ParameterizedTest @ValueSource(strings = {"STAFF", "ADMIN"})
     void deniesOtherRolesAtTheApi(String role) throws Exception {
         jdbc.update("update app.user_account set role=? where user_id=?", role, id);
         var session = login();

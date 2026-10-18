@@ -80,6 +80,6 @@ public class ProductController {
 
     private com.swp391.householdgoods.catalog.application.CatalogException retiredWrite() {
         return new com.swp391.householdgoods.catalog.application.CatalogException(HttpStatus.GONE,
-                "CATALOG_WRITE_MOVED", "Dùng API quản lý /api/v1/manager/catalog/products với productId và SKU riêng.");
+                "CATALOG_WRITE_MOVED", "Dùng API quản lý /api/v1/admin/catalog/products với productId và SKU riêng.");
     }
 }

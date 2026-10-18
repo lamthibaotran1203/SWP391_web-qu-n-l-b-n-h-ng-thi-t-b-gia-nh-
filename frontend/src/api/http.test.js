@@ -112,7 +112,7 @@ describe('API client CSRF flow', () => {
         },
       }))
       .mockResolvedValueOnce(jsonResponse({
-        data: { authenticated: true, fullName: 'Bảo Trân', role: 'MANAGER' },
+        data: { authenticated: true, fullName: 'Bảo Trân', role: 'ADMIN' },
       }))
 
     await refreshCsrfToken()

@@ -118,7 +118,7 @@ class SupplierServiceTest {
                 SupplierStatus.INACTIVE
         );
 
-        SupplierResponse response = service.updateSupplier(1L, updateRequest, "manager@homemart.vn");
+        SupplierResponse response = service.updateSupplier(1L, updateRequest, "admin@homemart.vn");
 
         assertThat(response.name()).isEqualTo("Sunhouse New");
         assertThat(response.contactName()).isEqualTo("Tran B");

@@ -19,8 +19,6 @@ export function AppHeader({ variant = 'light' }) {
   const auth = useContext(AuthContext)
   const user = auth?.user || { authenticated: false, fullName: '', role: '' }
   const logout = auth?.logout
-  const isEmployee = ['STAFF', 'MANAGER'].includes(user.role)
-
   return (
     <header className={`app-header app-header--${variant}`}>
       <div className="container app-header-inner">
@@ -28,10 +26,6 @@ export function AppHeader({ variant = 'light' }) {
         <nav className="app-navigation" aria-label="Điều hướng chính">
           <NavLink to="/" end>Trang chủ</NavLink>
           <NavLink to="/products">Sản phẩm</NavLink>
-          {user.role === 'MANAGER' && <NavLink to="/staff/products">Quản lý sản phẩm</NavLink>}
-          {user.role === 'MANAGER' && <NavLink to="/manager/brands">Thương hiệu</NavLink>}
-          {isEmployee && <NavLink to="/staff/orders">Đơn hàng</NavLink>}
-          {user.role === 'MANAGER' && <NavLink to="/staff/suppliers">Nhà cung cấp</NavLink>}
         </nav>
         <div className="app-header-actions">
           {user.authenticated ? (

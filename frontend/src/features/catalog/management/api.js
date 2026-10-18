@@ -1,6 +1,6 @@
 import { apiRequest } from '../../../api/http'
 
-const base = '/api/v1/manager/catalog/products'
+const base = '/api/v1/admin/catalog/products'
 export function getManagedProducts({ search = '', page = 0, status = '' } = {}, options = {}) {
   const query = new URLSearchParams({ search, page: String(page), size: '20' })
   if (status) query.set('status', status)

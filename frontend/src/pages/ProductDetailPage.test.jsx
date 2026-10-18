@@ -65,7 +65,7 @@ it('hands only SKU ID and valid quantity to the future UC-10 adapter', async () 
   await waitFor(() => expect(onAddToCart).toHaveBeenCalledExactlyOnceWith({ skuId: 2, quantity: 2 }))
 })
 
-it.each([{ authenticated: false }, { authenticated: true, role: 'MANAGER' }])('does not allow a non-Customer to hand off a cart operation: %j', async (user) => {
+it.each([{ authenticated: false }, { authenticated: true, role: 'ADMIN' }])('does not allow a non-Customer to hand off a cart operation: %j', async (user) => {
   show({ user, onAddToCart: vi.fn() })
   expect(await screen.findByRole('button', { name: 'Thêm vào giỏ hàng' })).toBeDisabled()
 })

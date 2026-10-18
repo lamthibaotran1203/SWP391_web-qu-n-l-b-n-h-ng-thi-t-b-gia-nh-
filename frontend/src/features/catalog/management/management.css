@@ -7,11 +7,9 @@
   --management-line: #d8dedb;
 }
 
-.catalog-workspace-content { padding-top: 24px; padding-bottom: 48px; }
-.management-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; font-size: 14px; }
-.management-breadcrumb > span { color: #59655e; }
+.catalog-workspace-content { padding-top: 32px; padding-bottom: 48px; }
 .catalog-workspace .workspace-heading { margin-bottom: 24px; align-items: center; }
-.catalog-workspace .workspace-heading h1 { color: #25322c; font-family: inherit; font-size: 28px; letter-spacing: 0; }
+.catalog-workspace .workspace-heading h1 { color: #172033; font-family: inherit; font-size: 28px; font-weight: 750; letter-spacing: -0.02em; }
 .catalog-workspace .workspace-heading-actions { flex-wrap: wrap; }
 .catalog-workspace .app-brand-mark { border-radius: 4px; background: var(--hm-primary); box-shadow: none; }
 .catalog-workspace .app-navigation a { border-radius: 4px; }

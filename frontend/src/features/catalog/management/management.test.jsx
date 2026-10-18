@@ -33,7 +33,7 @@ it('keeps edits visible and explains a server version conflict instead of overwr
   expect(save).toHaveBeenCalledTimes(1)
 })
 
-it('prevents a non-manager from loading management data', () => {
+it('prevents a non-admin from loading management data', () => {
   useAuth.mockReturnValue({ user: { authenticated: true, role: 'STAFF' }, connection: { status: 'connected' } })
   render(<MemoryRouter><CatalogWorkspace /></MemoryRouter>)
   expect(screen.getByRole('heading', { name: 'Không có quyền quản lý sản phẩm' })).toBeInTheDocument()
@@ -41,7 +41,7 @@ it('prevents a non-manager from loading management data', () => {
 })
 
 it('offers a retry when management data cannot load', async () => {
-  useAuth.mockReturnValue({ user: { authenticated: true, role: 'MANAGER' }, connection: { status: 'connected' } })
+  useAuth.mockReturnValue({ user: { authenticated: true, role: 'ADMIN' }, connection: { status: 'connected' } })
   getManagedProducts.mockRejectedValue(new Error('Chưa thể tải danh mục.'))
   render(<MemoryRouter><Routes><Route element={<CatalogWorkspace />}><Route path="/" element={<ManagedProductListPage />} /></Route></Routes></MemoryRouter>)
   expect(await screen.findByRole('alert')).toHaveTextContent('Chưa thể tải danh mục.')

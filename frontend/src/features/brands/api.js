@@ -1,7 +1,7 @@
 
 import { apiRequest } from '../../api/http'
 
-const BASE_PATH = '/api/v1/manager/brands'
+const BASE_PATH = '/api/v1/admin/brands'
 
 // UC-12.2: View Brands (List & Search & Filter & Pagination)
 export function getBrands({ keyword = '', status = '', page = 0, size = 10 } = {}) {

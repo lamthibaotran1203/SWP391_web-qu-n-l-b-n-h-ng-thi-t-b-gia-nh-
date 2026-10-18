@@ -32,7 +32,7 @@ export function ManagedProductListPage() {
 
   return <>
     <CatalogPageHeading title="Quản lý sản phẩm">
-      <Link className="btn btn-primary" to="/staff/products/new">Thêm sản phẩm</Link>
+      <Link className="btn btn-primary" to="/admin/products/new">Thêm sản phẩm</Link>
     </CatalogPageHeading>
     <form className="management-filters" onSubmit={(event) => {
       event.preventDefault()
@@ -57,15 +57,15 @@ export function ManagedProductListPage() {
         <caption className="visually-hidden">Danh sách sản phẩm của cửa hàng</caption>
         <thead><tr><th scope="col">Sản phẩm</th><th scope="col">Danh mục</th><th scope="col">Thương hiệu</th><th scope="col">Trạng thái</th><th scope="col">Tùy chọn</th></tr></thead>
         <tbody>{current.data.items.map((product) => <tr key={product.productId}>
-                    <td><Link className="management-product-link" to={`/staff/products/${product.productId}`}>
+                    <td><Link className="management-product-link" to={`/admin/products/${product.productId}`}>
             <ProductThumbnail src={product.imageUrl} /><strong>{product.name}</strong>
           </Link></td>
           <td>{references.categories.find((item) => item.id === product.categoryId)?.name || '—'}</td>
           <td>{references.brands.find((item) => item.id === product.brandId)?.name || '—'}</td>
           <td><ProductStatus status={product.status} /></td>
           <td><div className="management-row-actions">
-                        <Link to={`/staff/products/${product.productId}`} aria-label={`Chi tiết ${product.name}`}>Chi tiết</Link>
-                        <Link to={`/staff/products/${product.productId}/edit`} aria-label={`Chỉnh sửa ${product.name}`}>Chỉnh sửa</Link>
+                        <Link to={`/admin/products/${product.productId}`} aria-label={`Chi tiết ${product.name}`}>Chi tiết</Link>
+                        <Link to={`/admin/products/${product.productId}/edit`} aria-label={`Chỉnh sửa ${product.name}`}>Chỉnh sửa</Link>
           </div></td>
         </tr>)}</tbody>
       </table></div> : <div className="management-empty"><h3>Không tìm thấy sản phẩm</h3>

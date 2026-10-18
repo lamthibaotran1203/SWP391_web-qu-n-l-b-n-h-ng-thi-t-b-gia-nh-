@@ -1,6 +1,6 @@
 package com.swp391.householdgoods.identity.application;
 
-import com.swp391.householdgoods.config.BootstrapManagerProperties;
+import com.swp391.householdgoods.config.BootstrapAdminProperties;
 import com.swp391.householdgoods.identity.domain.AccountRole;
 import com.swp391.householdgoods.identity.domain.AccountStatus;
 import com.swp391.householdgoods.identity.domain.UserAccount;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class BootstrapManagerService {
+public class BootstrapAdminService {
 
     private final UserAccountRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final Clock clock;
 
-    public BootstrapManagerService(
+    public BootstrapAdminService(
             UserAccountRepository repository,
             PasswordEncoder passwordEncoder,
             Clock clock) {
@@ -29,7 +29,7 @@ public class BootstrapManagerService {
     }
 
     @Transactional
-    public BootstrapManagerResult initialize(BootstrapManagerProperties properties) {
+    public BootstrapAdminResult initialize(BootstrapAdminProperties properties) {
         String email = normalizeEmail(properties.email());
         String password = properties.password();
         String fullName = normalizeFullName(properties.fullName());
@@ -38,45 +38,45 @@ public class BootstrapManagerService {
 
         return repository.findByEmailIgnoreCase(email)
                 .map(existing -> updateExisting(existing, email, fullName, properties.updateExisting()))
-                .orElseGet(() -> createManager(email, password, fullName));
+                .orElseGet(() -> createAdmin(email, password, fullName));
     }
 
-    private BootstrapManagerResult createManager(String email, String password, String fullName) {
+    private BootstrapAdminResult createAdmin(String email, String password, String fullName) {
         Instant now = clock.instant();
-        repository.save(UserAccount.bootstrapManager(
+        repository.save(UserAccount.bootstrapAdmin(
                 email,
                 passwordEncoder.encode(password),
                 fullName,
                 now));
-        return BootstrapManagerResult.CREATED;
+        return BootstrapAdminResult.CREATED;
     }
 
-    private BootstrapManagerResult updateExisting(
+    private BootstrapAdminResult updateExisting(
             UserAccount existing,
             String email,
             String fullName,
             boolean updateExisting) {
-        if (existing.getRole() != AccountRole.MANAGER || existing.getStatus() != AccountStatus.ACTIVE) {
+        if (existing.getRole() != AccountRole.ADMIN || existing.getStatus() != AccountStatus.ACTIVE) {
             throw new IllegalStateException(
-                    "BOOTSTRAP_MANAGER_EMAIL belongs to a non-active Manager account: " + email);
+                    "BOOTSTRAP_ADMIN_EMAIL belongs to a non-active Admin account: " + email);
         }
         if (!updateExisting) {
-            return BootstrapManagerResult.UNCHANGED;
+            return BootstrapAdminResult.UNCHANGED;
         }
         return existing.updateFullName(fullName, clock.instant())
-                ? BootstrapManagerResult.UPDATED
-                : BootstrapManagerResult.UNCHANGED;
+                ? BootstrapAdminResult.UPDATED
+                : BootstrapAdminResult.UNCHANGED;
     }
 
     private void validate(String email, String password, String fullName) {
         if (email.isBlank() || email.length() > 254 || !email.contains("@")) {
-            throw new IllegalStateException("BOOTSTRAP_MANAGER_EMAIL must be a valid email up to 254 characters");
+            throw new IllegalStateException("BOOTSTRAP_ADMIN_EMAIL must be a valid email up to 254 characters");
         }
         if (!PasswordPolicy.accepts(password)) {
-            throw new IllegalStateException("BOOTSTRAP_MANAGER_PASSWORD must be 8-64 characters and at most 72 UTF-8 bytes");
+            throw new IllegalStateException("BOOTSTRAP_ADMIN_PASSWORD must be 8-64 characters and at most 72 UTF-8 bytes");
         }
         if (fullName.length() < 2 || fullName.length() > 100) {
-            throw new IllegalStateException("BOOTSTRAP_MANAGER_FULL_NAME must be 2-100 characters");
+            throw new IllegalStateException("BOOTSTRAP_ADMIN_FULL_NAME must be 2-100 characters");
         }
     }
 

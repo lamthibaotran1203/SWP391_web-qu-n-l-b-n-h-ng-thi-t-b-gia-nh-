@@ -47,7 +47,7 @@ describe('BrandsPage (UC-12 Manage Brands)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     useAuth.mockReturnValue({
-      user: { authenticated: true, role: 'MANAGER', fullName: 'Manager' },
+      user: { authenticated: true, role: 'ADMIN', fullName: 'Admin' },
       connection: { status: 'connected' },
       reload: vi.fn(),
     })
@@ -176,7 +176,7 @@ describe('BrandsPage (UC-12 Manage Brands)', () => {
       </MemoryRouter>,
     )
 
-    const addBtn = screen.getByRole('button', { name: /\+ Thêm thương hiệu/i })
+    const addBtn = screen.getByRole('button', { name: 'Thêm thương hiệu' })
     await user.click(addBtn)
 
     expect(await screen.findByText('Thêm thương hiệu mới')).toBeInTheDocument()
@@ -215,7 +215,7 @@ describe('BrandsPage (UC-12 Manage Brands)', () => {
       </MemoryRouter>,
     )
 
-    const addBtn = screen.getByRole('button', { name: /\+ Thêm thương hiệu/i })
+    const addBtn = screen.getByRole('button', { name: 'Thêm thương hiệu' })
     await user.click(addBtn)
 
     const nameInput = screen.getByLabelText(/Tên thương hiệu/i)
@@ -342,7 +342,7 @@ describe('BrandsPage (UC-12 Manage Brands)', () => {
       </MemoryRouter>,
     )
 
-    const addBtn = screen.getByRole('button', { name: /\+ Thêm thương hiệu/i })
+    const addBtn = screen.getByRole('button', { name: 'Thêm thương hiệu' })
     await user.click(addBtn)
 
     const submitBtn = screen.getByRole('button', { name: 'Tạo mới' })
@@ -361,7 +361,7 @@ describe('BrandsPage (UC-12 Manage Brands)', () => {
   })
 
   // 10. Unauthorized access
-  it('blocks non-MANAGER users from accessing the page', () => {
+  it('blocks non-ADMIN users from accessing the page', () => {
     useAuth.mockReturnValue({
       user: { authenticated: true, role: 'CUSTOMER' },
       connection: { status: 'connected' },
