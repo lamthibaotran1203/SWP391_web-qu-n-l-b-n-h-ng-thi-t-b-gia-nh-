@@ -29,8 +29,8 @@ export function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/manager/catalog" element={<Navigate to="/manager/products" replace />} />
-          <Route path="/manager/products" element={<CatalogWorkspace />}>
+          <Route path="/manager/catalog" element={<Navigate to="/staff/products" replace />} />
+          <Route path="/staff/products" element={<CatalogWorkspace />}>
             <Route index element={<ManagedProductListPage />} />
             <Route path="new" element={<ManagedProductCreatePage />} />
             <Route path=":productId" element={<ManagedProductDetailPage />} />
@@ -46,8 +46,8 @@ export function App() {
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/staff/orders" element={<StaffOrdersPage />} />
-          <Route path="/manager/suppliers" element={<SuppliersPage />} />
-          <Route path="/manager/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
+          <Route path="/staff/suppliers" element={<SuppliersPage />} />
+          <Route path="/staff/purchase-orders/create" element={<CreatePurchaseOrderPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

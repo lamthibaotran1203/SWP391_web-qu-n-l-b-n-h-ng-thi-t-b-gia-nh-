@@ -199,7 +199,7 @@ export function CreatePurchaseOrderPage() {
           <h4 className="alert-heading">Không thể khởi tạo đơn hàng</h4>
           <p>{initialError}</p>
           <hr />
-          <Link to="/manager/suppliers" className="btn btn-outline-danger btn-sm">
+                <Link to="/staff/suppliers" className="btn btn-outline-danger btn-sm">
             Quay lại quản lý nhà cung cấp
           </Link>
         </div>
@@ -215,7 +215,7 @@ export function CreatePurchaseOrderPage() {
       <div className="purchasing-header">
         <div className="purchasing-title">
           <div className="mb-2">
-            <Link to="/manager/suppliers" className="text-decoration-none small text-muted">
+                <Link to="/staff/suppliers" className="text-decoration-none small text-muted">
               &larr; Quay lại danh sách nhà cung cấp
             </Link>
           </div>
@@ -259,7 +259,7 @@ export function CreatePurchaseOrderPage() {
             >
               Tạo thêm đơn PO khác
             </button>
-            <Link to="/manager/suppliers" className="btn btn-outline-secondary">
+              <Link to="/staff/suppliers" className="btn btn-outline-secondary">
               Về trang Quản lý nhà cung cấp
             </Link>
           </div>
@@ -486,7 +486,7 @@ export function CreatePurchaseOrderPage() {
                     Lưu nháp (Draft)
                   </button>
 
-                  <Link to="/manager/suppliers" className="btn btn-link text-muted text-decoration-none text-center">
+            <Link to="/staff/suppliers" className="btn btn-link text-muted text-decoration-none text-center">
                     Hủy bỏ
                   </Link>
                 </div>

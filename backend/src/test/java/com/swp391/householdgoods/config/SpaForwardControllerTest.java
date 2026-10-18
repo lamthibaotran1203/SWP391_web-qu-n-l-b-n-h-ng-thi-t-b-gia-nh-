@@ -12,9 +12,10 @@ class SpaForwardControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "/manager/catalog", "/manager/products", "/manager/products/new",
-            "/manager/products/7", "/manager/products/7/edit",
-            "/manager/products/7/skus/new", "/manager/products/7/skus/9/edit",
+            "/manager/catalog", "/staff/products", "/staff/products/new",
+            "/staff/products/7", "/staff/products/7/edit",
+            "/staff/products/7/skus/new", "/staff/products/7/skus/9/edit",
+            "/staff/suppliers", "/staff/purchase-orders/create",
             "/account/password", "/account/profile", "/products/7"
     })
     void forwardsDirectClientLinksToTheReactEntryPoint(String path) throws Exception {
