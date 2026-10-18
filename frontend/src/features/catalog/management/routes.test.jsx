@@ -32,21 +32,21 @@ afterEach(cleanup)
 it('separates list, detail and edit through the actual application routes', async () => {
   open('/manager/catalog')
   expect(await screen.findByRole('link', { name: `Chi tiết ${product.name}` })).toBeInTheDocument()
-  expect(window.location.pathname).toBe('/manager/products')
+  expect(window.location.pathname).toBe('/staff/products')
   expect(screen.queryByLabelText('Tên phân loại')).not.toBeInTheDocument()
   fireEvent.click(screen.getByRole('link', { name: `Chi tiết ${product.name}` }))
   expect(await screen.findByText('Sắp hết hàng')).toBeInTheDocument()
-  expect(window.location.pathname).toBe('/manager/products/7')
+  expect(window.location.pathname).toBe('/staff/products/7')
   expect(screen.queryByLabelText('Tên sản phẩm')).not.toBeInTheDocument()
   fireEvent.click(screen.getByRole('link', { name: 'Chỉnh sửa sản phẩm' }))
   expect(await screen.findByLabelText('Tên sản phẩm')).toHaveValue(product.name)
-  expect(window.location.pathname).toBe('/manager/products/7/edit')
+  expect(window.location.pathname).toBe('/staff/products/7/edit')
   expect(screen.queryByRole('table')).not.toBeInTheDocument()
 })
 
 it('opens creation directly and submits the product plus initial SKU atomically', async () => {
   createManagedProduct.mockResolvedValue(product)
-  open('/manager/products/new')
+  open('/staff/products/new')
   fireEvent.change(await screen.findByLabelText('Tên sản phẩm'), { target: { value: 'Ấm siêu tốc 1.8 lít' } })
   fireEvent.change(screen.getByLabelText('Mã hàng (SKU)'), { target: { value: 'SHD1182' } })
   fireEvent.change(screen.getByLabelText('Mã vạch nội bộ'), { target: { value: 'BAR-1182' } })
@@ -56,19 +56,19 @@ it('opens creation directly and submits the product plus initial SKU atomically'
   expect(createManagedProduct.mock.calls[0][0].name).toBe('Ấm siêu tốc 1.8 lít')
   expect(createManagedProduct.mock.calls[0][1][0].skuCode).toBe('SHD1182')
   expect(await screen.findByText('Đã thêm sản phẩm.')).toBeInTheDocument()
-  expect(window.location.pathname).toBe('/manager/products/7')
+  expect(window.location.pathname).toBe('/staff/products/7')
   expect(getManagedProducts).not.toHaveBeenCalled()
 })
 
 it('loads current versions for a direct edit and keeps entered values on a 409', async () => {
   editManagedProduct.mockRejectedValue(Object.assign(new Error('Thông tin đã thay đổi. Hãy tải lại.'), { status: 409 }))
-  open('/manager/products/7/edit')
+  open('/staff/products/7/edit')
   fireEvent.change(await screen.findByLabelText('Tên sản phẩm'), { target: { value: 'Nồi cơm mới' } })
   fireEvent.click(screen.getByRole('button', { name: 'Lưu sản phẩm' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('Hãy tải lại')
   expect(editManagedProduct).toHaveBeenCalledWith(7, 4, expect.objectContaining({ name: 'Nồi cơm mới' }))
   expect(screen.getByLabelText('Tên sản phẩm')).toHaveValue('Nồi cơm mới')
-  expect(window.location.pathname).toBe('/manager/products/7/edit')
+  expect(window.location.pathname).toBe('/staff/products/7/edit')
   getManagedProduct.mockResolvedValue({ ...product, productVersion: 5, name: 'Tên vừa được cập nhật' })
   fireEvent.click(screen.getByRole('button', { name: 'Làm mới dữ liệu' }))
   await waitFor(() => expect(screen.getByLabelText('Tên sản phẩm')).toHaveValue('Tên vừa được cập nhật'))
@@ -79,7 +79,7 @@ it('loads current versions for a direct edit and keeps entered values on a 409',
 
 it('edits an owned SKU using both versions and returns to product detail', async () => {
   editManagedSku.mockResolvedValue(product)
-  open('/manager/products/7/skus/9/edit')
+  open('/staff/products/7/skus/9/edit')
   fireEvent.change(await screen.findByLabelText('Giá bán (VND)'), { target: { value: '600000' } })
   fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
   await waitFor(() => expect(editManagedSku).toHaveBeenCalledWith(7, 9, 4, 2, expect.objectContaining({ sellingPrice: '600000' })))
@@ -87,14 +87,14 @@ it('edits an owned SKU using both versions and returns to product detail', async
 })
 
 it('does not display an edit form for a SKU belonging to another product', async () => {
-  open('/manager/products/7/skus/99/edit')
+  open('/staff/products/7/skus/99/edit')
   expect(await screen.findByRole('alert')).toHaveTextContent('không thuộc sản phẩm')
   expect(screen.queryByRole('button', { name: 'Lưu thay đổi' })).not.toBeInTheDocument()
   expect(editManagedSku).not.toHaveBeenCalled()
 })
 
 it('does not send writes when canceling a new SKU', async () => {
-  open('/manager/products/7/skus/new')
+  open('/staff/products/7/skus/new')
   expect(await screen.findByLabelText('Tên phân loại')).toHaveValue('')
   fireEvent.click(screen.getByRole('button', { name: 'Hủy' }))
   expect(await screen.findByText('Sắp hết hàng')).toBeInTheDocument()
@@ -102,7 +102,7 @@ it('does not send writes when canceling a new SKU', async () => {
 })
 
 it('preserves search and status in the list URL without querying on each keystroke', async () => {
-  open('/manager/products?search=nồi&status=ACTIVE&page=0')
+  open('/staff/products?search=nồi&status=ACTIVE&page=0')
   const field = await screen.findByLabelText('Tên sản phẩm')
   await screen.findByRole('table')
   expect(getManagedProducts).toHaveBeenLastCalledWith({ search: 'nồi', status: 'ACTIVE', page: 0 }, expect.any(Object))

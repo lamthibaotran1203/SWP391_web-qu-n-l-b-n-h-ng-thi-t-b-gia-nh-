@@ -105,16 +105,16 @@ export function HomePage() {
                   )}
                   {user.role === 'MANAGER' && (
                     <>
-                      <Link className="btn btn-primary btn-sm mt-2 ms-2" to="/manager/suppliers">
+                      <Link className="btn btn-primary btn-sm mt-2 ms-2" to="/staff/suppliers">
                         Quản lý nhà cung cấp
                       </Link>
-                      <Link className="btn btn-success btn-sm mt-2 ms-2" to="/manager/purchase-orders/create">
+                      <Link className="btn btn-success btn-sm mt-2 ms-2" to="/staff/purchase-orders/create">
                         Lập đơn PO
                       </Link>
                     </>
                   )}
                 </div>
-                {user.role === 'MANAGER' && <Link className="btn btn-outline-light" to="/manager/products">Quản lý sản phẩm</Link>}
+                {user.role === 'MANAGER' && <Link className="btn btn-outline-light" to="/staff/products">Quản lý sản phẩm</Link>}
                 <Link className="btn btn-outline-light" to="/account/password">Đổi mật khẩu</Link>
                 <button className="btn btn-outline-light" type="button" onClick={logout}>
                   Đăng xuất

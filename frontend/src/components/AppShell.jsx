@@ -28,9 +28,9 @@ export function AppHeader({ variant = 'light' }) {
         <nav className="app-navigation" aria-label="Điều hướng chính">
           <NavLink to="/" end>Trang chủ</NavLink>
           <NavLink to="/products">Sản phẩm</NavLink>
-          {user.role === 'MANAGER' && <NavLink to="/manager/products">Quản lý sản phẩm</NavLink>}
+          {user.role === 'MANAGER' && <NavLink to="/staff/products">Quản lý sản phẩm</NavLink>}
           {isEmployee && <NavLink to="/staff/orders">Đơn hàng</NavLink>}
-          {user.role === 'MANAGER' && <NavLink to="/manager/suppliers">Nhà cung cấp</NavLink>}
+          {user.role === 'MANAGER' && <NavLink to="/staff/suppliers">Nhà cung cấp</NavLink>}
         </nav>
         <div className="app-header-actions">
           {user.authenticated ? (
