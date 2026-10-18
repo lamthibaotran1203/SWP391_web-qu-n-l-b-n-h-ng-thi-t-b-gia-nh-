@@ -16,6 +16,7 @@ public class SpaForwardController {
             "/products",
             "/categories",
             "/cart",
+            "/checkout",
             "/products/{id}",
             "/staff",
             "/staff/orders",

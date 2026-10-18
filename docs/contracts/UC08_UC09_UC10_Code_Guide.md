@@ -33,12 +33,14 @@ Service lấy SKU được bán công khai trước; nếu không có thì trả
 Đọc `CartController` → `CartService` → `CartRepository`.
 
 - `view()`: xác định khách hàng → lấy các dòng với giá/tồn kho hiện tại → tính tổng.
-- `save()`: khóa bản ghi khách hàng → kiểm tra số lượng → tính số lượng cần lưu → kiểm tra SKU/tồn kho → lưu → đọc lại giỏ.
-- Tham số `add=true` cộng vào số lượng cũ; `add=false` thay bằng số lượng mới.
-- `remove()`: chỉ xóa dòng thuộc khách hàng đang đăng nhập → đọc lại giỏ.
+- `addItem()`: khóa Customer → kiểm tra mã request đã xử lý chưa → kiểm tra số lượng/SKU/tồn kho → cộng số lượng → lưu giỏ và receipt → đọc kết quả. Receipt giúp thử lại cùng request không cộng hai lần.
+- `updateItem()`: khóa Customer → tìm dòng thuộc Customer → kiểm tra số lượng → nếu không đổi thì chỉ đọc; nếu đổi thì kiểm tra version/SKU/tồn kho → lưu số lượng thay thế → đọc kết quả. Version là mã UUID của lần ghi trước, không phải số lượng.
+- `remove()`: gọi CartRemovalService để xóa và commit → đọc lại giỏ; nếu chỉ phần đọc lỗi thì vẫn xác nhận đã xóa và cho refresh.
 - `readCart()` dùng vòng `for` cộng thành tiền và kiểm tra mọi dòng trước khi cho checkout.
 
-`@Transactional` bao trọn thao tác thay đổi: lỗi khi lưu hoặc đọc lại phải thoát ra để Spring rollback. Không bắt lỗi trong Repository rồi giả vờ lưu thành công. Khóa khách hàng giữ nguyên để tránh hai request cùng ghi đè giỏ.
+`@Transactional` bao trọn add/update: lỗi lưu hoặc đọc kết quả phải thoát ra để rollback. Riêng remove có transaction ở CartRemovalService; Spring commit khi lời gọi sang Service này trả về, trước khi CartService đọc giỏ mới. Tách thành hai Service để tránh gọi hàm transactional trong cùng đối tượng (Spring không đi qua proxy trong trường hợp đó). Lỗi xóa vẫn rollback; lỗi tải lại sau commit không được báo xóa thất bại.
+
+Controller gọi rõ từng hàm Service và dùng @ExceptionHandler cho lỗi database; không còn Supplier/lambda hay cờ true/false để phân biệt thêm/sửa. SQL version và receipt nằm trong Repository. Đây là phần kiểm soát đồng thời cần giữ, không bỏ để làm code ngắn hơn.
 
 Giỏ hàng không đặt giữ tồn kho và không tạo đơn hàng. `CartRepository` vẫn dùng `JdbcTemplate` như trước; việc tách lớp không yêu cầu đổi sang JPA.
 
@@ -46,4 +48,4 @@ Giỏ hàng không đặt giữ tồn kho và không tạo đơn hàng. `CartRep
 
 `CartServiceTest` kiểm tra nghiệp vụ không cần kết nối database. Các test Service và WebMvc kiểm tra thêm validation, quyền Customer, CSRF và response lỗi. Test tích hợp PostgreSQL vẫn cần database có lịch sử migration hợp lệ; unit test qua không có nghĩa lỗi V8 đã được xử lý.
 
-Code được ghép lại từ stash vào develop; các stash được giữ làm bản dự phòng. Không thay API, số tiền, điều kiện tồn kho hay cơ chế tự cập nhật số lượng trên frontend trong lần refactor này.
+Trong lần hoàn thiện theo đặc tả mới, POST bổ sung Idempotency-Key, PUT bổ sung expectedVersion và DELETE bổ sung kết quả xác nhận xóa/tải lại. Frontend đã cập nhật tương ứng; số tiền và cơ chế tự lưu sau 400ms vẫn giữ. /checkout chỉ là bước bàn giao chờ UC14, không tạo đơn hàng.

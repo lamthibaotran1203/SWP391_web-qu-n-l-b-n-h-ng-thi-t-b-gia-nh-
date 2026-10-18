@@ -22,6 +22,7 @@ import { ProductDetailPage } from '../pages/ProductDetailPage'
 import { ProductListPage } from '../pages/ProductListPage'
 import { ProductCategoriesPage } from '../pages/ProductCategoriesPage'
 import { CartPage } from '../features/cart/CartPage'
+import { CheckoutHandoffPage } from '../features/cart/CheckoutHandoffPage'
 import { addCartItem } from '../features/cart/api'
 import { StaffOrdersPage } from '../pages/StaffOrdersPage'
 import { SuppliersPage } from '../pages/SuppliersPage'
@@ -44,6 +45,7 @@ export function App() {
           <Route path="/categories" element={<ProductCategoriesPage />} />
           <Route path="/products/:id" element={<ProductDetailPage onAddToCart={addCartItem} />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutHandoffPage />} />
           <Route element={<OperationsLayout />}>
             <Route path="/staff" element={<Navigate to="/staff/orders" replace />} />
             <Route path="/staff/orders" element={<StaffOrdersPage />} />
