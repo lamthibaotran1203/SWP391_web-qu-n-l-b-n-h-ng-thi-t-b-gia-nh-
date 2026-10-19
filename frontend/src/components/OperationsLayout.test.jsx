@@ -22,6 +22,7 @@ function renderLayout({ role = 'ADMIN', path = '/admin/products', connection, lo
             <Route path="/login" element={<p>Trang đăng nhập</p>} />
             <Route element={<OperationsLayout />}>
               <Route path="/staff/orders" element={<h1>Danh sách đơn hàng</h1>} />
+              <Route path="/staff/pos" element={<h1>Giao dịch POS</h1>} />
               <Route element={<RequireRole roles={['ADMIN']} />}>
                 <Route path="/admin/products" element={<h1>Danh sách sản phẩm</h1>} />
                 <Route path="/admin/categories" element={<h1>Danh sách danh mục</h1>} />
@@ -43,6 +44,7 @@ describe('OperationsLayout', () => {
     expect(screen.getByText('Quản trị viên')).toBeInTheDocument()
     expect(screen.queryByText('Bảo Trân')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Đơn hàng bán' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Bán hàng tại quầy' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Sản phẩm & SKU' })).toHaveClass('active')
     expect(screen.getByRole('link', { name: 'Danh mục sản phẩm' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Thương hiệu' })).toBeInTheDocument()
@@ -58,6 +60,7 @@ describe('OperationsLayout', () => {
     expect(screen.getByText('Nhân viên')).toBeInTheDocument()
     expect(screen.queryByText('Nhân viên kho')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Đơn hàng bán' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Bán hàng tại quầy' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Sản phẩm & SKU' })).not.toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Bạn không có quyền truy cập' })).toBeInTheDocument()
   })

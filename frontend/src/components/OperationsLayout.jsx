@@ -9,17 +9,20 @@ const adminItems = [
   { to: '/admin/categories', icon: 'categories', label: 'Danh mục sản phẩm' },
   { to: '/admin/brands', icon: 'brands', label: 'Thương hiệu' },
   { to: '/staff/orders', icon: 'orders', label: 'Đơn hàng bán' },
+  { to: '/staff/pos', icon: 'pos', label: 'Bán hàng tại quầy' },
   { to: '/admin/suppliers', icon: 'suppliers', label: 'Nhà cung cấp' },
   { to: '/admin/purchase-orders/create', icon: 'purchase', label: 'Lập đơn mua hàng' },
 ]
 
 const staffItems = [
   { to: '/staff/orders', icon: 'orders', label: 'Đơn hàng bán' },
+  { to: '/staff/pos', icon: 'pos', label: 'Bán hàng tại quầy' },
 ]
 
 function MenuIcon({ name }) {
   const paths = {
     orders: <><path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" /></>,
+    pos: <><path d="M4 6h16l-1 14H5L4 6z" /><path d="M8 9v2a4 4 0 0 0 8 0V9" /></>,
     products: <><path d="m4 8 8-4 8 4-8 4z" /><path d="m4 8 8 4 8-4v8l-8 4-8-4z" /></>,
     categories: <><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z" /></>,
     brands: <><path d="M4 5h10l6 6-9 9-7-7z" /><circle cx="9" cy="10" r="1" /></>,

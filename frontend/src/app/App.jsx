@@ -29,6 +29,7 @@ import { SuppliersPage } from '../pages/SuppliersPage'
 import { BrandsPage } from '../pages/BrandsPage'
 import { CategoriesPage } from '../pages/CategoriesPage'
 import { CreatePurchaseOrderPage } from '../pages/CreatePurchaseOrderPage'
+import { PosPage } from '../features/pos/PosPage'
 
 export function App() {
   return (
@@ -49,6 +50,7 @@ export function App() {
           <Route element={<OperationsLayout />}>
             <Route path="/staff" element={<Navigate to="/staff/orders" replace />} />
             <Route path="/staff/orders" element={<StaffOrdersPage />} />
+            <Route path="/staff/pos" element={<PosPage />} />
             <Route element={<RequireRole roles={['ADMIN']} />}>
               <Route path="/admin" element={<Navigate to="/admin/products" replace />} />
               <Route path="/admin/catalog" element={<Navigate to="/admin/products" replace />} />
